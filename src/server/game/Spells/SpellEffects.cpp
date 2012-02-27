@@ -238,7 +238,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectRewardCurrency,                           // 166 SPELL_EFFECT_REWARD_CURRENCY
     &Spell::EffectNULL,                                     // 167
     &Spell::EffectNULL,                                     // 168
-    &Spell::EffectNULL,                                     // 169
+    &Spell::EffectDestroyItem,                              // 169 SPELL_EFFECT_DESTROY_ITEM
     &Spell::EffectNULL,                                     // 170
     &Spell::EffectNULL,                                     // 171
     &Spell::EffectMassResurrect,                            // 172 SPELL_EFFECT_RESURRECT_RAID_PARTY
@@ -7771,6 +7771,17 @@ void Spell:EffectRewardCurrency(SpellEffIndex effIndex)
         return;
 
     unitTarget->ModifyCurrency(m_spellInfo->Effects[effIndex].MiscValue, damage);
+}
+
+void Spell::EffectDestroyItem(SpellEffIndex effIndex)
+{
+    if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
+        return;
+
+    if (unitTarget->GetTypeId() != TYPEID_PLAYER)
+        return;
+
+    unitTarget->DestroyItemCount(m_spellInfo->Effects[effIndex].ItemType, 9999, true, true);
 }
 
 void Spell::EffectMassResurrect(SpellEffIndex effIndex)

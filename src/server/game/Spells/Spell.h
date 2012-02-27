@@ -374,6 +374,7 @@ class Spell
         void EffectPlayerNotification(SpellEffIndex effIndex);
         void EffectRemoveAura(SpellEffIndex effIndex);
         void EffectRewardCurrency(SpellEffIndex effIndex);
+        void EffectDestroyItem(SpellEffIndex effIndex);
         void EffectMassResurrect(SpellEffIndex effIndex);
         void EffectCastButtons(SpellEffIndex effIndex);
         void EffectRechargeManaGem(SpellEffIndex effIndex);
