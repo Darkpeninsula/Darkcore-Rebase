@@ -367,10 +367,6 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                 break;
             case CLASS_DRUID:
             {
-                // Check if Predatory Strikes is skilled
-                float mLevelMult = 0.0f;
-                float weapon_bonus = 0.0f;
-
                 switch (GetShapeshiftForm())
                 {
                     case FORM_CAT:
