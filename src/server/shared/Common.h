@@ -210,11 +210,15 @@ typedef std::vector<std::string> StringVector;
   ACE_Guard< MUTEX > DARKCORE_GUARD_OBJECT (LOCK); \
     if (DARKCORE_GUARD_OBJECT.locked() == 0) ASSERT(false);
 
-# define DARKCORE_WRITE_GUARD(MUTEX, LOCK) \
+//! For proper implementation of multiple-read, single-write pattern, use
+//! ACE_RW_Mutex as underlying @MUTEX
+#define DARKCORE_WRITE_GUARD(MUTEX, LOCK) \
   ACE_Write_Guard< MUTEX > DARKCORE_GUARD_OBJECT (LOCK); \
     if (DARKCORE_GUARD_OBJECT.locked() == 0) ASSERT(false);
 
-# define DARKCORE_READ_GUARD(MUTEX, LOCK) \
+//! For proper implementation of multiple-read, single-write pattern, use   
+//! ACE_RW_Mutex as underlying @MUTEX
+#define DARKCORE_READ_GUARD(MUTEX, LOCK) \
   ACE_Read_Guard< MUTEX > DARKCORE_GUARD_OBJECT (LOCK); \
     if (DARKCORE_GUARD_OBJECT.locked() == 0) ASSERT(false);
 
