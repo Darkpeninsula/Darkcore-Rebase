@@ -1,12 +1,12 @@
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
-  Maelstrom/kezan.cpp
-  Maelstrom/deepholm.cpp
-  Maelstrom/darkmoon_island.cpp
-  Maelstrom/lost_isles.cpp
-  Maelstrom/tolbarad_peninsula.cpp
-  Maelstrom/the_maelstrom.cpp
-  Maelstrom/tol_barad.cpp
+  Maelstrom/Zones/kezan.cpp
+  Maelstrom/Zones/deepholm.cpp
+  Maelstrom/Zones/darkmoon_island.cpp
+  Maelstrom/Zones/lost_isles.cpp
+  Maelstrom/Zones/tolbarad_peninsula.cpp
+  Maelstrom/Zones/the_maelstrom.cpp
+  Maelstrom/Zones/tol_barad.cpp
 )
 
 message("  -> Prepared: The Maelstrom")
