@@ -98,7 +98,7 @@ void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket & recv_data)
             return;
         }
 
-        objEntry = creature->GetCreatureInfo()->Entry;
+        objEntry = creature->GetCreatureTemplate()->Entry;
         objType = 1;
         loot = &creature->loot;
     }
