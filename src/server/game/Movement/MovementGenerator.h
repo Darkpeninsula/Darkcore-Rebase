@@ -41,7 +41,7 @@ class MovementGenerator
 
         virtual void Reset(Unit &) = 0;
 
-        virtual bool Update(Unit &, const uint32 time_diff) = 0;
+        virtual bool Update(Unit &, const uint32 &time_diff) = 0;
 
         virtual MovementGeneratorType GetMovementGeneratorType() = 0;
 
@@ -67,7 +67,7 @@ class MovementGeneratorMedium : public MovementGenerator
             //u->AssertIsType<T>();
             (static_cast<D*>(this))->Reset(*((T*)&u));
         }
-        bool Update(Unit &u, const uint32 time_diff)
+        bool Update(Unit &u, const uint32 &time_diff)
         {
             //u->AssertIsType<T>();
             return (static_cast<D*>(this))->Update(*((T*)&u), time_diff);
@@ -77,7 +77,7 @@ class MovementGeneratorMedium : public MovementGenerator
         void Initialize(T &u);
         void Finalize(T &u);
         void Reset(T &u);
-        bool Update(T &u, const uint32 time_diff);
+        bool Update(T &u, const uint32 &time_diff);
 };
 
 struct SelectableMovement : public FactoryHolder<MovementGenerator, MovementGeneratorType>
