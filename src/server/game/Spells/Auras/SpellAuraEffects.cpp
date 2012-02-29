@@ -5923,7 +5923,6 @@ void AuraEffect::HandleActionbarSpellOverride(AuraApplication const * aurApp, ui
     uint32 affSpell = 0;
 
     ActionBarSpellOverride const* actbarSpellOverride = sSpellMgr->GetActionBarSpellOverride(overrideId);
-
     if(actbarSpellOverride)
     {
         aura = actbarSpellOverride->aura;
