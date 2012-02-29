@@ -335,7 +335,7 @@ void VehicleAI::CheckConditions(const uint32 diff)
                 {
                     if (Player* player = passenger->ToPlayer())
                     {
-                        if (!sConditionMgr->IsPlayerMeetToConditions(player, conditions))
+                        if (!sConditionMgr->IsObjectMeetToConditions(player, me, conditions))
                         {
                             player->ExitVehicle();
                             return;//check other pessanger in next tick

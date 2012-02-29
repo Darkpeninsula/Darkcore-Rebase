@@ -415,7 +415,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
 
 AuraEffect::AuraEffect(Aura* base, uint8 effIndex, int32 *baseAmount, Unit* caster):
 m_base(base), m_spellInfo(base->GetSpellInfo()), m_effIndex(effIndex),
-m_baseAmount(baseAmount ? *baseAmount : m_spellInfo->Effects[m_effIndex].BasePoints),
+m_baseAmount(baseAmount ? *baseAmount : m_spellInfo->Effects[effIndex].BasePoints),
 m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false),
 m_periodicTimer(0), m_tickNumber(0)
 {
@@ -5448,8 +5448,21 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
         }
         case SPELLFAMILY_MAGE:
         {
-            // if (!(mode & AURA_EFFECT_HANDLE_REAL))
-                // break;
+            switch(GetId())
+            {
+                case 79683: // Arcane Missiles
+                {
+                    if (apply)
+                        if (caster)
+                            caster->CastSpell(caster, 79808, true, NULL, NULL, GetCasterGUID()); // Arcane Missiles Aurastate
+                    break;
+                }
+                case 5143: // Arcane Missiles
+                {
+                    caster->RemoveAurasDueToSpell(79808);
+                    break;
+                }
+            }
             break;
         }
         case SPELLFAMILY_PRIEST:

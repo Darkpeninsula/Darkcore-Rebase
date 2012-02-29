@@ -66,6 +66,7 @@ class WorldObject;
 
 struct AchievementCriteriaData;
 struct AuctionEntry;
+struct ConditionSourceInfo;
 struct Condition;
 struct ItemTemplate;
 struct OutdoorPvPData;
@@ -579,7 +580,7 @@ class ConditionScript : public ScriptObject
         bool IsDatabaseBound() const { return true; }
 
         // Called when a single condition is checked for a player.
-        virtual bool OnConditionCheck(Condition* /*condition*/, Player* /*player*/, Unit* /*invoker*/) { return true; }
+        virtual bool OnConditionCheck(Condition* /*condition*/, ConditionSourceInfo& /*sourceInfo*/) { return true; }
 };
 
 class VehicleScript : public ScriptObject
@@ -954,7 +955,7 @@ class ScriptMgr
 
     public: /* ConditionScript */
 
-        bool OnConditionCheck(Condition* condition, Player* player, Unit* invoker);
+        bool OnConditionCheck(Condition* condition, ConditionSourceInfo& sourceInfo);
 
     public: /* VehicleScript */
 
