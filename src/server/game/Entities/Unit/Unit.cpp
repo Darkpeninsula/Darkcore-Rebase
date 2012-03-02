@@ -6636,10 +6636,8 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
             {
                 case 5094: // Posthaste
                 {
-                    if(!roll_chance_i(triggerAmount))
-                        return false;
-
                     triggered_spell_id = 83559;
+                    basepoints0 = triggerAmount;
                     target = this;
                     break;
                 }                
