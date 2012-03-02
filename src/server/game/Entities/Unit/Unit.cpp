@@ -6634,8 +6634,16 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
         {
             switch (dummySpell->SpellIconID)
             {
-                // Crouching Tiger, Hidden Chimera
-                case 4752:
+                case 5094: // Posthaste
+                {
+                    if(!roll_chance_i(triggerAmount))
+                        return false;
+
+                    triggered_spell_id = 83559;
+                    target = this;
+                    break;
+                }                
+                case 4752: // Crouching Tiger, Hidden Chimera
                 {
                     if (!procSpell)
                         return false;
