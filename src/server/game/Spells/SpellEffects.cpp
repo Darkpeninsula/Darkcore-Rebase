@@ -1557,24 +1557,26 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 m_caster->CastSpell(unitTarget, damage, true);
                 return;
             }
-            // Wild mushroom: detonate
-            /*if(m_spellInfo->Id == 88751)
+            //Wild mushroom: detonate
+            if(m_spellInfo->Id == 88751)
             {
+                std::list<Creature*> templist;
+
                 CellCoord pair(Darkcore::ComputeCellCoord(m_caster->GetPositionX(), m_caster->GetPositionY()));
                 Cell cell(pair);
                 cell.SetNoCreate();
 
-                std::list<Creature*> templist;
-                Darkcore::AllFriendlyCreaturesInGrid check(me, 47649);
-                Darkcore::CreatureListSearcher<Darkcore::AllCreaturesOfEntryInRange> searcher(m_caster, templist, check);
+                Darkcore::AllFriendlyCreaturesInGrid check(m_caster);
+                Darkcore::CreatureListSearcher<Darkcore::AllFriendlyCreaturesInGrid> searcher(m_caster, templist, check);
 
-                TypeContainerVisitor<Darkcore::CreatureListSearcher<Darkcore::AllCreaturesOfEntryInRange>, GridTypeMapContainer> cSearcher(searcher);
-                cell.Visit(pair, cSearcher, *(me->GetMap()), *me, me->GetGridActivationRange());
+                TypeContainerVisitor<Darkcore::CreatureListSearcher<Darkcore::AllFriendlyCreaturesInGrid>, GridTypeMapContainer> cSearcher(searcher);
+
+                cell.Visit(pair, cSearcher, *(m_caster->GetMap()), *m_caster, m_caster->GetGridActivationRange());
 
                 if (!templist.empty())
                     for (std::list<Creature*>::const_iterator itr = templist.begin(); itr != templist.end(); ++itr)
                     {
-                        // You cannot detonate other people's mushrooms
+                        //You cannot detonate other people's mushrooms
                         if((*itr)->GetOwner() != m_caster)
                             continue;
                         // Find all the enemies
@@ -1584,15 +1586,15 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                         (*itr)->VisitNearbyObject(6.0f, searcher);
                         for (std::list<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
                         {
-                            // Damage spell
-                            (*itr)->CastSpell((*iter),78777,true);
-                            // Suicide spell
-                            (*itr)->CastSpell((*itr),92853,true);
+                            //Damage spell
+                            (*itr)->CastSpell((*iter), 88747, true);
+                            //Suicide spell
+                            (*itr)->CastSpell((*itr), 92853, true);
                             (*itr)->DisappearAndDie();
                         }
                     }
                     templist.clear();
-            }*/
+            }
             if(m_spellInfo->Id == 1126)
             {
                 if (m_caster->GetTypeId() == TYPEID_PLAYER)
