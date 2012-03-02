@@ -373,7 +373,7 @@ void ProcessUnlearnAction(Player* player, Creature* creature, uint32 spellId, ui
 }
 
 /*###
-# start menues alchemy
+# start menus alchemy
 ###*/
 
 class npc_prof_alchemy : public CreatureScript
@@ -525,7 +525,7 @@ public:
 };
 
 /*###
-# start menues blacksmith
+# start menus blacksmith
 ###*/
 
 class npc_prof_blacksmith : public CreatureScript
@@ -745,7 +745,7 @@ public:
 # engineering trinkets
 ###*/
 
-enum eEngineeringTrinkets
+enum EngineeringTrinkets
 {
     NPC_ZAP                     = 14742,
     NPC_JHORDY                  = 14743,
@@ -771,7 +771,7 @@ enum eEngineeringTrinkets
 class npc_engineering_tele_trinket : public CreatureScript
 {
 public:
-    npc_engineering_tele_trinket() : CreatureScript("npc_engineering_tele_trinket") { }
+    npc_engineering_tele_trinket() : CreatureScript("npc_engineering_tele_trinket") {}
 
     bool CanLearn(Player* player, uint32 textId, uint32 altTextId, uint32 skillValue, uint32 reqSpellId, uint32 spellId, uint32& npcTextId)
     {
@@ -857,7 +857,7 @@ public:
 };
 
 /*###
-# start menues leatherworking
+# start menus leatherworking
 ###*/
 
 class npc_prof_leather : public CreatureScript

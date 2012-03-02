@@ -39,7 +39,7 @@ EndContentData */
 # item_only_for_flight
 #####*/
 
-enum eOnlyForFlight
+enum OnlyForFlight
 {
     SPELL_ARCANE_CHARGES    = 45072
 };
@@ -54,7 +54,7 @@ public:
         uint32 itemId = pItem->GetEntry();
         bool disabled = false;
 
-        //for special scripts
+        // for special scripts
         switch (itemId)
         {
            case 24538:
@@ -66,8 +66,8 @@ public:
                     disabled = true;
                     break;
            case 34475:
-                if (const SpellInfo* pSpellInfo = sSpellMgr->GetSpellInfo(SPELL_ARCANE_CHARGES))
-                    Spell::SendCastResult(player, pSpellInfo, 1, SPELL_FAILED_NOT_ON_GROUND);
+                if (const SpellInfo* spellInfo = sSpellMgr->GetSpellInfo(SPELL_ARCANE_CHARGES))
+                    Spell::SendCastResult(player, spellInfo, 1, SPELL_FAILED_NOT_ON_GROUND);
                     break;
         }
 
@@ -146,7 +146,7 @@ public:
 # item_pile_fake_furs
 #####*/
 
-enum ePileFakeFur
+enum PileFakeFur
 {
     GO_CARIBOU_TRAP_1                                      = 187982,
     GO_CARIBOU_TRAP_2                                      = 187995,
@@ -168,6 +168,7 @@ enum ePileFakeFur
 };
 
 #define CaribouTrapsNum 15
+
 const uint32 CaribouTraps[CaribouTrapsNum] =
 {
     GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5,
@@ -197,8 +198,10 @@ public:
             return true;
 
         float x, y, z;
+
         go->GetClosePoint(x, y, z, go->GetObjectSize() / 3, 7.0f);
         go->SummonGameObject(GO_HIGH_QUALITY_FUR, go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), 0, 0, 0, 0, 0, 1000);
+
         if (TempSummon* summon = player->SummonCreature(NPC_NESINGWARY_TRAPPER, x, y, z, go->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 1000))
         {
             summon->SetVisible(false);
@@ -213,7 +216,7 @@ public:
 # item_petrov_cluster_bombs
 #####*/
 
-enum ePetrovClusterBombs
+enum PetrovClusterBombs
 {
     SPELL_PETROV_BOMB           = 42406,
     AREA_ID_SHATTERED_STRAITS   = 4064,
@@ -225,7 +228,7 @@ class item_petrov_cluster_bombs : public ItemScript
 public:
     item_petrov_cluster_bombs() : ItemScript("item_petrov_cluster_bombs") { }
 
-    bool OnUse(Player* player, Item* pItem, const SpellCastTargets & /*pTargets*/)
+    bool OnUse(Player* player, Item* pItem, const SpellCastTargets & /*targets*/)
     {
         if (player->GetZoneId() != ZONE_ID_HOWLING)
             return false;
@@ -234,8 +237,8 @@ public:
         {
             player->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
 
-            if (const SpellInfo* pSpellInfo = sSpellMgr->GetSpellInfo(SPELL_PETROV_BOMB))
-                Spell::SendCastResult(player, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+            if (const SpellInfo* spellInfo = sSpellMgr->GetSpellInfo(SPELL_PETROV_BOMB))
+                Spell::SendCastResult(player, spellInfo, 1, SPELL_FAILED_NOT_HERE);
 
             return true;
         }
@@ -248,7 +251,7 @@ public:
 # item_dehta_trap_smasher
 # For quest 11876, Help Those That Cannot Help Themselves
 ######*/
-enum eHelpThemselves
+enum HelpThemselves
 {
     QUEST_CANNOT_HELP_THEMSELVES                  =  11876,
     NPC_TRAPPED_MAMMOTH_CALF                      =  25850,
@@ -277,6 +280,7 @@ enum eHelpThemselves
 };
 
 #define MammothTrapsNum 22
+
 const uint32 MammothTraps[MammothTrapsNum] =
 {
     GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5,
@@ -291,24 +295,24 @@ class item_dehta_trap_smasher : public ItemScript
 public:
     item_dehta_trap_smasher() : ItemScript("item_dehta_trap_smasher") { }
 
-    bool OnUse(Player* player, Item* /*pItem*/, const SpellCastTargets & /*pTargets*/)
+    bool OnUse(Player* player, Item* /*pItem*/, const SpellCastTargets & /*targets*/)
     {
         if (player->GetQuestStatus(QUEST_CANNOT_HELP_THEMSELVES) != QUEST_STATUS_INCOMPLETE)
             return false;
 
-        Creature* pMammoth;
-        pMammoth = player->FindNearestCreature(NPC_TRAPPED_MAMMOTH_CALF, 5.0f);
-        if (!pMammoth)
+        Creature* mammoth;
+        mammoth = player->FindNearestCreature(NPC_TRAPPED_MAMMOTH_CALF, 5.0f);
+        if (!mammoth)
             return false;
 
-        GameObject* pTrap;
+        GameObject* trap;
         for (uint8 i = 0; i < MammothTrapsNum; ++i)
         {
-            pTrap = player->FindNearestGameObject(MammothTraps[i], 11.0f);
-            if (pTrap)
+            trap = player->FindNearestGameObject(MammothTraps[i], 11.0f);
+            if (trap)
             {
-                pMammoth->AI()->DoAction(1);
-                pTrap->SetGoState(GO_STATE_READY);
+                mammoth->AI()->DoAction(1);
+                trap->SetGoState(GO_STATE_READY);
                 player->KilledMonsterCredit(NPC_TRAPPED_MAMMOTH_CALF, 0);
                 return true;
             }
