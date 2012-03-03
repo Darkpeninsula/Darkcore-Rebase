@@ -40,6 +40,9 @@ enum ShamanSpells
 
     SHAMAN_SPELL_UNLEASH_ELEMENTS           = 73680,
 
+    SHAMAN_SPELL_SATED                      = 57724, 	
+    SHAMAN_SPELL_EXHAUSTION                 = 57723,
+
     SHAMAN_TOTEM_SPELL_EARTHBIND_TOTEM      = 6474,
     SHAMAN_TOTEM_SPELL_EARTHEN_POWER        = 59566,
     SHAMAN_TOTEM_SPELL_EARTHS_GRASP         = 51485,
@@ -125,7 +128,7 @@ public:
 
         void Register()
         {
-             OnEffect += SpellEffectFn(spell_sha_unleash_elements_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+             OnEffectHitTarget += SpellEffectFn(spell_sha_unleash_elements_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
         }
     };
     SpellScript* GetSpellScript() const
@@ -148,7 +151,7 @@ public:
 
         bool Load()
         {
-            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
+            absorbPct = GetSpellInfo()->Effects[EFFECT_0].CalcValue(GetCaster());
             return true;
         }
 
@@ -223,7 +226,7 @@ public:
         void Register()
         {
             OnCheckCast += SpellCheckCastFn(spell_sha_fire_nova_SpellScript::CheckFireTotem);
-            OnEffect += SpellEffectFn(spell_sha_fire_nova_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            OnEffectHitTarget += SpellEffectFn(spell_sha_fire_nova_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
         }
     };
 
@@ -372,8 +375,8 @@ public:
             uint8 usedCharges = lsCharges - 3;
 
             SpellEntry const* spellInfo = sSpellStore.LookupEntry(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
-            int32 basePoints = caster->CalculateSpellDamage(target, spellInfo, 0);
-            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, effIndex, basePoints, SPELL_DIRECT_DAMAGE);
+            int32 basePoints = caster->CalculateSpellDamage(target, spellInfo);
+            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, basePoints, SPELL_DIRECT_DAMAGE);
 
             caster->CastCustomSpell(SHAMAN_SPELL_FULMINATION_TRIGGERED, SPELLVALUE_BASE_POINT0, damage, target, true, NULL, fulminationAura);
             lightningShield->SetCharges(lsCharges - usedCharges);
@@ -382,7 +385,7 @@ public:
         // register functions used in spell script - names of these functions do not matter
         void Register()
         {
-            OnEffect += SpellEffectFn(spell_sha_fulminationSpellScript::HandleFulmination, EFFECT_FIRST_FOUND, SPELL_EFFECT_ANY);
+            OnEffectHitTarget += SpellEffectFn(spell_sha_fulminationSpellScript::HandleFulmination, EFFECT_FIRST_FOUND, SPELL_EFFECT_ANY);
         }
     };
 
