@@ -36,6 +36,8 @@ enum WarlockSpells
     WARLOCK_DEMONIC_EMPOWERMENT_FELGUARD    = 54508,
     WARLOCK_DEMONIC_EMPOWERMENT_FELHUNTER   = 54509,
     WARLOCK_DEMONIC_EMPOWERMENT_IMP         = 54444,
+
+    WARLOCK_CREATE_HEALTHSTONE_TRIGGERED    = 34130,
 };
 
 class spell_warl_banish : public SpellScriptLoader
@@ -170,16 +172,17 @@ class spell_warl_create_healthstone : public SpellScriptLoader
         {
             PrepareSpellScript(spell_warl_create_healthstone_SpellScript);
 
-            static uint32 const iTypes[8][3];
+            bool Validate(SpellInfo const* /*spellEntry*/)
+            {
+                if (!sSpellMgr->GetSpellInfo(WARLOCK_CREATE_HEALTHSTONE_TRIGGERED))
+                    return false;
+                return true;
+            }
 
             void HandleScriptEffect(SpellEffIndex effIndex)
             {
                 if (Unit* unitTarget = GetHitUnit())
-                {
-                    uint8 spellRank = sSpellMgr->GetSpellRank(GetSpellInfo()->Id);
-                    if (spellRank > 0 && spellRank <= 8)
-                        CreateItem(effIndex, iTypes[spellRank - 1][rank]);
-                }
+                    unitTarget->CastSpell(unitTarget, WARLOCK_CREATE_HEALTHSTONE_TRIGGERED, true);
             }
 
             void Register()
@@ -192,17 +195,6 @@ class spell_warl_create_healthstone : public SpellScriptLoader
         {
             return new spell_warl_create_healthstone_SpellScript();
         }
-};
-
-uint32 const spell_warl_create_healthstone::spell_warl_create_healthstone_SpellScript::iTypes[8][3] = {
-    { 5512, 19004, 19005},             // Minor Healthstone
-    { 5511, 19006, 19007},             // Lesser Healthstone
-    { 5509, 19008, 19009},             // Healthstone
-    { 5510, 19010, 19011},             // Greater Healthstone
-    { 9421, 19012, 19013},             // Major Healthstone
-    {22103, 22104, 22105},             // Master Healthstone
-    {36889, 36890, 36891},             // Demonic Healthstone
-    {36892, 36893, 36894}               // Fel Healthstone
 };
 
 // 47422 Everlasting Affliction

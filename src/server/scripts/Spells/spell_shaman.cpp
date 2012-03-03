@@ -40,7 +40,7 @@ enum ShamanSpells
 
     SHAMAN_SPELL_UNLEASH_ELEMENTS           = 73680,
 
-    SHAMAN_SPELL_SATED                      = 57724, 	
+    SHAMAN_SPELL_SATED                      = 57724,
     SHAMAN_SPELL_EXHAUSTION                 = 57723,
 
     SHAMAN_TOTEM_SPELL_EARTHBIND_TOTEM      = 6474,
@@ -298,11 +298,11 @@ public:
 
     class spell_sha_totemic_wrath_AuraScript : public AuraScript
     {
-        PrepareAuraScript(spell_sha_totemic_wrath_AuraScript); 
+        PrepareAuraScript(spell_sha_totemic_wrath_AuraScript);
 
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
-            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH)) 
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH))
                 return false;
             if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA))
                 return false;
@@ -361,7 +361,7 @@ public:
             Unit *caster = GetCaster();
             if(!target || !caster)
                 return;
-            
+
             AuraEffect *fulminationAura = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 2010, 0);
             if (!fulminationAura)
                 return;
@@ -374,9 +374,9 @@ public:
                 return;
             uint8 usedCharges = lsCharges - 3;
 
-            SpellEntry const* spellInfo = sSpellStore.LookupEntry(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
-            int32 basePoints = caster->CalculateSpellDamage(target, spellInfo);
-            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, basePoints, SPELL_DIRECT_DAMAGE);
+            SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
+            int32 basePoints = caster->CalculateSpellDamage(target, spellInfo, 0);
+            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, uint32(basePoints), SPELL_DIRECT_DAMAGE);
 
             caster->CastCustomSpell(SHAMAN_SPELL_FULMINATION_TRIGGERED, SPELLVALUE_BASE_POINT0, damage, target, true, NULL, fulminationAura);
             lightningShield->SetCharges(lsCharges - usedCharges);
