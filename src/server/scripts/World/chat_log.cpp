@@ -27,7 +27,7 @@
 class ChatLogScript : public PlayerScript
 {
 public:
-    ChatLogScript() : PlayerScript("ChatLogScript") { }
+    ChatLogScript() : PlayerScript("ChatLogScript") {}
 
     void OnChat(Player* player, uint32 type, uint32 lang, std::string& msg)
     {
