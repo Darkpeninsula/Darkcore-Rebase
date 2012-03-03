@@ -31,6 +31,7 @@
 enum PaladinSpells
 {
     PALADIN_SPELL_DIVINE_PLEA                    = 54428,
+    PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF     = 67480,
 
     PALADIN_SPELL_HOLY_SHOCK_R1                  = 20473,
     PALADIN_SPELL_HOLY_SHOCK_R1_DAMAGE           = 25912,
@@ -169,6 +170,49 @@ public:
     SpellScript* GetSpellScript() const
     {
         return new spell_pal_blessing_of_faith_SpellScript();
+    }
+};
+
+// 20911 Blessing of Sanctuary
+// 25899 Greater Blessing of Sanctuary
+class spell_pal_blessing_of_sanctuary : public SpellScriptLoader
+{
+public:
+    spell_pal_blessing_of_sanctuary() : SpellScriptLoader("spell_pal_blessing_of_sanctuary") { }
+
+    class spell_pal_blessing_of_sanctuary_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_pal_blessing_of_sanctuary_AuraScript)
+        bool Validate(SpellInfo const* /*entry*/)
+        {
+            if (!sSpellMgr->GetSpellInfo(PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF))
+                return false;
+            return true;
+        }
+
+        void HandleEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Unit* target = GetTarget();
+            if (Unit* pCaster = GetCaster())
+                pCaster->CastSpell(target, PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, true);
+        }
+
+        void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            Unit* target = GetTarget();
+            target->RemoveAura(PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, GetCasterGUID());
+        }
+
+        void Register()
+        {
+            AfterEffectApply += AuraEffectApplyFn(spell_pal_blessing_of_sanctuary_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_pal_blessing_of_sanctuary_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+        }
+    };
+
+    AuraScript* GetAuraScript() const
+    {
+        return new spell_pal_blessing_of_sanctuary_AuraScript();
     }
 };
 
@@ -512,6 +556,7 @@ void AddSC_paladin_spell_scripts()
 {
     new spell_pal_ardent_defender();
     new spell_pal_blessing_of_faith();
+    new spell_pal_blessing_of_sanctuary();
     new spell_pal_guarded_by_the_light();
     new spell_pal_holy_shock();
     new spell_pal_shield_of_righteous();
