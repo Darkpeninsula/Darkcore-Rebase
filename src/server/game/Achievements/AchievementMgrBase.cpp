@@ -1240,7 +1240,7 @@ void AchievementMgrBase::UpdateAchievementCriteria(AchievementCriteriaTypes type
             case ACHIEVEMENT_CRITERIA_TYPE_ON_LOGIN:
             {
                 // This criteria is only called directly after login - with expected miscvalue1 == 1
-                if (!miscvalue1)
+                if (!miscValue1)
                     continue;
 
                 // They have no proper requirements in dbc
