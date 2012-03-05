@@ -1910,7 +1910,7 @@ class Unit : public WorldObject
         // delayed+channeled spells are always interrupted
         void InterruptNonMeleeSpells(bool withDelayed, uint32 spellid = 0, bool withInstant = true);
 
-        bool CanCastWhileWalking(const SpellEntry * const sp);
+        bool CanCastWhileWalking(const SpellInfo* const& sp);
 
         Spell* GetCurrentSpell(CurrentSpellTypes spellType) const { return m_currentSpells[spellType]; }
         Spell* GetCurrentSpell(uint32 spellType) const { return m_currentSpells[spellType]; }

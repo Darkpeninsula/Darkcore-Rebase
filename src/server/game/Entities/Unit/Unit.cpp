@@ -3097,14 +3097,13 @@ void Unit::InterruptNonMeleeSpells(bool withDelayed, uint32 spell_id, bool withI
         InterruptSpell(CURRENT_CHANNELED_SPELL, true, true);
 }
 
-bool Unit::CanCastWhileWalking(const SpellEntry * const sp)
+bool Unit::CanCastWhileWalking(const SpellInfo* const& sp)
 {
-    SpellInfo const* spellEntry = sSpellMgr->GetSpellInfo(sp->Id);
     AuraEffectList alist = GetAuraEffectsByType(SPELL_AURA_CAST_WHILE_WALKING);
     for (AuraEffectList::const_iterator i = alist.begin(); i != alist.end(); ++i)
     {
         // check that spell mask matches
-        if (!((*i)->GetSpellInfo()->Effects[(*i)->GetEffIndex()].SpellClassMask & spellEntry->SpellFamilyFlags))
+        if (!((*i)->GetSpellInfo()->Effects[(*i)->GetEffIndex()].SpellClassMask & sp->SpellFamilyFlags))
             continue;
 
         return true;
@@ -6229,6 +6228,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                                 uint32 seconds = triggeredByAura->GetSpellInfo()->Effects[triggeredByAura->GetEffIndex()].CalcValue();
                                 caster->ReduceSpellCooldown(47540, uint32(seconds / 10));
                                 return true;
+                            }
                         }
                     }
                 }
