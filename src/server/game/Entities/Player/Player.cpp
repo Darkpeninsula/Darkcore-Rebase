@@ -4259,14 +4259,14 @@ void Player::ReduceSpellCooldown(uint32 spell_id, uint32 seconds)
     if (HasSpellCooldown(spell_id))
     {
         uint32 newCooldownDelay = GetSpellCooldownDelay(spell_id);
-        
-        if (newCooldownDelay < seconds/1000 + 1) 
+
+        if (newCooldownDelay < seconds/1000 + 1)
             newCooldownDelay = 0;
-        else 
+        else
             newCooldownDelay -= seconds/1000;
-        
+
         this->AddSpellCooldown(spell_id, 0, uint32(time(NULL) + newCooldownDelay));
-        
+
         WorldPacket data(SMSG_MODIFY_COOLDOWN, 4 + 8 + 4);
         data << uint32(spell_id); // Spell ID
         data << uint64(GetGUID()); // Player GUID
@@ -23818,7 +23818,7 @@ bool Player::isTotalImmune()
     return false;
 }
 
-bool Player::HasTitle(uint32 bitIndex)
+bool Player::HasTitle(uint32 bitIndex) const
 {
     if (bitIndex > MAX_TITLE_INDEX)
         return false;
