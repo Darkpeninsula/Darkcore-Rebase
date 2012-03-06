@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `spell_override` (
 	`overrideSpell` int(10) unsigned NOT NULL default '0',
-	`affSpell` int(10) NOT NULL default '0', 
-	`aura` int(10) NOT NULL default '0', 
+	`affSpell` int(10) NOT NULL default '0',
+	`aura` int(10) NOT NULL default '0',
 	`comment` longtext NOT NULL default '',
 	PRIMARY KEY	(`overrideSpell`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;

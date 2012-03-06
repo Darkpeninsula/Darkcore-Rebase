@@ -592,7 +592,7 @@ class spell_dk_chains_of_ice : public SpellScriptLoader
 
 void AddSC_deathknight_spell_scripts()
 {
-    new spell_dk_necrotic_strike();    
+    new spell_dk_necrotic_strike();
     new spell_dk_anti_magic_shell_raid();
     new spell_dk_anti_magic_shell_self();
     new spell_dk_anti_magic_zone();

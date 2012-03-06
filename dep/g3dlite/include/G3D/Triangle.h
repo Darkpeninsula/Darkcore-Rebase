@@ -1,8 +1,8 @@
 /**
  @file Triangle.h
-  
+
  @maintainer Morgan McGuire, http://graphics.cs.williams.edu
- 
+
  @created 2003-04-05
  @edited  2008-10-06
 
@@ -61,9 +61,9 @@ public:
 	void deserialize(class BinaryInput& b);
 
     Triangle();
-    
+
     Triangle(const Vector3& v0, const Vector3& v1, const Vector3& v2);
-    
+
     ~Triangle();
 
     /** 0, 1, or 2 */
@@ -99,7 +99,7 @@ public:
     Vector3 randomPoint() const;
 
     inline void getRandomSurfacePoint
-    (Vector3& P, 
+    (Vector3& P,
      Vector3& N = Vector3::ignore()) const {
         P = randomPoint();
         N = normal();
@@ -136,7 +136,7 @@ public:
        to search for an intersection.  On return, this is the smaller
        of the distance to the intersection, if one exists, and the original
        value.
-       
+
        @param baryCoord  If a triangle is hit before @a distance, a
        the barycentric coordinates of the hit location on the triangle.
        Otherwise, unmodified.

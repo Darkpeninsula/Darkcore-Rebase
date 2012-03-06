@@ -165,7 +165,7 @@ extern  struct ltc_hash_descriptor {
       @return CRYPT_OK if successful
     */
     int (*init)(hash_state *hash);
-    /** Process a block of data 
+    /** Process a block of data
       @param hash   The hash state
       @param in     The data to hash
       @param inlen  The length of the data (octets)
@@ -184,8 +184,8 @@ extern  struct ltc_hash_descriptor {
     int (*test)(void);
 
     /* accelerated hmac callback: if you need to-do multiple packets just use the generic hmac_memory and provide a hash callback */
-    int  (*hmac_block)(const unsigned char *key, unsigned long  keylen, 
-                       const unsigned char *in, unsigned long  inlen, 
+    int  (*hmac_block)(const unsigned char *key, unsigned long  keylen,
+                       const unsigned char *in, unsigned long  inlen,
                              unsigned char *out, unsigned long *outlen);
 
 } hash_descriptor[];
@@ -328,10 +328,10 @@ int hash_is_valid(int idx);
 
 LTC_MUTEX_PROTO(ltc_hash_mutex)
 
-int hash_memory(int hash, 
-                const unsigned char *in, unsigned long inlen, 
+int hash_memory(int hash,
+                const unsigned char *in, unsigned long inlen,
                       unsigned char *out, unsigned long *outlen);
-int hash_memory_multi(int hash, unsigned char *out, unsigned long *outlen, 
+int hash_memory_multi(int hash, unsigned char *out, unsigned long *outlen,
                       const unsigned char *in, unsigned long inlen, ...);
 int hash_filehandle(int hash, FILE *in, unsigned char *out, unsigned long *outlen);
 int hash_file(int hash, const char *fname, unsigned char *out, unsigned long *outlen);

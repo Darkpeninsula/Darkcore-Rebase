@@ -1,8 +1,8 @@
 MySQL Server
 
 This is a release of MySQL, a dual-license SQL database server.
-For the avoidance of doubt, this particular copy of the software 
-is released under the version 2 of the GNU General Public License. 
+For the avoidance of doubt, this particular copy of the software
+is released under the version 2 of the GNU General Public License.
 MySQL is brought to you by the MySQL team at Oracle.
 
 Copyright (c) 2003, 2011, Oracle and/or its affiliates. All rights reserved.
@@ -13,35 +13,35 @@ This distribution may include materials developed by third
 parties. For license and attribution notices for these
 materials, please refer to the documentation that accompanies
 this distribution (see the Licenses for Third-Party Components
-appendix). A copy of the license/notices is also reproduced 
-below. 
+appendix). A copy of the license/notices is also reproduced
+below.
 
 GPLv2 Disclaimer
 For the avoidance of doubt, except that if any license choice
-other than GPL or LGPL is available it will apply instead, 
-Oracle elects to use only the General Public License version 2 
-(GPLv2) at this time for any software where a choice of GPL 
-license versions is made available with the language indicating 
-that GPLv2 or any later version may be used, or where a choice 
+other than GPL or LGPL is available it will apply instead,
+Oracle elects to use only the General Public License version 2
+(GPLv2) at this time for any software where a choice of GPL
+license versions is made available with the language indicating
+that GPLv2 or any later version may be used, or where a choice
 of which version of the GPL is applied is otherwise unspecified.
 
-For further information about MySQL or additional documentation, 
+For further information about MySQL or additional documentation,
 see:
 - The latest information about MySQL: http://www.mysql.com
 - The current MySQL documentation: http://dev.mysql.com/doc
 
 Some Reference Manual sections of special interest:
-- If you are migrating from an older version of MySQL, please 
+- If you are migrating from an older version of MySQL, please
   read the "Upgrading from..." section.
 - To see what MySQL can do, take a look at the features section.
 - For installation instructions, see the Installing and Upgrading
   chapter.
-- For the new features/bugfix history, see the MySQL Change History 
+- For the new features/bugfix history, see the MySQL Change History
   appendix.
 - For currently known bugs, see the Errors and Common Problems
   appendix.
 
-You can browse the MySQL Reference Manual online or download it 
+You can browse the MySQL Reference Manual online or download it
 in any of several formats at the URL given earlier in this file.
 Source distributions include a local copy of the manual in the
 Docs directory.
@@ -58,8 +58,8 @@ FindGTest.cmake (part of CMake 2.8.0)
 Use of any of this software is governed by the terms of the license below:
 
 # Copyright 2009 Kitware, Inc.
-# Copyright 2009 Philip Lowman 
-# Copyright 2009 Daniel Blezek 
+# Copyright 2009 Philip Lowman
+# Copyright 2009 Daniel Blezek
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see accompanying file Copyright.txt for details.
@@ -153,7 +153,7 @@ cmake-2.4.8/Utilities/cmtar/compat/gethostname.c:
  created 2000-Mar-02 jmk
  requires SVR4 uname() and -lc
 
- by Jim Knoble 
+ by Jim Knoble
  Copyright ? 2000 Jim Knoble
 
  Permission to use, copy, modify, distribute, and sell this software
@@ -185,11 +185,11 @@ cmake-2.4.8/Utilities/cmtar/compat/gethostname.c:
  You may freely copy it for use as a template for your own field types.
  If you develop a field type that might be of general use, please send
  it back to the ncurses maintainers for inclusion in the next version.
- 
+
 **************************************************************************
-                                                                     
-    * Author : Per Foreby, perf@efd.lth.se                               
-    * Author : Juergen Pfeifer, juergen.pfeifer@gmx.net                  
+
+    * Author : Per Foreby, perf@efd.lth.se
+    * Author : Juergen Pfeifer, juergen.pfeifer@gmx.net
 
 **************************************************************************
 
@@ -222,12 +222,12 @@ cmake-2.4.8/Utilities/cmtar/compat/gethostname.c:
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  
+   Boston, MA 02110-1301, USA.
 
    As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
    This special exception was added by the Free Software Foundation
-   in version 1.24 of Bison.  
+   in version 1.24 of Bison.
 
 ---------------------------------------------------
 
@@ -301,7 +301,7 @@ cmake-2.4.8/Utilities/cmzlib/zlib.h:
  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.  
+ SUCH DAMAGE.
 
 ---------------------------------------------
 
@@ -318,7 +318,7 @@ cmake-2.4.8/Utilities/cmzlib/zlib.h:
 
 cmake-2.4.8/Utilities/cmcurl/inet_pton.c,
 cmake-2.4.8/Source/CTest/Curl/inet_pton.c:
- This is from the BIND 4.9.4 release, modified to compile by itself 
+ This is from the BIND 4.9.4 release, modified to compile by itself
 
  Copyright (c) 1996 by Internet Software Consortium.
 
@@ -350,8 +350,8 @@ cmake-2.4.8/Source/CTest/Curl/inet_pton.c:
 *    notice, this list of conditions and the following disclaimer in the
 *    documentation and/or other materials provided with the distribution.
 * 3. The name of the author may not be used to endorse or promote products
-*    derived from this software without specific prior written permission. 
-*  
+*    derived from this software without specific prior written permission.
+*
 * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
 * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -362,7 +362,7 @@ cmake-2.4.8/Source/CTest/Curl/inet_pton.c:
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-* SUCH DAMAGE. 
+* SUCH DAMAGE.
 
 ---------------------------------------------------
 
@@ -452,38 +452,38 @@ cmake-2.4.8/Source/CTest/Curl/inet_pton.c:
 ------------------------------------------------------------
 
 ***************************************************************************
- Copyright (c) 1998 Free Software Foundation, Inc.                   
- Copyright (c) 1998,2000 Free Software Foundation, Inc.              
-                                                                     
+ Copyright (c) 1998 Free Software Foundation, Inc.
+ Copyright (c) 1998,2000 Free Software Foundation, Inc.
+
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
  without limitation the rights to use, copy, modify, merge, publish,
  distribute, distribute with modifications, sublicense, and/or sell  copies
  of the Software, and to permit persons to whom the Software is furnished
- to do so, subject to the following conditions:            
-                                                                     
+ to do so, subject to the following conditions:
+
  The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.              
-                                                                     
+ all copies or substantial portions of the Software.
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN
  NO EVENT SHALL THE ABOVE COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- USE OR OTHER DEALINGS IN THE SOFTWARE.                          
-                                                                     
-                                                                     
+ USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
  Except as contained in this notice, the name(s) of the above copyright
  holders shall not be used in advertising or otherwise to promote the sale,
  use or other dealings in this Software without prior written
- authorization.                                                      
+ authorization.
 ***************************************************************************
 
 ------------------------------------------------------
 
- Copyright (c) 1997 Todd C. Miller 
+ Copyright (c) 1997 Todd C. Miller
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -507,7 +507,7 @@ cmake-2.4.8/Source/CTest/Curl/inet_pton.c:
  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -620,7 +620,7 @@ libtool inclusion:
 # Generated automatically by  (GNU mysql 5.1.30)
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
-# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 
+# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
 # 2006, 2007 Free Software Foundation, Inc.
 #
 # This file is part of GNU Libtool:
@@ -695,7 +695,7 @@ GNU GENERAL PUBLIC LICENSE
 
 Version 2, June 1991
 
-Copyright (C) 1989, 1991 Free Software Foundation, Inc.  
+Copyright (C) 1989, 1991 Free Software Foundation, Inc.
 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 Everyone is permitted to copy and distribute verbatim copies
@@ -779,11 +779,11 @@ or work under the terms of Section 1 above, provided that you also meet all of
 these conditions:
 
     a) You must cause the modified files to carry prominent notices stating that
-you changed the files and the date of any change. 
+you changed the files and the date of any change.
     b) You must cause any work that you distribute or publish, that in whole or
 in part contains or is derived from the Program or any part thereof, to be
 licensed as a whole at no charge to all third parties under the terms of this
-License. 
+License.
     c) If the modified program normally reads commands interactively when run,
 you must cause it, when started running for such interactive use in the most
 ordinary way, to print or display an announcement including an appropriate
@@ -792,7 +792,7 @@ you provide a warranty) and that users may redistribute the program under these
 conditions, and telling the user how to view a copy of this License. (Exception:
 if the Program itself is interactive but does not normally print such an
 announcement, your work based on the Program is not required to print an
-announcement.) 
+announcement.)
 
 These requirements apply to the modified work as a whole. If identifiable
 sections of that work are not derived from the Program, and can be reasonably
@@ -818,16 +818,16 @@ provided that you also do one of the following:
 
     a) Accompany it with the complete corresponding machine-readable source
 code, which must be distributed under the terms of Sections 1 and 2 above on a
-medium customarily used for software interchange; or, 
+medium customarily used for software interchange; or,
     b) Accompany it with a written offer, valid for at least three years, to
 give any third party, for a charge no more than your cost of physically
 performing source distribution, a complete machine-readable copy of the
 corresponding source code, to be distributed under the terms of Sections 1 and 2
-above on a medium customarily used for software interchange; or, 
+above on a medium customarily used for software interchange; or,
     c) Accompany it with the information you received as to the offer to
 distribute corresponding source code. (This alternative is allowed only for
 noncommercial distribution and only if you received the program in object code
-or executable form with such an offer, in accord with Subsection b above.) 
+or executable form with such an offer, in accord with Subsection b above.)
 
 The source code for a work means the preferred form of the work for making
 modifications to it. For an executable work, complete source code means all the
@@ -979,7 +979,7 @@ starts in an interactive mode:
 Gnomovision version 69, Copyright (C) year name of author
 Gnomovision comes with ABSOLUTELY NO WARRANTY; for details
 type `show w'.  This is free software, and you are welcome
-to redistribute it under certain conditions; type `show c' 
+to redistribute it under certain conditions; type `show c'
 for details.
 
 The hypothetical commands `show w' and `show c' should show the appropriate
@@ -993,7 +993,7 @@ a sample; alter the names:
 
 Yoyodyne, Inc., hereby disclaims all copyright
 interest in the program `Gnomovision'
-(which makes passes at compilers) written 
+(which makes passes at compilers) written
 by James Hacker.
 
 signature of Ty Coon, 1 April 1989
@@ -1045,7 +1045,7 @@ libevent
 Use of any of this software is governed by the terms of the license below:
 
 /*
- * Copyright (c) 2000-2004 Niels Provos 
+ * Copyright (c) 2000-2004 Niels Provos
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1083,7 +1083,7 @@ Async DNS Library
 Use of any of this software is governed by the terms of the license below:
 
 /* Async DNS Library
- * Adam Langley 
+ * Adam Langley
  * http://www.imperialviolet.org/eventdns.html
  * Public Domain code
  *
@@ -1093,7 +1093,7 @@ Use of any of this software is governed by the terms of the license below:
  *
  * I ask and expect, but do not require, that all derivative works contain an
  * attribution similar to:
- * 	Parts developed by Adam Langley 
+ * 	Parts developed by Adam Langley
  *
  * You may wish to replace the word "Parts" with something else depending on
  * the amount of original code.
@@ -1118,9 +1118,9 @@ Use of any of this software is governed by the terms of the license below:
  *
  * Based on err.c, which was adapted from OpenBSD libc *err* *warn* code.
  *
- * Copyright (c) 2005 Nick Mathewson 
+ * Copyright (c) 2005 Nick Mathewson
  *
- * Copyright (c) 2000 Dug Song 
+ * Copyright (c) 2000 Dug Song
  *
  * Copyright (c) 1993
  *      The Regents of the University of California.  All rights
@@ -1159,7 +1159,7 @@ min_heap.h
 Use of any of this software is governed by the terms of the license below:
 
 /*
- * Copyright (c) 2006 Maxim Yegorushkin 
+ * Copyright (c) 2006 Maxim Yegorushkin
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1193,8 +1193,8 @@ win32.c
 Use of any of this software is governed by the terms of the license below:
 
 /*
- * Copyright 2000-2002 Niels Provos 
- * Copyright 2003 Michael A. Davis 
+ * Copyright 2000-2002 Niels Provos
+ * Copyright 2003 Michael A. Davis
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1306,7 +1306,7 @@ t_ctype.h
 
 Use of any of this software is governed by the terms of the license below:
 
-http://bioinfo.mbb.yale.edu/genome/yeast/cluster/database/mysql/include/t_ctype.h 
+http://bioinfo.mbb.yale.edu/genome/yeast/cluster/database/mysql/include/t_ctype.h
 
 /*
   Copyright (C) 1998, 1999 by Pruet Boonma, all rights reserved.
@@ -1314,7 +1314,7 @@ http://bioinfo.mbb.yale.edu/genome/yeast/cluster/database/mysql/include/t_ctype.
   Permission to use, copy, modify, distribute and sell this software
    and its documentation for any purpose is hereby granted without fee,
    provided that the above copyright notice appear in all copies.
-   Smaphan Raruenrom and Pruet Boonma makes no representations about 
+   Smaphan Raruenrom and Pruet Boonma makes no representations about
    the suitability of this software for any purpose.  It is provided
     "as is" without express or implied warranty.
 */
@@ -1327,7 +1327,7 @@ SHA-1 in C
 Use of any of this software is governed by the terms of the license below:
 
 	  SHA-1 in C
-	  By Steve Reid 
+	  By Steve Reid
 	  100% Public Domain
 
 Additional License(s)
@@ -1343,11 +1343,11 @@ Use of any of this software is governed by the terms of the license below:
 
 # Copyright (c) 1998-2006, Google Inc.
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
 # met:
-# 
+#
 #     * Redistributions of source code must retain the above copyright
 # notice, this list of conditions and the following disclaimer.
 #     * Redistributions in binary form must reproduce the above
@@ -1357,7 +1357,7 @@ Use of any of this software is governed by the terms of the license below:
 #     * Neither the name of Google Inc. nor the names of its
 # contributors may be used to endorse or promote products derived from
 # this software without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 # "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -1562,7 +1562,7 @@ Unicode Terms of Use
        distribution of this information or its derivatives.
        5. Trademarks.
              1. Unicode and the Unicode logo are registered trademarks of
-             Unicode, Inc. 
+             Unicode, Inc.
              2. This site contains product names and corporate names of
              other companies. All product names and company names and logos
              mentioned herein are the trademarks or registered trademarks
@@ -1598,7 +1598,7 @@ Unicode Terms of Use
              declared invalid or unenforceable, the remaining provisions of
              this Agreement shall remain in effect.
              5. Entire Agreement. This Agreement constitutes the entire
-             agreement between the parties. 
+             agreement between the parties.
 
 EXHIBIT 1
 UNICODE, INC. LICENSE AGREEMENT - DATA FILES AND SOFTWARE
@@ -2110,8 +2110,8 @@ to attach them to the start of each source file to most effectively
 convey the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    
-    Copyright (C)   
+
+    Copyright (C)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2231,7 +2231,7 @@ Use of any of this software is governed by the terms of the license below:
 /*
  pstack.c -- asynchronous stack trace of a running process
  Copyright (c) 1999 Ross Thompson
- Author: Ross Thompson 
+ Author: Ross Thompson
  Critical bug fix: Tim Waugh
 */
 

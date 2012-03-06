@@ -25,7 +25,7 @@
 // Define DT_VIRTUAL_QUERYFILTER if you wish to derive a custom filter from dtQueryFilter.
 // On certain platforms indirect or virtual function call is expensive. The default
 // setting is to use non-virtual functions, the actualy implementations of the functions
-// are declared as inline for maximum speed. 
+// are declared as inline for maximum speed.
 
 //#define DT_VIRTUAL_QUERYFILTER 1
 
@@ -65,7 +65,7 @@ public:
 
 	// Returns cost to travel from 'pa' to 'pb'.'
 	// The segment is fully contained inside 'cur'.
-	// 'pa' lies on the edge between 'prev' and 'cur', 
+	// 'pa' lies on the edge between 'prev' and 'cur',
 	// 'pb' lies on the edge between 'cur' and 'next'.
 	// Params:
 	//  pa - (in) segment start position.
@@ -87,7 +87,7 @@ public:
 	
 	// Getters and setters for the default implementation data.
 	inline float getAreaCost(const int i) const { return m_areaCost[i]; }
-	inline void setAreaCost(const int i, const float cost) { m_areaCost[i] = cost; } 
+	inline void setAreaCost(const int i, const float cost) { m_areaCost[i] = cost; }
 
 	inline unsigned short getIncludeFlags() const { return m_includeFlags; }
 	inline void setIncludeFlags(const unsigned short flags) { m_includeFlags = flags; }
@@ -214,7 +214,7 @@ public:
 	// If the endPos is reachable, the resultPos will be endPos,
 	// or else the resultPos will be the nearest point in navmesh.
 	// Note: The resulting point is not projected to the ground, use getPolyHeight() to get height.
-	// Note: The algorithm is optimized for small delta movement and small number of polygons. 
+	// Note: The algorithm is optimized for small delta movement and small number of polygons.
 	// Params:
 	//  startRef - (in) ref to the polygon where startPos lies.
 	//  startPos[3] - (in) start position of the mover.
@@ -289,7 +289,7 @@ public:
 								  int* resultCount, const int maxResult) const;
 	
 	// Finds non-overlapping local neighbourhood around center location.
-	// Note: The algorithm is optimized for small query radius and small number of polygons. 
+	// Note: The algorithm is optimized for small query radius and small number of polygons.
 	// Params:
 	//	startRef - (in) ref to the polygon where the search starts.
 	//	centerPos[3] - (in) center if the query circle.
@@ -315,7 +315,7 @@ public:
 								 float* segments, int* segmentCount, const int maxSegments) const;
 	
 	// Returns closest point on navigation polygon.
-	// Uses detail polygons to find the closest point to the navigation polygon surface. 
+	// Uses detail polygons to find the closest point to the navigation polygon surface.
 	// Params:
 	//	ref - (in) ref to the polygon.
 	//	pos[3] - (in) the point to check.
@@ -357,7 +357,7 @@ public:
 	
 private:
 	
-	// Returns neighbour tile based on side. 
+	// Returns neighbour tile based on side.
 	dtMeshTile* getNeighbourTileAt(int x, int y, int side) const;
 
 	// Queries polygons within a tile.

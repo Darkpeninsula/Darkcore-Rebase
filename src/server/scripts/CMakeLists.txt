@@ -57,14 +57,14 @@ message(STATUS "SCRIPT PREPARATIONS")
 include(Spells/CMakeLists.txt)
 include(Commands/CMakeLists.txt)
 
-file(GLOB_RECURSE sources_ScriptedAI 
-  ../game/AI/ScriptedAI/ScriptedEscortAI.cpp 
+file(GLOB_RECURSE sources_ScriptedAI
+  ../game/AI/ScriptedAI/ScriptedEscortAI.cpp
   ../game/AI/ScriptedAI/ScriptedCreature.cpp
-  ../game/AI/ScriptedAI/ScriptedFollowerAI.cpp 
+  ../game/AI/ScriptedAI/ScriptedFollowerAI.cpp
   ../game/AI/ScriptedAI/ScriptedSimpleAI.cpp)
 
 source_group(ScriptedAI FILES ${sources_ScriptedAI})
-  
+
  set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
   ${sources_ScriptedAI}
@@ -73,7 +73,7 @@ source_group(ScriptedAI FILES ${sources_ScriptedAI})
 if(EXAMPLES)
   include(Examples/CMakeLists.txt)
  endif()
- 
+
 if(SCRIPTS)
   include(Custom/CMakeLists.txt)
   include(World/CMakeLists.txt)
@@ -119,7 +119,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/server/game/AI/SmartScripts
   ${CMAKE_SOURCE_DIR}/src/server/game/AuctionHouse
   ${CMAKE_SOURCE_DIR}/src/server/game/Battlefields
-  ${CMAKE_SOURCE_DIR}/src/server/game/Battlefields/Zones  
+  ${CMAKE_SOURCE_DIR}/src/server/game/Battlefields/Zones
   ${CMAKE_SOURCE_DIR}/src/server/game/Battlegrounds
   ${CMAKE_SOURCE_DIR}/src/server/game/Battlegrounds/Zones
   ${CMAKE_SOURCE_DIR}/src/server/game/Calendar

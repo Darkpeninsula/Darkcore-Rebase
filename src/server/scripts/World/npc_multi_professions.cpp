@@ -51,7 +51,7 @@ public:
     void SendActionMenu(Player* player, Creature* creature, uint32 action)
     {
         switch (action)
-        {        
+        {
             case GOSSIP_ACTION_INFO_DEF:
                 player->CastSpell(player, S_LEARN_HERB1, true);
                 player->CLOSE_GOSSIP_MENU();
@@ -61,11 +61,11 @@ public:
                 player->CastSpell(player, S_LEARN_INSC1, true);
                 player->CLOSE_GOSSIP_MENU();
             break;
-            
+
             case GOSSIP_ACTION_INFO_DEF + 2:
                 player->SEND_GOSSIP_MENU(17126, creature->GetGUID());
             break;
-            
+
             case GOSSIP_ACTION_INFO_DEF + 3:
                 player->SEND_GOSSIP_MENU(17127, creature->GetGUID());
             break;

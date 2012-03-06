@@ -625,7 +625,7 @@ class SpellMgr
         // Spell proc table
         SpellProcEntry const* GetSpellProcEntry(uint32 spellId) const;
         bool CanSpellTriggerProcOnEvent(SpellProcEntry const& procEntry, ProcEventInfo& eventInfo);
-        
+
         // Actionbar override spell
         ActionBarSpellOverride const* GetActionBarSpellOverride(uint32 overrideSpell) const;
 

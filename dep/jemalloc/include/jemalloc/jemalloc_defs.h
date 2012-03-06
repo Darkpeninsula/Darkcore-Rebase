@@ -26,7 +26,7 @@
 #define CPU_SPINWAIT __asm__ volatile("pause")
 
 /* Defined if __attribute__((...)) syntax is supported. */
-#define JEMALLOC_HAVE_ATTR 
+#define JEMALLOC_HAVE_ATTR
 #ifdef JEMALLOC_HAVE_ATTR
 #  define JEMALLOC_ATTR(s) __attribute__((s))
 #else

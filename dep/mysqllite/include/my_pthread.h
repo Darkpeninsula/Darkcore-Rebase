@@ -29,7 +29,7 @@
 extern "C" {
 #else
 #define EXTERNC
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
 #if defined(__WIN__)
 typedef CRITICAL_SECTION pthread_mutex_t;
@@ -50,7 +50,7 @@ typedef struct st_pthread_link {
 
 /**
   Implementation of Windows condition variables.
-  We use native conditions on Vista and later, and fallback to own 
+  We use native conditions on Vista and later, and fallback to own
   implementation on earlier OS version.
 */
 typedef union
@@ -60,10 +60,10 @@ typedef union
 
   /* Own implementation (used on XP) */
   struct
-  { 
+  {
     uint32 waiting;
     CRITICAL_SECTION lock_waiting;
-    enum 
+    enum
     {
       SIGNAL= 0,
       BROADCAST= 1,
@@ -550,7 +550,7 @@ typedef struct st_my_pthread_fastmutex_t
 } my_pthread_fastmutex_t;
 void fastmutex_global_init(void);
 
-int my_pthread_fastmutex_init(my_pthread_fastmutex_t *mp, 
+int my_pthread_fastmutex_init(my_pthread_fastmutex_t *mp,
                               const pthread_mutexattr_t *attr);
 int my_pthread_fastmutex_lock(my_pthread_fastmutex_t *mp);
 
@@ -710,7 +710,7 @@ extern int rw_pr_destroy(rw_pr_lock_t *);
 typedef union
 {
   /* Native rwlock (is_srwlock == TRUE) */
-  struct 
+  struct
   {
     SRWLOCK srwlock;             /* native reader writer lock */
     BOOL have_exclusive_srwlock; /* used for unlock */
@@ -720,7 +720,7 @@ typedef union
     Portable implementation (is_srwlock == FALSE)
     Fields are identical with Unix my_rw_lock_t fields.
   */
-  struct 
+  struct
   {
     pthread_mutex_t lock;       /* lock for structure		*/
     pthread_cond_t  readers;    /* waiting readers		*/

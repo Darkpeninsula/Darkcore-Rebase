@@ -87,7 +87,7 @@ public:
 
 	void addCircle(const float* pos, const float rad,
 				   const float* vel, const float* dvel);
-				   
+				
 	void addSegment(const float* p, const float* q);
 
 	inline void setVelocitySelectionBias(float v) { m_velBias = v; }
@@ -104,7 +104,7 @@ public:
 
 	void sampleVelocityAdaptive(const float* pos, const float rad, const float vmax,
 								const float* vel, const float* dvel, float* nvel,
-								const int ndivs, const int nrings, const int depth, 
+								const int ndivs, const int nrings, const int depth,
 								dtObstacleAvoidanceDebugData* debug = 0);
 	
 	inline int getObstacleCircleCount() const { return m_ncircles; }

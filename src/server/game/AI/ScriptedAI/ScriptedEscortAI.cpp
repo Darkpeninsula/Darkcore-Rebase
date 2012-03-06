@@ -316,7 +316,7 @@ void npc_escortAI::MovementInform(uint32 moveType, uint32 pointId)
     if (pointId == POINT_LAST_POINT)
     {
         sLog->outDebug(LOG_FILTER_TSCR, "TSCR: EscortAI has returned to original position before combat");
-        
+
         me->SetWalk(!m_bIsRunning);
         RemoveEscortState(STATE_ESCORT_RETURNING);
 

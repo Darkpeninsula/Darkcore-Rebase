@@ -1,5 +1,5 @@
 # Copyright (C) 2009 Sun Microsystems, Inc
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 of the License.
@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #
 # Global constants, only to be changed between major releases.
@@ -94,9 +94,9 @@ IF(MSVC)
     GET_FILENAME_COMPONENT(MYSQL_CMAKE_SCRIPT_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 	
     SET(FILETYPE VFT_DLL)
-    CONFIGURE_FILE(${MYSQL_CMAKE_SCRIPT_DIR}/versioninfo.rc.in  
+    CONFIGURE_FILE(${MYSQL_CMAKE_SCRIPT_DIR}/versioninfo.rc.in
       ${CMAKE_CURRENT_BINARY_DIR}/versioninfo_dll.rc)
-	  
+	
   FUNCTION(ADD_VERSION_INFO target sources_var)
     SET(rcfile ${CMAKE_CURRENT_BINARY_DIR}/versioninfo_dll.rc)
     SET(${sources_var} ${${sources_var}} ${rcfile} PARENT_SCOPE)

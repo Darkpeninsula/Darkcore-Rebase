@@ -47,7 +47,7 @@ enum thr_lock_type { TL_IGNORE=-1,
 		     TL_READ_HIGH_PRIORITY,
 		     /* READ, Don't allow concurrent insert */
 		     TL_READ_NO_INSERT,
-		     /* 
+		     /*
 			Write lock, but allow other threads to read / write.
 			Used by BDB tables in MySQL to mark that someone is
 			reading/writing to the table.
@@ -60,8 +60,8 @@ enum thr_lock_type { TL_IGNORE=-1,
 		     TL_WRITE_CONCURRENT_INSERT,
 		     /* Write used by INSERT DELAYED.  Allows READ locks */
 		     TL_WRITE_DELAYED,
-                     /* 
-                       parser only! Late bound low_priority flag. 
+                     /*
+                       parser only! Late bound low_priority flag.
                        At open_tables() becomes thd->update_lock_default.
                      */
                      TL_WRITE_DEFAULT,

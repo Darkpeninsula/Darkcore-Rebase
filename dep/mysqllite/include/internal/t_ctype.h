@@ -19,7 +19,7 @@
   Permission to use, copy, modify, distribute and sell this software
    and its documentation for any purpose is hereby granted without fee,
    provided that the above copyright notice appear in all copies.
-   Smaphan Raruenrom and Pruet Boonma makes no representations about 
+   Smaphan Raruenrom and Pruet Boonma makes no representations about
    the suitability of this software for any purpose.  It is provided
     "as is" without express or implied warranty.
 */
@@ -246,9 +246,9 @@ enum level_symbols {
 #define isstone(c)      ( _is(c) & _stone )
 #define isdiacrt1(c)	( _is(c) & _diacrt1)
 #define isdiacrt2(c)	( _is(c) & _diacrt2)
-#define isdiacrt(c)		( _is(c) & _diacrt) 
+#define isdiacrt(c)		( _is(c) & _diacrt)
 
 /* Function prototype called by sql/field.cc */
 void ThNormalize(uchar* ptr, uint field_length, const uchar* from, uint length);
 
-#endif  
+#endif

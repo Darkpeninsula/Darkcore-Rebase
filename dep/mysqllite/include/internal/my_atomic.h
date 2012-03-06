@@ -51,7 +51,7 @@
   On architectures where these operations are really atomic, rwlocks will
   be optimized away.
   8- and 16-bit atomics aren't implemented for windows (see generic-msvc.h),
-  but can be added, if necessary. 
+  but can be added, if necessary.
 */
 
 #ifndef my_atomic_rwlock_init

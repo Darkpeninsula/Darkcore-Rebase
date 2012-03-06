@@ -13,12 +13,12 @@
 
 
 set(Detour_STAT_SRCS
-    DetourAlloc.cpp 
-    DetourCommon.cpp 
-    DetourNavMesh.cpp 
-    DetourNavMeshBuilder.cpp 
-    DetourNavMeshQuery.cpp 
-    DetourNode.cpp 
+    DetourAlloc.cpp
+    DetourCommon.cpp
+    DetourNavMesh.cpp
+    DetourNavMeshBuilder.cpp
+    DetourNavMeshQuery.cpp
+    DetourNode.cpp
 )
 
 if(WIN32)

@@ -1,8 +1,8 @@
 /**
  @file Intersect.cpp
- 
+
  @maintainer Morgan McGuire, http://graphics.cs.williams.edu
-  
+
  @created 2009-06-29
  @edited  2009-06-29
 
@@ -58,9 +58,9 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MPM:
 		
 		if ((ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)
 			|| (ray.kbyi * box.lo.x - box.hi.z + ray.c_xz > 0)
 			|| (ray.ibyk * box.lo.z - box.hi.x + ray.c_zx > 0)
@@ -72,7 +72,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MPP:
 	
 		if ((ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z > box.hi.z)
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0)
 			|| (ray.jbyk * box.hi.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.lo.z + ray.c_yz < 0)
@@ -116,7 +116,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 		if ((ray.m_origin.x > box.hi.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
 			|| (ray.jbyi * box.hi.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.lo.x + ray.c_yx < 0)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)
 			|| (ray.kbyi * box.hi.x - box.hi.z + ray.c_xz > 0)
 			|| (ray.ibyk * box.lo.z - box.lo.x + ray.c_zx < 0)
@@ -165,7 +165,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 
 		if((ray.m_origin.x < box.lo.x) || (ray.m_origin.x > box.hi.x)
 			|| (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)
 			)
 			return false;
@@ -186,7 +186,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MOM:
 
 		if((ray.m_origin.y < box.lo.y) || (ray.m_origin.y > box.hi.y)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z < box.lo.z) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z < box.lo.z)
 			|| (ray.kbyi * box.lo.x - box.hi.z + ray.c_xz > 0)
 			|| (ray.ibyk * box.lo.z - box.hi.x + ray.c_zx > 0)
 			)
@@ -197,7 +197,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MOP:
 
 		if((ray.m_origin.y < box.lo.y) || (ray.m_origin.y > box.hi.y)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z > box.hi.z) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z > box.hi.z)
 			|| (ray.kbyi * box.lo.x - box.lo.z + ray.c_xz < 0)
 			|| (ray.ibyk * box.hi.z - box.hi.x + ray.c_zx > 0)
 			)
@@ -230,7 +230,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MMO:
 
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y < box.lo.y) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y < box.lo.y)
 			|| (ray.jbyi * box.lo.x - box.hi.y + ray.c_xy > 0)
 			|| (ray.ibyj * box.lo.y - box.hi.x + ray.c_yx > 0)
 			)
@@ -241,8 +241,8 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::MPO:
 
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) 
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y)
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0)
 			)
 			return false;
@@ -252,9 +252,9 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box) {
 	case Ray::PMO:
 
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y < box.lo.y) 
+			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y < box.lo.y)
 			|| (ray.jbyi * box.hi.x - box.hi.y + ray.c_xy > 0)
-			|| (ray.ibyj * box.lo.y - box.lo.x + ray.c_yx < 0)  
+			|| (ray.ibyj * box.lo.y - box.lo.x + ray.c_yx < 0)
 			)
 			return false;
 
@@ -390,9 +390,9 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MPM:
 		{		
 		if ((ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)
 			|| (ray.kbyi * box.lo.x - box.hi.z + ray.c_xz > 0)
             || (ray.ibyk * box.lo.z - box.hi.x + ray.c_zx > 0)) {
@@ -415,10 +415,10 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MPP:
 		{
 		if ((ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z > box.hi.z)
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0)
 			|| (ray.jbyk * box.hi.z - box.lo.y + ray.c_zy < 0)
-			|| (ray.kbyj * box.hi.y - box.lo.z + ray.c_yz < 0) 
+			|| (ray.kbyj * box.hi.y - box.lo.z + ray.c_yz < 0)
 			|| (ray.kbyi * box.lo.x - box.lo.z + ray.c_xz < 0)
             || (ray.ibyk * box.hi.z - box.hi.x + ray.c_zx > 0)) {
 			return false;
@@ -493,7 +493,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 		if ((ray.m_origin.x > box.hi.x) || (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
 			|| (ray.jbyi * box.hi.x - box.lo.y + ray.c_xy < 0)
 			|| (ray.ibyj * box.hi.y - box.lo.x + ray.c_yx < 0)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
 			|| (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)
 			|| (ray.kbyi * box.hi.x - box.hi.z + ray.c_xz > 0)
             || (ray.ibyk * box.lo.z - box.lo.x + ray.c_zx < 0))	{
@@ -578,7 +578,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 		{
 		if((ray.m_origin.x < box.lo.x) || (ray.m_origin.x > box.hi.x)
 			|| (ray.m_origin.y > box.hi.y) || (ray.m_origin.z < box.lo.z)
-			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0) 
+			|| (ray.jbyk * box.lo.z - box.lo.y + ray.c_zy < 0)
             || (ray.kbyj * box.hi.y - box.hi.z + ray.c_yz > 0)) {
 			return false;
         }
@@ -614,7 +614,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MOM:
 		{
 		if((ray.m_origin.y < box.lo.y) || (ray.m_origin.y > box.hi.y)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z < box.lo.z) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z < box.lo.z)
 			|| (ray.kbyi * box.lo.x - box.hi.z + ray.c_xz > 0)
             || (ray.ibyk * box.lo.z - box.hi.x + ray.c_zx > 0)) {
 			return false;
@@ -633,7 +633,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MOP:
 		{
 		if((ray.m_origin.y < box.lo.y) || (ray.m_origin.y > box.hi.y)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z > box.hi.z) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.z > box.hi.z)
 			|| (ray.kbyi * box.lo.x - box.lo.z + ray.c_xz < 0)
             || (ray.ibyk * box.hi.z - box.hi.x + ray.c_zx > 0)) {
 			return false;
@@ -688,7 +688,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MMO:
 		{
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y < box.lo.y)  
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y < box.lo.y)
 			|| (ray.jbyi * box.lo.x - box.hi.y + ray.c_xy > 0)
             || (ray.ibyj * box.lo.y - box.hi.x + ray.c_yx > 0)) {
 			return false;
@@ -706,8 +706,8 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::MPO:
 		{
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y) 
-			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0) 
+			|| (ray.m_origin.x < box.lo.x) || (ray.m_origin.y > box.hi.y)
+			|| (ray.jbyi * box.lo.x - box.lo.y + ray.c_xy < 0)
             || (ray.ibyj * box.hi.y - box.hi.x + ray.c_yx > 0))	{
             return false;
         }
@@ -725,7 +725,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::PMO:
 		{
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y < box.lo.y) 
+			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y < box.lo.y)
 			|| (ray.jbyi * box.hi.x - box.hi.y + ray.c_xy > 0)
             || (ray.ibyj * box.lo.y - box.lo.x + ray.c_yx < 0)) {
 			return false;
@@ -743,7 +743,7 @@ bool __fastcall Intersect::rayAABox(const Ray& ray, const AABox& box, float& tim
 	case Ray::PPO:
 		{
 		if((ray.m_origin.z < box.lo.z) || (ray.m_origin.z > box.hi.z)
-			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y > box.hi.y) 
+			|| (ray.m_origin.x > box.hi.x) || (ray.m_origin.y > box.hi.y)
 			|| (ray.jbyi * box.hi.x - box.lo.y + ray.c_xy < 0)
             || (ray.ibyj * box.hi.y - box.lo.x + ray.c_yx < 0)) {
 			return false;

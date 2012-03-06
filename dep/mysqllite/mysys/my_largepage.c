@@ -35,7 +35,7 @@ uint my_get_large_page_size(void)
 {
   uint size;
   DBUG_ENTER("my_get_large_page_size");
-  
+
   if (!(size = my_get_large_page_size_int()))
     fprintf(stderr, "Warning: Failed to determine large page size\n");
 
@@ -52,7 +52,7 @@ uchar* my_large_malloc(size_t size, myf my_flags)
 {
   uchar* ptr;
   DBUG_ENTER("my_large_malloc");
-  
+
   if (my_use_large_pages && my_large_page_size)
   {
     if ((ptr = my_large_malloc_int(size, my_flags)) != NULL)
@@ -60,7 +60,7 @@ uchar* my_large_malloc(size_t size, myf my_flags)
     if (my_flags & MY_WME)
       fprintf(stderr, "Warning: Using conventional memory pool\n");
   }
-      
+
   DBUG_RETURN(my_malloc_lock(size, my_flags));
 }
 
@@ -73,7 +73,7 @@ uchar* my_large_malloc(size_t size, myf my_flags)
 void my_large_free(uchar* ptr)
 {
   DBUG_ENTER("my_large_free");
-  
+
   /*
     my_large_free_int() can only fail if ptr was not allocated with
     my_large_malloc_int(), i.e. my_malloc_lock() was used so we should free it
@@ -104,7 +104,7 @@ uint my_get_large_page_size_int(void)
       break;
 
   mysql_file_fclose(f, MYF(MY_WME));
-  
+
 finish:
   DBUG_RETURN(size * 1024);
 }
@@ -112,7 +112,7 @@ finish:
 
 #if HAVE_DECL_SHM_HUGETLB
 /* Linux-specific large pages allocator  */
-    
+
 uchar* my_large_malloc_int(size_t size, myf my_flags)
 {
   int shmid;
@@ -122,7 +122,7 @@ uchar* my_large_malloc_int(size_t size, myf my_flags)
 
   /* Align block size to my_large_page_size */
   size= MY_ALIGN(size, (size_t) my_large_page_size);
-  
+
   shmid = shmget(IPC_PRIVATE, size, SHM_HUGETLB | SHM_R | SHM_W);
   if (shmid < 0)
   {

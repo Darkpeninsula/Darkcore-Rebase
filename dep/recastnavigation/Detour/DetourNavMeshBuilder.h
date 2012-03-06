@@ -30,7 +30,7 @@ struct dtNavMeshCreateParams
 	const unsigned short* verts;			// Array of vertices, each vertex has 3 components. (vx).
 	int vertCount;							// Vertex count
 	// Navmesh polygons
-	const unsigned short* polys;			// Array of polygons, uses same format as rcPolyMesh. 
+	const unsigned short* polys;			// Array of polygons, uses same format as rcPolyMesh.
 	const unsigned short* polyFlags;		// Array of flags per polygon.
 	const unsigned char* polyAreas;			// Array of area ids per polygon.
 	int polyCount;							// Number of polygons

@@ -1,7 +1,7 @@
 
 CHARSET_INFO
 ============
-A structure containing data for charset+collation pair implementation. 
+A structure containing data for charset+collation pair implementation.
 
 Virtual functions that use this data are collected into separate
 structures, MY_CHARSET_HANDLER and MY_COLLATION_HANDLER.
@@ -57,7 +57,7 @@ using its non-default counterpart for the given character set.
 
 binary_number - ID of a charset+collation pair, which consists
 of the same character set and the binary collation of this
-character set. Not really used now. 
+character set. Not really used now.
 
 Names
 -----
@@ -69,9 +69,9 @@ Names
 
 Conversion tables
 -----------------
-  
+
   ctype      - pointer to array[257] of "type of characters"
-               bit mask for each character, e.g., whether a 
+               bit mask for each character, e.g., whether a
                character is a digit, letter, separator, etc.
 
                Monty 2004-10-21:
@@ -167,13 +167,13 @@ Miscellaneous fields
 
   strxfrm_multiply - how many times a sort key (that is, a string
                      that can be passed into memcmp() for comparison)
-                     can be longer than the original string. 
+                     can be longer than the original string.
                      Usually it is 1. For some complex
                      collations it can be bigger. For example,
                      in latin1_german2_ci, a sort key is up to
                      two times longer than the original string.
                      e.g. Letter 'A' with two dots above is
-                     substituted with 'AE'. 
+                     substituted with 'AE'.
   mbminlen         - minimum multi-byte sequence length.
                      Now always 1 except for ucs2. For ucs2,
                      it is 2.
@@ -194,7 +194,7 @@ MY_CHARSET_HANDLER
 ==================
 
 MY_CHARSET_HANDLER is a collection of character-set
-related routines. Defined in m_ctype.h. Have the 
+related routines. Defined in m_ctype.h. Have the
 following set of functions:
 
 Multi-byte routines
@@ -205,7 +205,7 @@ mbcharlen() - returns length of multi-byte sequence starting with
 numchars()  - returns number of characters in the given string, e.g.
               in SQL function CHAR_LENGTH().
 charpos()   - calculates the offset of the given position in the string.
-              Used in SQL functions LEFT(), RIGHT(), SUBSTRING(), 
+              Used in SQL functions LEFT(), RIGHT(), SUBSTRING(),
               INSERT()
 
 well_formed_len()
@@ -275,7 +275,7 @@ wildcmp()     - wildcard comparison, for LIKE
 strcasecmp()  - 0-terminated string comparison
 instr()       - finds the first substring appearance in the string
 hash_sort()   - calculates hash value taking into account
-                the collation rules, e.g. case-insensitivity, 
+                the collation rules, e.g. case-insensitivity,
                 accent sensitivity, etc.
 
- 
+

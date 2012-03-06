@@ -1,5 +1,5 @@
 # Copyright (C) 2010 Sun Microsystems, Inc
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 of the License.
@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 # This file includes Windows specific hacks, mostly around compiler flags
 
@@ -26,14 +26,14 @@ INCLUDE (CheckSymbolExists)
 INCLUDE (CheckTypeSize)
 
 # avoid running system checks by using pre-cached check results
-# system checks are expensive on VS since every tiny program is to be compiled in 
+# system checks are expensive on VS since every tiny program is to be compiled in
 # a VC solution.
 GET_FILENAME_COMPONENT(_SCRIPT_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 INCLUDE(${_SCRIPT_DIR}/WindowsCache.cmake)
- 
+
 
 # OS display name (version_compile_os etc).
-# Used by the test suite to ignore bugs on some platforms, 
+# Used by the test suite to ignore bugs on some platforms,
 IF(CMAKE_SIZEOF_VOID_P MATCHES 8)
   SET(SYSTEM_TYPE "Win64")
 ELSE()
@@ -50,7 +50,7 @@ ADD_DEFINITIONS("-D__WIN__ -D_CRT_SECURE_NO_DEPRECATE")
 ADD_DEFINITIONS("-D_WIN32_WINNT=0x0501")
 # Speed up build process excluding unused header files
 ADD_DEFINITIONS("-DWIN32_LEAN_AND_MEAN")
-  
+
 # Adjust compiler and linker flags
 IF(MINGW AND CMAKE_SIZEOF_VOID_P EQUAL 4)
    # mininal architecture flags, i486 enables GCC atomics
@@ -60,12 +60,12 @@ ENDIF()
 IF(MSVC)
   # Remove support for exceptions
   FOREACH(flag CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_INIT)
-   STRING(REPLACE "/EHsc" ""   "${flag}" "${${flag}}") 
+   STRING(REPLACE "/EHsc" ""   "${flag}" "${${flag}}")
   ENDFOREACH()
- 
+
   # Fix CMake's predefined huge stack size
   STRING(REGEX REPLACE "/STACK:([^ ]+)" "" CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
-  
+
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /wd4800 /wd4805 /wd4996 /wd4244 /wd4267 /wd4090")
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4800 /wd4805 /wd4996 /we4099 /wd4244 /wd4267")
 ENDIF()
@@ -73,7 +73,7 @@ ENDIF()
 # System checks
 SET(SIGNAL_WITH_VIO_CLOSE 1) # Something that runtime team needs
 
-# IPv6 constants appeared in Vista SDK first. We need to define them in any case if they are 
+# IPv6 constants appeared in Vista SDK first. We need to define them in any case if they are
 # not in headers, to handle dual mode sockets correctly.
 CHECK_SYMBOL_EXISTS(IPPROTO_IPV6 "winsock2.h" HAVE_IPPROTO_IPV6)
 IF(NOT HAVE_IPPROTO_IPV6)
@@ -92,7 +92,7 @@ ENDIF()
 # So for example, CHECK_FUNCTION_REPLACEMENT(popen _popen)
 # will define HAVE_POPEN to 1 and set variable named popen
 # to _popen. If the header template, one needs to have
-# cmakedefine popen @popen@ which will expand to 
+# cmakedefine popen @popen@ which will expand to
 # define popen _popen after CONFIGURE_FILE
 
 MACRO(CHECK_FUNCTION_REPLACEMENT function replacement)

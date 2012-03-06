@@ -4,12 +4,12 @@
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; version 2 of the License.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA */
@@ -314,7 +314,7 @@
 /* Types we may use */
 #ifdef __APPLE__
   /*
-    Special handling required for OSX to support universal binaries that 
+    Special handling required for OSX to support universal binaries that
     mix 32 and 64 bit architectures.
   */
   #if(__LP64__)
@@ -394,7 +394,7 @@
     #define WORDS_BIGENDIAN 1
   #endif
 #else
-#cmakedefine WORDS_BIGENDIAN 1 
+#cmakedefine WORDS_BIGENDIAN 1
 #endif
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler calls
@@ -434,7 +434,7 @@
 #cmakedefine HAVE_STRCASECMP 1
 #cmakedefine HAVE_STRNCASECMP 1
 #cmakedefine HAVE_STRDUP 1
-#cmakedefine HAVE_LANGINFO_CODESET 
+#cmakedefine HAVE_LANGINFO_CODESET
 #cmakedefine HAVE_TCGETATTR 1
 #cmakedefine HAVE_FLOCKFILE 1
 
@@ -534,7 +534,7 @@
 #cmakedefine HAVE_CHARSET_cp1256 1
 #cmakedefine HAVE_CHARSET_cp1257 1
 #cmakedefine HAVE_CHARSET_cp850 1
-#cmakedefine HAVE_CHARSET_cp852 1 
+#cmakedefine HAVE_CHARSET_cp852 1
 #cmakedefine HAVE_CHARSET_cp866 1
 #cmakedefine HAVE_CHARSET_cp932 1
 #cmakedefine HAVE_CHARSET_dec8 1
@@ -578,7 +578,7 @@
 #define BIG_TABLES 1
 
 /*
-  Important storage engines (those that really need define 
+  Important storage engines (those that really need define
   WITH_<ENGINE>_STORAGE_ENGINE for the whole server)
 */
 #cmakedefine WITH_MYISAM_STORAGE_ENGINE 1

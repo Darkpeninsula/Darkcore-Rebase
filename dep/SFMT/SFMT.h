@@ -8,17 +8,17 @@
  * Copyright (c) 2006, 2007 by Mutsuo Saito, Makoto Matsumoto and Hiroshima University.
  * Copyright (c) 2008 by Agner Fog.
  * Copyright (c) 2010 Trinity Core
- * 
+ *
  *  BSD License:
- *  Redistribution and use in source and binary forms, with or without 
+ *  Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     > Redistributions of source code must retain the above copyright notice, 
+ *     > Redistributions of source code must retain the above copyright notice,
  *       this list of conditions and the following disclaimer.
- *     > Redistributions in binary form must reproduce the above copyright notice, 
+ *     > Redistributions in binary form must reproduce the above copyright notice,
  *       this list of conditions and the following disclaimer in the documentation
  *       and/or other materials provided with the distribution.
- *     > Neither the name of the Hiroshima University nor the names of its 
- *       contributors may be used to endorse or promote products derived from 
+ *     > Neither the name of the Hiroshima University nor the names of its
+ *       contributors may be used to endorse or promote products derived from
  *       this software without specific prior written permission.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -133,7 +133,7 @@ static uint32_t func2(uint32_t x) {
 }
 
 // Subfunction for the sfmt algorithm
-static inline __m128i sfmt_recursion(__m128i const &a, __m128i const &b, 
+static inline __m128i sfmt_recursion(__m128i const &a, __m128i const &b,
 __m128i const &c, __m128i const &d, __m128i const &mask) {
     __m128i a1, b1, c1, d1, z1, z2;
     b1 = _mm_srli_epi32(b, SFMT_SR1);
@@ -246,7 +246,7 @@ private:
     {
         // Various initializations and period certification
         uint32_t i, j, temp;
-    
+
         // Initialize mask
         static const uint32_t maskinit[4] = {SFMT_MASK};
         mask = _mm_loadu_si128((__m128i*)maskinit);

@@ -20,7 +20,7 @@
   @file include/mysql/service_thd_wait.h
   This service provides functions for plugins and storage engines to report
   when they are going to sleep/stall.
-  
+
   SYNOPSIS
   thd_wait_begin() - call just before a wait begins
   thd                     Thread object

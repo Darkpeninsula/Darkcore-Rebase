@@ -13,15 +13,15 @@
 
 
 set(Recast_STAT_SRCS
-    Recast.cpp 
-    RecastAlloc.cpp 
-    RecastArea.cpp 
-    RecastContour.cpp 
-    RecastFilter.cpp 
-    RecastMesh.cpp 
-    RecastMeshDetail.cpp 
-    RecastRasterization.cpp 
-    RecastRegion.cpp 
+    Recast.cpp
+    RecastAlloc.cpp
+    RecastArea.cpp
+    RecastContour.cpp
+    RecastFilter.cpp
+    RecastMesh.cpp
+    RecastMeshDetail.cpp
+    RecastRasterization.cpp
+    RecastRegion.cpp
 )
 
 if(WIN32)

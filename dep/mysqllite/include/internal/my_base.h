@@ -1,4 +1,4 @@
-/* Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved. 
+/* Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
    reserved
 
    This program is free software; you can redistribute it and/or modify
@@ -96,7 +96,7 @@ enum ha_key_alg {
   HA_KEY_ALG_FULLTEXT=	4		/* FULLTEXT (MyISAM tables) */
 };
 
-        /* Storage media types */ 
+        /* Storage media types */
 
 enum ha_storage_media {
   HA_SM_DEFAULT=        0,		/* Not specified (engine default) */
@@ -144,7 +144,7 @@ enum ha_extra_function {
   HA_EXTRA_CHANGE_KEY_TO_UNIQUE,
   HA_EXTRA_CHANGE_KEY_TO_DUP,
   /*
-    When using HA_EXTRA_KEYREAD, overwrite only key member fields and keep 
+    When using HA_EXTRA_KEYREAD, overwrite only key member fields and keep
     other fields intact. When this is off (by default) InnoDB will use memcpy
     to overwrite entire row.
   */
@@ -175,7 +175,7 @@ enum ha_extra_function {
   HA_EXTRA_WRITE_CANNOT_REPLACE,
   /*
     Inform handler that delete_row()/update_row() cannot batch deletes/updates
-    and should perform them immediately. This may be needed when table has 
+    and should perform them immediately. This may be needed when table has
     AFTER DELETE/UPDATE triggers which access to subject table.
     These flags are reset by the handler::extra(HA_EXTRA_RESET) call.
   */

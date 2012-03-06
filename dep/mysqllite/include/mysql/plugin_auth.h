@@ -69,19 +69,19 @@ typedef struct st_mysql_server_auth_info
     A plugin can override it with another name that will be
     used by MySQL for authorization, and shown in CURRENT_USER()
   */
-  char authenticated_as[MYSQL_USERNAME_LENGTH+1]; 
+  char authenticated_as[MYSQL_USERNAME_LENGTH+1];
 
 
   /**
     The unique user name that was used by the plugin to authenticate.
     Plugins should put null-terminated UTF-8 here.
     Available through the @@EXTERNAL_USER variable.
-  */  
+  */
   char external_user[512];
 
   /**
     This only affects the "Authentication failed. Password used: %s"
-    error message. has the following values : 
+    error message. has the following values :
     0 : %s will be NO.
     1 : %s will be YES.
     2 : there will be no %s.
@@ -90,7 +90,7 @@ typedef struct st_mysql_server_auth_info
   int  password_used;
 
   /**
-    Set to the name of the connected client host, if it can be resolved, 
+    Set to the name of the connected client host, if it can be resolved,
     or to its IP address otherwise.
   */
   const char *host_or_ip;

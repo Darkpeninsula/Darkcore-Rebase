@@ -64,7 +64,7 @@ tools, such as symbolic debuggers, are difficult or impossible with this
 package, and vice versa.
 Thus the
 .I dbug
-package should 
+package should
 .I not
 be thought of as a replacement or substitute for
 other debugging tools, but simply as a useful
@@ -91,7 +91,7 @@ Examples of this type of debugger include the
 .B adb
 and
 .B sdb
-debuggers provided with the 
+debuggers provided with the
 .B UNIX\*F
 .FS
 UNIX is a trademark of AT&T Bell Laboratories.
@@ -100,7 +100,7 @@ operating system.
 
 .P
 One of the problems associated with developing programs in an environment
-with good external debuggers is that developed programs tend to have 
+with good external debuggers is that developed programs tend to have
 little or no internal instrumentation.
 This is usually not a problem for the developer since he is,
 or at least should be, intimately familiar with the internal organization,
@@ -128,10 +128,10 @@ This is in sharp contrast to other forms of internal instrumentation
 where each developer has their own, usually less capable, form
 of internal debugger.
 In summary,
-because 
+because
 .I dbug
 is an internal debugger it provides consistency across operating
-environments, 
+environments,
 and because it is available to all developers it provides
 consistency across all programs in the same environment.
 
@@ -218,7 +218,7 @@ Primitive Debugging Technique
 .P
 Eventually, and usually after at least several iterations, the
 problem will be found and corrected.
-At this point, the newly inserted print statements must be 
+At this point, the newly inserted print statements must be
 dealt with.
 One obvious solution is to simply delete them all.
 Beginners usually do this a few times until they have to
@@ -248,16 +248,16 @@ Each technique has its advantages and disadvantages with respect
 to dynamic vs static activation, source code overhead, recompilation
 requirements, ease of use, program readability, etc.
 Overuse of the preprocessor solution quickly leads to problems with
-source code readability and maintainability when multiple 
+source code readability and maintainability when multiple
 .B #ifdef
 symbols are to be defined or undefined based on specific types
 of debug desired.
 The source code can be made slightly more readable by suitable indentation
-of the 
+of the
 .B #ifdef
 arguments to match the indentation of the code, but
 not all C preprocessors allow this.
-The only requirement for the standard 
+The only requirement for the standard
 .B UNIX
 C preprocessor is for the '#' character to appear
 in the first column, but even this seems
@@ -307,7 +307,7 @@ Factorial Program Mainline
 .DE
 
 .P
-The 
+The
 .B main
 function is responsible for processing any command line
 option arguments and then computing and printing the factorial of
@@ -316,7 +316,7 @@ each non-option argument.
 First of all, notice that all of the debugger functions are implemented
 via preprocessor macros.
 This does not detract from the readability of the code and makes disabling
-all debug compilation trivial (a single preprocessor symbol, 
+all debug compilation trivial (a single preprocessor symbol,
 .B DBUG_OFF ,
 forces the macro expansions to be null).
 .P
@@ -326,18 +326,18 @@ from the local header file directory.
 (The version included here is the test version in the dbug source
 distribution directory).
 This file contains all the definitions for the debugger macros, which
-all have the form 
+all have the form
 .B DBUG_XX...XX .
 
 .P
-The 
-.B DBUG_ENTER 
+The
+.B DBUG_ENTER
 macro informs that debugger that we have entered the
-function named 
+function named
 .B main .
 It must be the very first "executable" line in a function, after
 all declarations and before any other executable line.
-The 
+The
 .B DBUG_PROCESS
 macro is generally used only once per program to
 inform the debugger what name the program was invoked with.
@@ -350,7 +350,7 @@ The
 .B DBUG_PRINT
 macro is used to print the values of each argument
 for which a factorial is to be computed.
-The 
+The
 .B DBUG_RETURN
 macro tells the debugger that the end of the current
 function has been reached and returns a value to the calling
@@ -362,13 +362,13 @@ line of the form:
 .DS CB N
 \fCfactorial -#d:t 1 2 3
 .DE
-The 
+The
 .B main
 function recognizes the "-#d:t" string as a debugger control
-string, and passes the debugger arguments ("d:t") to the 
+string, and passes the debugger arguments ("d:t") to the
 .I dbug
 runtime support routines via the
-.B DBUG_PUSH 
+.B DBUG_PUSH
 macro.
 This particular string enables output from the
 .B DBUG_PRINT
@@ -426,14 +426,14 @@ package is that it strongly encourages fully structured coding
 with only one entry and one exit point in each function.
 Multiple exit points, such as early returns to escape a loop,
 may be used, but each such point requires the use of an
-appropriate 
+appropriate
 .B DBUG_RETURN
 or
 .B DBUG_VOID_RETURN
 macro.
 
 .P
-To build the factorial program on a 
+To build the factorial program on a
 .B UNIX
 system, compile and
 link with the command:
@@ -501,7 +501,7 @@ returned control to main, which output the value for 3! and exited.
 
 .P
 Note that there is no matching entry point "main>" for the
-return point "<main" because at the time the 
+return point "<main" because at the time the
 .B DBUG_ENTER
 macro was reached in main, tracing was not enabled yet.
 It was only after the macro
@@ -509,12 +509,12 @@ It was only after the macro
 was executing that tracing became enabled.
 This implies that the argument list should be processed as early as
 possible since all code preceding the first call to
-.B DBUG_PUSH 
+.B DBUG_PUSH
 is
-essentially invisible to 
+essentially invisible to
 .I dbug
 (this can be worked around by
-inserting a temporary 
+inserting a temporary
 .B DBUG_PUSH(argv[1])
 immediately after the
 .B DBUG_ENTER("main")
@@ -528,12 +528,12 @@ output, there is the possibility of the output on the terminal
 being scrambled if the two streams are not synchronized.
 Thus the debugger is told to write its output on the standard
 output instead, via the 'o' flag character.
-Note that no 'o' implies the default (standard error), a 'o' 
-with no arguments means standard output, and a 'o' 
+Note that no 'o' implies the default (standard error), a 'o'
+with no arguments means standard output, and a 'o'
 with an argument means used the named file.
 i.e, "factorial\ -#t:o,logfile\ 3\ 2" would write the trace
 output in "logfile".
-Because of 
+Because of
 .B UNIX
 implementation details, programs usually run
 faster when writing to stdout rather than stderr, though this
@@ -551,16 +551,16 @@ macro.
 
 .P
 To allow selection of output from specific macros, the first argument
-to every 
+to every
 .B DBUG_PRINT
-macro is a 
+macro is a
 .I dbug
 keyword.
 When this keyword appears in the argument list of the 'd' flag in
 a debug control string, as in "-#d,keyword1,keyword2,...:t",
 output from the corresponding macro is enabled.
 The default when there is no 'd' flag in the control string is to
-enable output from all 
+enable output from all
 .B DBUG_PRINT
 macros.
 
@@ -573,14 +573,14 @@ to examine only specific areas of interest.
 
 .P
 The second argument to a
-.B DBUG_PRINT 
+.B DBUG_PRINT
 macro is a standard printf style
 format string and one or more arguments to print, all
 enclosed in parentheses so that they collectively become a single macro
 argument.
 This is how variable numbers of printf arguments are supported.
 Also note that no explicit newline is required at the end of the format string.
-As a matter of style, two or three small 
+As a matter of style, two or three small
 .B DBUG_PRINT
 macros are preferable
 to a single macro with a huge format string.
@@ -601,7 +601,7 @@ Figure 8
 .DE
 
 .P
-The output from the 
+The output from the
 .B DBUG_PRINT
 macro is indented to match the trace output
 for the function in which the macro occurs.
@@ -663,7 +663,7 @@ SUMMARY OF MACROS
 
 .P
 This section summarizes the usage of all currently defined macros
-in the 
+in the
 .I dbug
 package.
 The macros definitions are found in the user include file
@@ -672,7 +672,7 @@ from the standard include directory.
 
 .SP 2
 .BL 20
-.LI DBUG_ENTER\ 
+.LI DBUG_ENTER\
 Used to tell the runtime support module the name of the function being
 entered.  The argument must be of type "pointer to character".  The
 DBUG_ENTER macro must precede all executable lines in the function
@@ -680,13 +680,13 @@ just entered, and must come after all local declarations.  Each
 DBUG_ENTER macro must have a matching DBUG_RETURN or DBUG_VOID_RETURN
 macro at the function exit points.  DBUG_ENTER macros used without a
 matching DBUG_RETURN or DBUG_VOID_RETURN macro will cause warning
-messages from the 
+messages from the
 .I dbug
 package runtime support module.
 .SP 1
 EX:\ \fCDBUG_ENTER\ ("main");\fR
 .SP 1
-.LI DBUG_RETURN\ 
+.LI DBUG_RETURN\
 Used at each exit point of a function containing a DBUG_ENTER macro at
 the entry point.  The argument is the value to return.  Functions
 which return no value (void) should use the DBUG_VOID_RETURN macro.
@@ -698,7 +698,7 @@ EX:\ \fCDBUG_RETURN\ (value);\fR
 .br
 EX:\ \fCDBUG_VOID_RETURN;\fR
 .SP 1
-.LI DBUG_PROCESS\ 
+.LI DBUG_PROCESS\
 Used to name the current process being executed.
 A typical argument for this macro is "argv[0]", though
 it will be perfectly happy with any other string.
@@ -706,7 +706,7 @@ Im multi-threaded environment threads may have different names.
 .SP 1
 EX:\ \fCDBUG_PROCESS\ (argv[0]);\fR
 .SP 1
-.LI DBUG_PUSH\ 
+.LI DBUG_PUSH\
 Sets a new debugger state by pushing the current
 .I dbug
 state onto an internal stack and setting up the new state using the
@@ -723,14 +723,14 @@ EX:\ \fCDBUG_PUSH\ ("d:t");\fR
 .br
 EX:\ \fCDBUG_PUSH\ ("");\fR
 .SP 1
-.LI DBUG_POP\ 
+.LI DBUG_POP\
 Restores the previous debugger state by popping the state stack.
 Attempting to pop more states than pushed will be ignored and no
 warning will be given.  The DBUG_POP macro has no arguments.
 .SP 1
 EX:\ \fCDBUG_POP\ ();\fR
 .SP 1
-.LI DBUG_SET\ 
+.LI DBUG_SET\
 Modifies the current debugger state on top of the stack or pushes
 a new state if the current is set to the initial settings, using
 the debug control string passed as the macro argument.  Unless
@@ -744,14 +744,14 @@ EX:\ \fCDBUG_SET\ ("+d,info");\fR
 .br
 EX:\ \fCDBUG_SET\ ("+t:-d");\fR
 .SP 1
-.LI DBUG_FILE\ 
+.LI DBUG_FILE\
 The DBUG_FILE macro is used to do explicit I/O on the debug output
 stream.  It is used in the same manner as the symbols "stdout" and
 "stderr" in the standard I/O package.
 .SP 1
 EX:\ \fCfprintf\ (DBUG_FILE,\ "Doing\ my\ own\ I/O!\\n");\fR
 .SP 1
-.LI DBUG_EXECUTE\ 
+.LI DBUG_EXECUTE\
 The DBUG_EXECUTE macro is used to execute any arbitrary C code.  The
 first argument is the debug keyword, used to trigger execution of the
 code specified as the second argument.  This macro must be used
@@ -761,7 +761,7 @@ a "-#d:t" control string).
 .SP 1
 EX:\ \fCDBUG_EXECUTE\ ("status",\ print_status\ ());\fR
 .SP 1
-.LI DBUG_EXECUTE_IF\ 
+.LI DBUG_EXECUTE_IF\
 Works like DBUG_EXECUTE macro, but the code is
 .B not
 executed "by default", if the keyword is not explicitly listed in
@@ -771,7 +771,7 @@ artificial delay checking for race conditions.
 .SP 1
 EX:\ \fCDBUG_EXECUTE_IF\ ("crashme",\ DBUG_ABORT()\ ());\fR
 .SP 1
-.LI DBUG_EVALUATE\ 
+.LI DBUG_EVALUATE\
 The DBUG_EVALUATE macro is similar to DBUG_EXECUTE, but it can be used in
 the expression context. The first argument is the debug keyword that is used to
 choose whether the second (keyword is enabled) or the third (keyword is not
@@ -785,7 +785,7 @@ EX:\fC
 .br
          DBUG_EVALUATE\ ("info", "ON", "OFF"));\fR
 .SP 1
-.LI DBUG_EVALUATE_IF\ 
+.LI DBUG_EVALUATE_IF\
 Works like DBUG_EVALUATE macro, but the second argument is
 .B not
 evaluated, if the keyword is not explicitly listed in
@@ -800,7 +800,7 @@ EX:\fC
 .br
         commit_transaction () )\fR
 .SP 1
-.LI DBUG_PRINT\ 
+.LI DBUG_PRINT\
 Used to do printing via the "fprintf" library function on the current
 debug stream, DBUG_FILE.  The first argument is a debug keyword, the
 second is a format string and the corresponding argument list.  Note
@@ -815,7 +815,7 @@ EX:\ \fCDBUG_PRINT\ ("type",\ ("type\ is\ %x", type));\fR
 .br
 EX:\ \fCDBUG_PRINT\ ("stp",\ ("%x\ ->\ %s", stp, stp\ ->\ name));\fR
 .SP 1
-.LI DBUG_DUMP\ 
+.LI DBUG_DUMP\
 Used to dump a memory block in hex via the "fprintf" library function
 on the current debug stream, DBUG_FILE.  The first argument is a debug
 keyword, the second is a pointer to a memory to dump, the third is a
@@ -823,7 +823,7 @@ number of bytes to dump.
 .SP 1
 EX: \fCDBUG_DBUG\ ("net",\ packet,\ len);\fR
 .SP 1
-.LI DBUG_SETJMP\ 
+.LI DBUG_SETJMP\
 Used in place of the setjmp() function to first save the current
 debugger state and then execute the standard setjmp call.
 This allows to the debugger to restore its state when the
@@ -833,7 +833,7 @@ same function and at the same function nesting level.
 .SP 1
 EX: \fCDBUG_SETJMP\ (env);\fR
 .SP 1
-.LI DBUG_LONGJMP\ 
+.LI DBUG_LONGJMP\
 Used in place of the longjmp() function to first restore the
 previous debugger state at the time of the last DBUG_SETJMP
 and then execute the standard longjmp() call.
@@ -845,7 +845,7 @@ argument to differentiate the pairs.
 .SP 1
 EX: \fCDBUG_LONGJMP\ (env,val);\fR
 .SP 1
-.LI DBUG_LOCK_FILE\ 
+.LI DBUG_LOCK_FILE\
 Used in multi-threaded environment to lock DBUG_FILE stream.
 It can be used, for example, in functions that need to write something to a
 debug stream more than in one fprintf() call and want to ensure that no other
@@ -865,9 +865,9 @@ EX:\fC
 .br
   DBUG_UNLOCK_FILE;\fR
 .SP 1
-.LI DBUG_UNLOCK_FILE\ 
+.LI DBUG_UNLOCK_FILE\
 Unlocks DBUG_FILE stream, that was locked with a DBUG_LOCK_FILE.
-.LI DBUG_ASSERT\ 
+.LI DBUG_ASSERT\
 This macro just does a regular assert(). The difference is that it will be
 disabled by DBUG_OFF togeher with the
 .I dbug
@@ -875,13 +875,13 @@ library. So there will be no need to disable asserts separately with NDEBUG.
 .SP 1
 EX:\ \fCDBUG_ASSERT(\ a\ >\ 0\ );\fR
 .SP 1
-.LI DBUG_ABORT\ 
+.LI DBUG_ABORT\
 This macro could be used instead of abort(). It flushes DBUG_FILE stream
 to ensure that no
 .I dbug
 output is lost and then calls abort().
 .SP 1
-.LI DBUG_EXPLAIN\ 
+.LI DBUG_EXPLAIN\
 Generates control string corresponding to the current debug state.
 The macro takes two arguments - a buffer to store the result string
 into and its length. The macro (which could be used as a function)
@@ -894,8 +894,8 @@ EX:\fC
 .br
   DBUG_EXPLAIN( buf, sizeof(buf) );\fR
 .SP 1
-.LI DBUG_SET_INITIAL\ 
-.LI DBUG_EXPLAIN_INITIAL\ 
+.LI DBUG_SET_INITIAL\
+.LI DBUG_EXPLAIN_INITIAL\
 .br
 These two macros are identical to DBUG_SET and DBUG_EXPLAIN, but they
 operate on the debug state that any new thread starts from.
@@ -912,8 +912,8 @@ DEBUG CONTROL STRING
 
 .P
 The debug control string is used to set the state of the debugger
-via the 
-.B DBUG_PUSH 
+via the
+.B DBUG_PUSH
 or
 .B DBUG_SET
 macros. Control string consists of colon separated flags.  Colons
@@ -1011,12 +1011,12 @@ Most useful when used with a process which runs child processes that
 are also being debugged.  Note that the parent process must arrange
 for the debugger control string to be passed to the child processes.
 .LI r
-Used in conjunction with the 
-.B DBUG_PUSH 
+Used in conjunction with the
+.B DBUG_PUSH
 macro to reset the current
 indentation level back to zero.
-Most useful with 
-.B DBUG_PUSH 
+Most useful with
+.B DBUG_PUSH
 macros used to temporarily alter the
 debugger state.
 .LI t[,N]
@@ -1102,7 +1102,7 @@ A second program (\fBanalyze\fR) reads this file, and produces a report on
 standard output.
 
 .P
-Profiling is enabled through the 
+Profiling is enabled through the
 .B g
 flag.  It can take a list of
 function names for which profiling is enabled.  By default, it
@@ -1131,7 +1131,7 @@ main             1       16.67             0         0.00           0
 Totals           6      100.00            30       100.00
 .DE
 .P
-As you can see, it's quite self-evident.  The 
+As you can see, it's quite self-evident.  The
 .B Importance
 column is a
 metric obtained by multiplying the percentage of the calls and the percentage
@@ -1152,14 +1152,14 @@ HINTS AND MISCELLANEOUS
 .R
 
 .P
-One of the most useful capabilities of the 
-.I dbug 
+One of the most useful capabilities of the
+.I dbug
 package is to compare the executions of a given program in two
 different environments.
 This is typically done by executing the program in the environment
 where it behaves properly and saving the debugger output in a
 reference file.
-The program is then run with identical inputs in the environment where 
+The program is then run with identical inputs in the environment where
 it misbehaves and the output is again captured in a reference file.
 The two reference files can then be differentially compared to
 determine exactly where execution of the two processes diverges.
@@ -1171,7 +1171,7 @@ This is most useful when there are only minor changes.
 
 .P
 It is not difficult to modify an existing compiler to implement
-some of the functionality of the 
+some of the functionality of the
 .I dbug
 package automatically, without source code changes to the
 program being debugged.
@@ -1189,7 +1189,7 @@ CAVEATS
 .R
 
 .P
-The 
+The
 .I dbug
 package works best with programs which have "line\ oriented"
 output, such as text processors, general purpose utilities, etc.

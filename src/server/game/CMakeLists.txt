@@ -115,7 +115,7 @@ set(game_STAT_SRCS
   ${sources_Addons}
   ${sources_AI}
   ${sources_AuctionHouse}
-  ${sources_Battlefields}  
+  ${sources_Battlefields}
   ${sources_Battlegrounds}
   ${sources_Calendar}
   ${sources_Chat}
@@ -185,7 +185,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/AI/SmartScripts
   ${CMAKE_CURRENT_SOURCE_DIR}/AuctionHouse
   ${CMAKE_CURRENT_SOURCE_DIR}/Battlefields
-  ${CMAKE_CURRENT_SOURCE_DIR}/Battlefields/Zones 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Battlefields/Zones
   ${CMAKE_CURRENT_SOURCE_DIR}/Battlegrounds
   ${CMAKE_CURRENT_SOURCE_DIR}/Battlegrounds/Zones
   ${CMAKE_CURRENT_SOURCE_DIR}/Calendar
@@ -196,7 +196,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/Conditions
   ${CMAKE_CURRENT_SOURCE_DIR}/DataStores
   ${CMAKE_CURRENT_SOURCE_DIR}/DataStores/DBC
-  ${CMAKE_CURRENT_SOURCE_DIR}/DataStores/DB2  
+  ${CMAKE_CURRENT_SOURCE_DIR}/DataStores/DB2
   ${CMAKE_CURRENT_SOURCE_DIR}/DungeonFinding
   ${CMAKE_CURRENT_SOURCE_DIR}/Entities
   ${CMAKE_CURRENT_SOURCE_DIR}/Entities/Creature
@@ -235,7 +235,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders
   ${CMAKE_CURRENT_SOURCE_DIR}/Quests
   ${CMAKE_CURRENT_SOURCE_DIR}/Reputation
-  ${CMAKE_CURRENT_SOURCE_DIR}/Scripting 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Scripting
   ${CMAKE_CURRENT_SOURCE_DIR}/Server/Protocol
   ${CMAKE_CURRENT_SOURCE_DIR}/Server
   ${CMAKE_CURRENT_SOURCE_DIR}/Skills

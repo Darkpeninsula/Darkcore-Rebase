@@ -8,17 +8,17 @@
  * Copyright (c) 2006, 2007 by Mutsuo Saito, Makoto Matsumoto and Hiroshima University.
  * Copyright (c) 2008 by Agner Fog.
  * Copyright (c) 2010 Trinity Core
- * 
+ *
  *  BSD License:
- *  Redistribution and use in source and binary forms, with or without 
+ *  Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     > Redistributions of source code must retain the above copyright notice, 
+ *     > Redistributions of source code must retain the above copyright notice,
  *       this list of conditions and the following disclaimer.
- *     > Redistributions in binary form must reproduce the above copyright notice, 
+ *     > Redistributions in binary form must reproduce the above copyright notice,
  *       this list of conditions and the following disclaimer in the documentation
  *       and/or other materials provided with the distribution.
- *     > Neither the name of the Hiroshima University nor the names of its 
- *       contributors may be used to endorse or promote products derived from 
+ *     > Neither the name of the Hiroshima University nor the names of its
+ *       contributors may be used to endorse or promote products derived from
  *       this software without specific prior written permission.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -42,7 +42,7 @@
   // Compilers supporting C99 or C++0x have inttypes.h defining these integer types
   #include <inttypes.h>
   #define INT64_SUPPORTED // Remove this if the compiler doesn't support 64-bit integers
-#elif defined(_WIN16) || defined(__MSDOS__) || defined(_MSDOS) 
+#elif defined(_WIN16) || defined(__MSDOS__) || defined(_MSDOS)
    // 16 bit systems use long int for 32 bit integer
   typedef   signed long int int32_t;
   typedef unsigned long int uint32_t;

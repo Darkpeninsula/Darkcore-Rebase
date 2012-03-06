@@ -132,7 +132,7 @@ static inline my_bool validate_timestamp_range(const MYSQL_TIME *t)
   return TRUE;
 }
 
-my_time_t 
+my_time_t
 my_system_gmt_sec(const MYSQL_TIME *t, long *my_timezone,
                   my_bool *in_dst_time_gap);
 
@@ -153,18 +153,18 @@ int my_date_to_str(const MYSQL_TIME *l_time, char *to);
 int my_datetime_to_str(const MYSQL_TIME *l_time, char *to);
 int my_TIME_to_str(const MYSQL_TIME *l_time, char *to);
 
-/* 
+/*
   Available interval types used in any statement.
 
   'interval_type' must be sorted so that simple intervals comes first,
   ie year, quarter, month, week, day, hour, etc. The order based on
   interval size is also important and the intervals should be kept in a
   large to smaller order. (get_interval_value() depends on this)
- 
-  Note: If you change the order of elements in this enum you should fix 
-  order of elements in 'interval_type_to_name' and 'interval_names' 
-  arrays 
-  
+
+  Note: If you change the order of elements in this enum you should fix
+  order of elements in 'interval_type_to_name' and 'interval_names'
+  arrays
+
   See also interval_type_to_name, get_interval_value, interval_names
 */
 

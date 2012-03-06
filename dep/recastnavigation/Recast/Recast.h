@@ -15,7 +15,7 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 //
- 
+
 #ifndef RECAST_H
 #define RECAST_H
 
@@ -61,7 +61,7 @@ enum rcTimerLabel
 };
 
 // Build context provides several optional utilities needed for the build process,
-// such as timing, logging, and build time collecting. 
+// such as timing, logging, and build time collecting.
 class rcContext
 {
 public:
@@ -175,7 +175,7 @@ struct rcCompactSpan
 	unsigned int h : 8;			// Height of the span.
 };
 
-// Compact static heightfield. 
+// Compact static heightfield.
 struct rcCompactHeightfield
 {
 	int width, height;					// Width and height of the heightfield.
@@ -462,7 +462,7 @@ bool rcCreateHeightfield(rcContext* ctx, rcHeightfield& hf, int width, int heigh
 //	nt - (in) triangle count
 //	areas - (out) array of triangle area types
 void rcMarkWalkableTriangles(rcContext* ctx, const float walkableSlopeAngle, const float* verts, int nv,
-							 const int* tris, int nt, unsigned char* areas); 
+							 const int* tris, int nt, unsigned char* areas);
 
 // Sets the RC_NULL_AREA for every triangle whose slope is steeper than
 // the maximum walkable slope angle.
@@ -474,7 +474,7 @@ void rcMarkWalkableTriangles(rcContext* ctx, const float walkableSlopeAngle, con
 //	nt - (in) triangle count
 //	areas - (out) array of triangle are types
 void rcClearUnwalkableTriangles(rcContext* ctx, const float walkableSlopeAngle, const float* verts, int nv,
-								const int* tris, int nt, unsigned char* areas); 
+								const int* tris, int nt, unsigned char* areas);
 
 // Adds span to heightfield.
 // The span addition can set to favor flags. If the span is merged to

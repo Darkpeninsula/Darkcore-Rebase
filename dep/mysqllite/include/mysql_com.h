@@ -237,7 +237,7 @@ enum enum_server_command
 #define SERVER_STATUS_NO_BACKSLASH_ESCAPES 512
 /**
   Sent to the client if after a prepared statement reprepare
-  we discovered that the new statement returns a different 
+  we discovered that the new statement returns a different
   number of result set columns.
 */
 #define SERVER_STATUS_METADATA_CHANGED 1024
@@ -252,8 +252,8 @@ enum enum_server_command
   Server status flags that must be cleared when starting
   execution of a new SQL statement.
   Flags from this set are only added to the
-  current server status by the execution engine, but 
-  never removed -- the execution engine expects them 
+  current server status by the execution engine, but
+  never removed -- the execution engine expects them
   to disappear automagically by the next command.
 */
 #define SERVER_STATUS_CLEAR_SET (SERVER_QUERY_NO_GOOD_INDEX_USED| \
@@ -316,7 +316,7 @@ typedef struct st_net {
   */
   unsigned char *unused;
   unsigned int last_errno;
-  unsigned char error; 
+  unsigned char error;
   my_bool unused4; /* Please remove with the next incompatible ABI change. */
   my_bool unused5; /* Please remove with the next incompatible ABI change. */
   /** Client library error message buffer. Actually belongs to struct MYSQL. */
@@ -362,7 +362,7 @@ enum enum_field_types { MYSQL_TYPE_DECIMAL, MYSQL_TYPE_TINY,
 };
 
 /* For backward compatibility */
-#define CLIENT_MULTI_QUERIES    CLIENT_MULTI_STATEMENTS    
+#define CLIENT_MULTI_QUERIES    CLIENT_MULTI_STATEMENTS
 #define FIELD_TYPE_DECIMAL     MYSQL_TYPE_DECIMAL
 #define FIELD_TYPE_NEWDECIMAL  MYSQL_TYPE_NEWDECIMAL
 #define FIELD_TYPE_TINY        MYSQL_TYPE_TINY
@@ -393,7 +393,7 @@ enum enum_field_types { MYSQL_TYPE_DECIMAL, MYSQL_TYPE_TINY,
 #define FIELD_TYPE_BIT         MYSQL_TYPE_BIT
 
 
-/* Shutdown/kill enums and constants */ 
+/* Shutdown/kill enums and constants */
 
 /* Bits for THD::killable. */
 #define MYSQL_SHUTDOWN_KILLABLE_CONNECT    (unsigned char)(1 << 0)
@@ -507,8 +507,8 @@ typedef struct st_udf_init
   my_bool const_item;          /* 1 if function always returns the same value */
   void *extension;
 } UDF_INIT;
-/* 
-  TODO: add a notion for determinism of the UDF. 
+/*
+  TODO: add a notion for determinism of the UDF.
   See Item_udf_func::update_used_tables ()
 */
 

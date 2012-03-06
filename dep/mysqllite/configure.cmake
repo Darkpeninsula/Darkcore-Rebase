@@ -1,15 +1,15 @@
 
 # Copyright (C) 2009 Sun Microsystems,Inc
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 of the License.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -28,15 +28,15 @@ INCLUDE (CheckSymbolExists)
 # WITH_PIC options.Not of much use, PIC is taken care of on platforms
 # where it makes sense anyway.
 IF(UNIX)
-  IF(APPLE)  
+  IF(APPLE)
     # OSX  executable are always PIC
     SET(WITH_PIC ON)
   ELSE()
     OPTION(WITH_PIC "Generate PIC objects" OFF)
     IF(WITH_PIC)
-      SET(CMAKE_C_FLAGS 
+      SET(CMAKE_C_FLAGS
         "${CMAKE_C_FLAGS} ${CMAKE_SHARED_LIBRARY_C_FLAGS}")
-      SET(CMAKE_CXX_FLAGS 
+      SET(CMAKE_CXX_FLAGS
         "${CMAKE_CXX_FLAGS} ${CMAKE_SHARED_LIBRARY_CXX_FLAGS}")
     ENDIF()
   ENDIF()
@@ -44,7 +44,7 @@ ENDIF()
 
 
 
-# System type affects version_compile_os variable 
+# System type affects version_compile_os variable
 IF(NOT SYSTEM_TYPE)
   IF(PLATFORM)
     SET(SYSTEM_TYPE ${PLATFORM})
@@ -65,8 +65,8 @@ ENDIF()
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
   # MySQL "canonical" GCC flags. At least -fno-rtti flag affects
-  # ABI and cannot be simply removed. 
-  SET(CMAKE_CXX_FLAGS 
+  # ABI and cannot be simply removed.
+  SET(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} -fno-implicit-templates -fno-exceptions -fno-rtti")
   IF(CMAKE_CXX_FLAGS)
     STRING(REGEX MATCH "fno-implicit-templates" NO_IMPLICIT_TEMPLATES
@@ -76,7 +76,7 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
     ENDIF()
   ENDIF()
 
-  IF (CMAKE_EXE_LINKER_FLAGS MATCHES " -static " 
+  IF (CMAKE_EXE_LINKER_FLAGS MATCHES " -static "
      OR CMAKE_EXE_LINKER_FLAGS MATCHES " -static$")
      SET(HAVE_DLOPEN FALSE CACHE "Disable dlopen due to -static flag" FORCE)
      SET(WITHOUT_DYNAMIC_PLUGINS TRUE)
@@ -108,7 +108,7 @@ ENDFUNCTION()
 
 # Searches function in libraries
 # if function is found, sets output parameter result to the name of the library
-# if function is found in libc, result will be empty 
+# if function is found in libc, result will be empty
 FUNCTION(MY_SEARCH_LIBS func libs result)
   IF(${${result}})
     # Library is already found or was predefined
@@ -120,7 +120,7 @@ FUNCTION(MY_SEARCH_LIBS func libs result)
     RETURN()
   ENDIF()
   FOREACH(lib  ${libs})
-    CHECK_LIBRARY_EXISTS(${lib} ${func} "" HAVE_${func}_IN_${lib}) 
+    CHECK_LIBRARY_EXISTS(${lib} ${func} "" HAVE_${func}_IN_${lib})
     IF(HAVE_${func}_IN_${lib})
       SET(${result} ${lib} PARENT_SCOPE)
       SET(HAVE_${result} 1 PARENT_SCOPE)
@@ -146,12 +146,12 @@ IF(UNIX)
   ENDIF()
   FIND_PACKAGE(Threads)
 
-  SET(CMAKE_REQUIRED_LIBRARIES 
+  SET(CMAKE_REQUIRED_LIBRARIES
     ${LIBM} ${LIBNSL} ${LIBBIND} ${LIBCRYPT} ${LIBSOCKET} ${LIBDL} ${CMAKE_THREAD_LIBS_INIT} ${LIBRT})
 
   LIST(REMOVE_DUPLICATES CMAKE_REQUIRED_LIBRARIES)
   LINK_LIBRARIES(${CMAKE_THREAD_LIBS_INIT})
-  
+
   OPTION(WITH_LIBWRAP "Compile with tcp wrappers support" OFF)
   IF(WITH_LIBWRAP)
     SET(SAVE_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
@@ -410,7 +410,7 @@ CHECK_FUNCTION_EXISTS (sigthreadmask HAVE_SIGTHREADMASK)
 CHECK_FUNCTION_EXISTS (sigwait HAVE_SIGWAIT)
 CHECK_FUNCTION_EXISTS (sigaddset HAVE_SIGADDSET)
 CHECK_FUNCTION_EXISTS (sigemptyset HAVE_SIGEMPTYSET)
-CHECK_FUNCTION_EXISTS (sighold HAVE_SIGHOLD) 
+CHECK_FUNCTION_EXISTS (sighold HAVE_SIGHOLD)
 CHECK_FUNCTION_EXISTS (sigset HAVE_SIGSET)
 CHECK_FUNCTION_EXISTS (sleep HAVE_SLEEP)
 CHECK_FUNCTION_EXISTS (snprintf HAVE_SNPRINTF)
@@ -433,7 +433,7 @@ CHECK_FUNCTION_EXISTS (strtoull HAVE_STRTOULL)
 CHECK_FUNCTION_EXISTS (strcasecmp HAVE_STRCASECMP)
 CHECK_FUNCTION_EXISTS (strncasecmp HAVE_STRNCASECMP)
 CHECK_FUNCTION_EXISTS (strdup HAVE_STRDUP)
-CHECK_FUNCTION_EXISTS (shmat HAVE_SHMAT) 
+CHECK_FUNCTION_EXISTS (shmat HAVE_SHMAT)
 CHECK_FUNCTION_EXISTS (shmctl HAVE_SHMCTL)
 CHECK_FUNCTION_EXISTS (shmdt HAVE_SHMDT)
 CHECK_FUNCTION_EXISTS (shmget HAVE_SHMGET)
@@ -503,8 +503,8 @@ CHECK_SYMBOL_EXISTS(rint  math.h HAVE_RINT)
 # isinf() prototype not found on Solaris
 CHECK_CXX_SOURCE_COMPILES(
 "#include  <math.h>
-int main() { 
-  isinf(0.0); 
+int main() {
+  isinf(0.0);
   return 0;
 }" HAVE_ISINF)
 
@@ -515,7 +515,7 @@ int main() {
 #
 INCLUDE(TestBigEndian)
 IF(APPLE)
-  # Cannot run endian test on universal PPC/Intel binaries 
+  # Cannot run endian test on universal PPC/Intel binaries
   # would return inconsistent result.
   # config.h.cmake includes a special #ifdef for Darwin
 ELSE()
@@ -667,7 +667,7 @@ CHECK_CXX_SOURCE_COMPILES("
 int main(int argc, char **argv)
 {
   getsockname(0,0,(socklen_t *) 0);
-  return 0; 
+  return 0;
 }"
 HAVE_SOCKET_SIZE_T_AS_socklen_t)
 
@@ -679,7 +679,7 @@ ELSE()
   int main(int argc, char **argv)
   {
     getsockname(0,0,(int *) 0);
-    return 0; 
+    return 0;
   }"
   HAVE_SOCKET_SIZE_T_AS_int)
   IF(HAVE_SOCKET_SIZE_T_AS_int)
@@ -690,7 +690,7 @@ ELSE()
     int main(int argc, char **argv)
     {
       getsockname(0,0,(size_t *) 0);
-      return 0; 
+      return 0;
     }"
     HAVE_SOCKET_SIZE_T_AS_size_t)
     IF(HAVE_SOCKET_SIZE_T_AS_size_t)
@@ -713,12 +713,12 @@ int main()
 
 IF(NOT STACK_DIRECTION)
   IF(CMAKE_CROSSCOMPILING)
-   MESSAGE(FATAL_ERROR 
+   MESSAGE(FATAL_ERROR
    "STACK_DIRECTION is not defined.  Please specify -DSTACK_DIRECTION=1 "
    "or -DSTACK_DIRECTION=-1 when calling cmake.")
   ELSE()
-    TRY_RUN(STACKDIR_RUN_RESULT STACKDIR_COMPILE_RESULT    
-     ${CMAKE_BINARY_DIR} 
+    TRY_RUN(STACKDIR_RUN_RESULT STACKDIR_COMPILE_RESULT
+     ${CMAKE_BINARY_DIR}
      ${CMAKE_SOURCE_DIR}/cmake/stack_direction.c
      )
      # Test program returns 0 (down) or 1 (up).
@@ -786,8 +786,8 @@ IF(NOT CMAKE_CROSSCOMPILING AND NOT MSVC)
   # http://bugs.opensolaris.org/bugdatabase/printableBug.do?bug_id=6478684
   CHECK_C_SOURCE_RUNS("
   int main()
-  { 
-    __asm__ __volatile__ (\"pause\"); 
+  {
+    __asm__ __volatile__ (\"pause\");
     return 0;
   }"  HAVE_PAUSE_INSTRUCTION)
   ENDIF()
@@ -801,7 +801,7 @@ IF(NOT CMAKE_CROSSCOMPILING AND NOT MSVC)
    " HAVE_FAKE_PAUSE_INSTRUCTION)
   ENDIF()
 ENDIF()
-  
+
 CHECK_SYMBOL_EXISTS(tcgetattr "termios.h" HAVE_TCGETATTR 1)
 
 #
@@ -838,7 +838,7 @@ IF(NOT HAVE_POSIX_SIGNALS)
       sigset(SIGINT, foo); sigrelse(SIGINT);
       sighold(SIGINT); sigpause(SIGINT);
     }"
-   HAVE_SVR3_SIGNALS)  
+   HAVE_SVR3_SIGNALS)
    IF (NOT HAVE_SVR3_SIGNALS)
     SET(HAVE_V7_SIGNALS 1)
    ENDIF(NOT HAVE_SVR3_SIGNALS)
@@ -851,7 +851,7 @@ SET(SPRINTFS_RETURNS_INT 1)
 IF(CMAKE_COMPILER_IS_GNUCXX AND HAVE_CXXABI_H)
 CHECK_CXX_SOURCE_COMPILES("
  #include <cxxabi.h>
- int main(int argc, char **argv) 
+ int main(int argc, char **argv)
   {
     char *foo= 0; int bar= 0;
     foo= abi::__cxa_demangle(foo, foo, 0, &bar);
@@ -861,7 +861,7 @@ CHECK_CXX_SOURCE_COMPILES("
 ENDIF()
 
 CHECK_C_SOURCE_COMPILES("
-  int main(int argc, char **argv) 
+  int main(int argc, char **argv)
   {
     extern char *__bss_start;
     return __bss_start ? 1 : 0;
@@ -967,15 +967,15 @@ ELSEIF(CMAKE_SYSTEM MATCHES "HP-UX")
 ELSEIF(CMAKE_CROSSCOMPILING)
   SET(HAVE_SOCKET_TIMEOUT 0)
 ELSE()
-SET(CMAKE_REQUIRED_LIBRARIES ${LIBNSL} ${LIBSOCKET}) 
+SET(CMAKE_REQUIRED_LIBRARIES ${LIBNSL} ${LIBSOCKET})
 CHECK_C_SOURCE_RUNS(
 "
  #include <sys/types.h>
  #include <sys/socket.h>
  #include <sys/time.h>
- 
+
  int main()
- {    
+ {
    int fd = socket(AF_INET, SOCK_STREAM, 0);
    struct timeval tv;
    int ret= 0;
@@ -988,7 +988,7 @@ CHECK_C_SOURCE_RUNS(
 " HAVE_SOCKET_TIMEOUT)
 ENDIF()
 
-SET(NO_ALARM "${HAVE_SOCKET_TIMEOUT}" CACHE BOOL 
+SET(NO_ALARM "${HAVE_SOCKET_TIMEOUT}" CACHE BOOL
    "No need to use alarm to implement socket timeout")
 SET(SIGNAL_WITH_VIO_CLOSE "${HAVE_SOCKET_TIMEOUT}")
 MARK_AS_ADVANCED(NO_ALARM)
@@ -1038,7 +1038,7 @@ if available and 'smp' configuration otherwise.")
 MARK_AS_ADVANCED(WITH_ATOMIC_LOCKS MY_ATOMIC_MODE_RWLOCK MY_ATOMIC_MODE_DUMMY)
 
 IF(WITH_VALGRIND)
-  CHECK_INCLUDE_FILES("valgrind/memcheck.h;valgrind/valgrind.h" 
+  CHECK_INCLUDE_FILES("valgrind/memcheck.h;valgrind/valgrind.h"
     HAVE_VALGRIND_HEADERS)
   IF(HAVE_VALGRIND_HEADERS)
     SET(HAVE_VALGRIND 1)
@@ -1094,7 +1094,7 @@ CHECK_STRUCT_HAS_MEMBER("struct sockaddr_in" sin_len
 CHECK_STRUCT_HAS_MEMBER("struct sockaddr_in6" sin6_len
   "${CMAKE_EXTRA_INCLUDE_FILES}" HAVE_SOCKADDR_IN6_SIN6_LEN)
 
-SET(CMAKE_EXTRA_INCLUDE_FILES) 
+SET(CMAKE_EXTRA_INCLUDE_FILES)
 
 CHECK_STRUCT_HAS_MEMBER("struct dirent" d_ino "dirent.h"  STRUCT_DIRENT_HAS_D_INO)
 CHECK_STRUCT_HAS_MEMBER("struct dirent" d_namlen "dirent.h"  STRUCT_DIRENT_HAS_D_NAMLEN)

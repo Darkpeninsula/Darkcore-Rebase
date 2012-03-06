@@ -98,7 +98,7 @@ enum dtStatus
 // Structure describing the navigation polygon data.
 struct dtPoly
 {
-	unsigned int firstLink;						// Index to first link in linked list. 
+	unsigned int firstLink;						// Index to first link in linked list.
 	unsigned short verts[DT_VERTS_PER_POLYGON];	// Indices to vertices of the poly.
 	unsigned short neis[DT_VERTS_PER_POLYGON];	// Refs to neighbours of the poly.
 	unsigned short flags;						// Flags (see dtPolyFlags).
@@ -124,7 +124,7 @@ struct dtLink
 {
 	dtPolyRef ref;							// Neighbour reference.
 	unsigned int next;						// Index to next link.
-	unsigned char edge;						// Index to polygon edge which owns this link. 
+	unsigned char edge;						// Index to polygon edge which owns this link.
 	unsigned char side;						// If boundary link, defines on which side the link is.
 	unsigned char bmin, bmax;				// If boundary link, defines the sub edge area.
 };
@@ -236,7 +236,7 @@ public:
 	// Params:
 	//  ref - (in) Reference to the tile to remove.
 	//  data - (out) Data associated with deleted tile.
-	//  dataSize - (out) Size of the data associated with deleted tile. 
+	//  dataSize - (out) Size of the data associated with deleted tile.
 	dtStatus removeTile(dtTileRef ref, unsigned char** data, int* dataSize);
 
 	// Calculates tile location based in input world position.
@@ -372,7 +372,7 @@ private:
 	// Returns pointer to tile in the tile array.
 	dtMeshTile* getTile(int i);
 
-	// Returns neighbour tile based on side. 
+	// Returns neighbour tile based on side.
 	dtMeshTile* getNeighbourTileAt(int x, int y, int side) const;
 	// Returns all polygons in neighbour tile based on portal defined by the segment.
 	int findConnectingPolys(const float* va, const float* vb,

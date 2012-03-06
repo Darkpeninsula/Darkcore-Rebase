@@ -82,15 +82,15 @@ typedef struct st_plugin_vio
     contents of any incoming packet. Returns the packet length, or -1 if
     the plugin should terminate.
   */
-  int (*read_packet)(struct st_plugin_vio *vio, 
+  int (*read_packet)(struct st_plugin_vio *vio,
                      unsigned char **buf);
-  
+
   /**
     Plugin provides a buffer with data and the length and this
     function sends it as a packet. Returns 0 on success, 1 on failure.
   */
-  int (*write_packet)(struct st_plugin_vio *vio, 
-                      const unsigned char *packet, 
+  int (*write_packet)(struct st_plugin_vio *vio,
+                      const unsigned char *packet,
                       int packet_len);
 
   /**

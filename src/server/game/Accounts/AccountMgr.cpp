@@ -32,15 +32,15 @@ namespace AccountMgr
     {
         if (utf8length(username) > MAX_ACCOUNT_STR)
             return AOR_NAME_TOO_LONG;                           // username's too long
-        
+
         normalizeString(username);
         normalizeString(password);
-        
+
         if (GetId(username))
             return AOR_NAME_ALREADY_EXIST;                       // username does already exist
-        
+
         PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_ADD_ACCOUNT);
-        
+
         stmt->setString(0, username);
         stmt->setString(1, CalculateShaPassHash(username, password));
 
@@ -68,7 +68,7 @@ namespace AccountMgr
             {
                 uint32 guidLow = (*result)[0].GetUInt32();
                 uint64 guid = MAKE_NEW_GUID(guidLow, 0, HIGHGUID_PLAYER);
-                
+
                 // kick if player is online
                 if (Player* p = ObjectAccessor::FindPlayer(guid))
                 {
@@ -76,7 +76,7 @@ namespace AccountMgr
                     s->KickPlayer();                            // mark session to remove at next session list update
                     s->LogoutPlayer(false);                     // logout player without waiting next session list update
                 }
-                
+
                 Player::DeleteFromDB(guid, accountId, false);       // no need to update realm characters
             } while (result->NextRow());
         }

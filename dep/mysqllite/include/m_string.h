@@ -35,7 +35,7 @@
 #endif
 
 /* need by my_vsnprintf */
-#include <stdarg.h> 
+#include <stdarg.h>
 
 /*  This is needed for the definitions of bzero... on solaris */
 #if defined(HAVE_STRINGS_H)

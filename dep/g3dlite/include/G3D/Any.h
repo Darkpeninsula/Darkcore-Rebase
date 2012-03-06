@@ -1,9 +1,9 @@
 /**
  @file Any.h
-  
+
  @author Morgan McGuire, Shawn Yarbrough, and Corey Taylor
  @maintainer Morgan McGuire
-  
+
  @created 2006-06-11
  @edited  2010-03-16
 
@@ -31,7 +31,7 @@ namespace G3D {
 
 class TextOutput;
 
-/** 
+/**
 \brief Easy loading and saving of human-readable configuration files.
 
 Any encodes typed, structured data and can serialize it to a human
@@ -79,7 +79,7 @@ chosen over formats like XML, YAML, JSON, S-expressions, and Protocol
 Buffers, although there is no reason you could not write readers and
 writers for G3D::Any that support those.
 
-G3D::Any assumes that structures do not contain cycles; it is an 
+G3D::Any assumes that structures do not contain cycles; it is an
 error to create a structure like:
 
 <pre>
@@ -93,7 +93,7 @@ although no exception will be thrown at runtime during that append.
 \section Parsing
 
 The primary use of Any is to create your own text file formats.
-The Vector3 constructor is a good example of how to use the Any::verify 
+The Vector3 constructor is a good example of how to use the Any::verify
 methods to provide good error checking while parsing such formats:
 
 <pre>
@@ -156,7 +156,7 @@ include     ::= "#" "include" "(" string ")"
 value       ::= [comment] (none | number | boolean | string | array | table | named-array | named-table | include)
 </pre>
 
-Except for single-line comments, whitespace is not significant.  
+Except for single-line comments, whitespace is not significant.
 All parsing is case-insensitive.
 
 The include expression pastes the contents of the named file in as if
@@ -167,12 +167,12 @@ as the pair in a table.
 
 The deserializer allows the substitution of [] for () when writing
 tuples and ";" for ",".  These are convenient when mimicing a
-programming language, e.g., <code>"[ printf("hello world."); clearScreen();]"</code> 
-parses as an array containing two named arrays within it. The 
+programming language, e.g., <code>"[ printf("hello world."); clearScreen();]"</code>
+parses as an array containing two named arrays within it. The
 deserializer also allows a trailing comma inside any array or table,
 which also convenient when commenting out the last element.
 
-The serializer indents four spaces for each level of nesting. 
+The serializer indents four spaces for each level of nesting.
 Tables are written with the keys in alphabetic order.
 */
 class Any {
@@ -215,7 +215,7 @@ private:
         inline SimpleValue(bool x) : b(x) {}
         inline SimpleValue(double x) : n(x) {}
     };
- 
+
     class Data {
     public:
         /** ARRAY, TABLE, or STRING value only.  NULL otherwise. */
@@ -227,13 +227,13 @@ private:
         };
 
         // Needed so that the destructor knows what is in Value
-        // and can call its destructor. 
+        // and can call its destructor.
         Type                         type;
-        
+
         /** Always points to memory that is allocated with the Data, so
            the destructor does not delete this. */
         Value                        value;
-        
+
         std::string                  comment;
 
         std::string                  name;
@@ -301,7 +301,7 @@ private:
     /** If m_data is not NULL, ensure that it has a unique reference
         and contains a valid m_data.  This has a race condition if two
         threads are both trying to modify the same Any
-        simultaneously.*/    
+        simultaneously.*/
     void ensureMutable();
 
     /** Read an unnamed a TABLE or ARRAY.  Token should be the open
@@ -313,7 +313,7 @@ private:
 
     /** Read the name of a named Array or Table. */
     static void deserializeName(TextInput& ti, Token& token, std::string& name);
-    
+
     /** Read until a comma is consumed or a close paren is hit, and
      return that token.  Considers the passed in token to be the first
      value read. */
@@ -391,7 +391,7 @@ public:
 
     /** \a t must be ARRAY or TABLE */
     Any(Type t, const std::string& name = "");
-    
+
     ~Any();
 
     /** Removes the comment and name */
@@ -425,7 +425,7 @@ public:
     void parse(const std::string& src);
 
     std::string unparse() const;
-    
+
     /** Comments appear before values when they are in serialized form.*/
     const std::string& comment() const;
     void setComment(const std::string& c);
@@ -442,7 +442,7 @@ public:
         If not found, the returned string is empty.
 
         The file is searched for the following ways:
-        
+
         - In the directory from which the Any was loaded.
         - By calling System::findDataFile as you would with other data files.
      */
@@ -465,7 +465,7 @@ public:
     bool nameEquals(const char* s) const;
 
     /** \brief Set the name used when serializing an ARRAY or TABLE.
-    
+
        Only legal for ARRAY or TABLE.  The \a name must begin with a letter
        and contain only letters, numbers, underscores and scope operators.
 
@@ -477,8 +477,8 @@ public:
         this->that
         __x
         </pre>
-        
-                
+
+
         The scope operators "::", "->", and
         ".", may have spaces around them.  The name may not
         contain parentheses.
@@ -513,7 +513,7 @@ public:
 
     /** For a table, returns the element for \a key. Throws KeyNotFound
         exception if the element does not exist.
-       */ 
+       */
     const Any& operator[](const std::string& key) const;
 
     // Needed to prevent the operator[](int) overload from catching
@@ -522,13 +522,13 @@ public:
         return operator[](std::string(key));
     }
 
-    /** 
+    /**
         Fetch an element from a table.  This can be used as:
 
         <pre>
         a["key"] = value;  (create the key if it did not exist)
         </pre>
-        
+
         or
 
         <pre>
@@ -551,21 +551,21 @@ public:
     inline Any& operator[](const char* key) {
         return operator[](std::string(key));
     }
-    
+
     /** For a table, returns the element for key \a x and \a
         defaultVal if it does not exist. */
     const Any& get(const std::string& key, const Any& defaultVal) const;
 
     /** Returns true if this key is in the TABLE.  Illegal to call on an object that is not a TABLE. */
     bool containsKey(const std::string& key) const;
-    
+
     /** For a table, assigns the element for key k. */
     void set(const std::string& key, const Any& val);
 
     /** for an ARRAY, resizes and returns the last element */
     Any& next();
 
-    /** The parent directory of the location from which this Any was loaded.  This is useful for 
+    /** The parent directory of the location from which this Any was loaded.  This is useful for
        interpreting filenames relative to the Any's source location,
        which may not match the current directory if the Any was from an included file. */
     std::string sourceDirectory() const;
@@ -580,11 +580,11 @@ public:
     operator bool() const;
     operator std::string() const;
 
-    /** Resize to \a n elements, where new elements are NIL 
+    /** Resize to \a n elements, where new elements are NIL
        It is an error to call this method if this is not an Any::ARRAY */
     void resize(int n);
 
-    /** 
+    /**
        Clears all entries.
        This must be a TABLE or ARRAY */
     void clear();
@@ -609,11 +609,11 @@ public:
     void verify(bool value, const std::string& message = "") const;
 
 
-    /** Verifies that the name <i>begins with</i> identifier \a n (case insensitive). 
+    /** Verifies that the name <i>begins with</i> identifier \a n (case insensitive).
         It may contain identifier operators after this */
     void verifyName(const std::string& n) const;
 
-    /** Verifies that the name <i>begins with</i> identifier \a n or \a m (case insensitive). 
+    /** Verifies that the name <i>begins with</i> identifier \a n or \a m (case insensitive).
         It may contain identifier operators after this */
     void verifyName(const std::string& n, const std::string& m) const;
 

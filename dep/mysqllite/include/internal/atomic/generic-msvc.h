@@ -26,9 +26,9 @@
 
 #include <windows.h>
 /*
-  x86 compilers (both VS2003 or VS2005) never use instrinsics, but generate 
-  function calls to kernel32 instead, even in the optimized build. 
-  We force intrinsics as described in MSDN documentation for 
+  x86 compilers (both VS2003 or VS2005) never use instrinsics, but generate
+  function calls to kernel32 instead, even in the optimized build.
+  We force intrinsics as described in MSDN documentation for
   _InterlockedCompareExchange.
 */
 #ifdef _M_IX86
@@ -52,7 +52,7 @@ C_MODE_END
 /*
  No need to do something special for InterlockedCompareExchangePointer
  as it is a #define to InterlockedCompareExchange. The same applies to
- InterlockedExchangePointer. 
+ InterlockedExchangePointer.
 */
 #endif /*_M_IX86*/
 
@@ -93,7 +93,7 @@ C_MODE_END
 /*
   my_yield_processor (equivalent of x86 PAUSE instruction) should be used
   to improve performance on hyperthreaded CPUs. Intel recommends to use it in
-  spin loops also on non-HT machines to reduce power consumption (see e.g 
+  spin loops also on non-HT machines to reduce power consumption (see e.g
   http://softwarecommunity.intel.com/articles/eng/2004.htm)
 
   Running benchmarks for spinlocks implemented with InterlockedCompareExchange
