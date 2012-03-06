@@ -19,7 +19,6 @@
  */
 
 
-#include "GuildAchievementMgr.h"
 #include "Common.h"
 #include "DBCEnums.h"
 #include "ObjectMgr.h"

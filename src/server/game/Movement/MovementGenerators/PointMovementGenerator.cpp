@@ -26,6 +26,7 @@
 #include "World.h"
 #include "MoveSplineInit.h"
 #include "MoveSpline.h"
+#include "Player.h"
 
 //----- Point Movement Generator
 template<class T>

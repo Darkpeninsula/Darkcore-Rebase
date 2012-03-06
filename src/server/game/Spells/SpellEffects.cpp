@@ -5811,9 +5811,9 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                 int32 bp = 0;
                 Unit::AuraEffectList const &mPeriodic =    unitTarget->GetAuraEffectsByType(SPELL_AURA_PERIODIC_DAMAGE);
                 //Cycle trough all periodic auras to increase Combustion periodic damage
-                for (Unit::AuraEffectList::const_iterator i = mPeriodic.begin(); i != mPeriodic.end(); ++i)                 
+                for (Unit::AuraEffectList::const_iterator i = mPeriodic.begin(); i != mPeriodic.end(); ++i)
                     if ((*i)->GetCasterGUID() == m_caster->GetGUID())
-                        bp += (*i)->GetAmount();             
+                        bp += (*i)->GetAmount();
                 m_caster->CastCustomSpell(unitTarget, 83853, &bp,NULL, NULL, true);
             }
             break;
@@ -5852,7 +5852,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
 
                 uint32 spellId = 0;
 
-                // Seal of Truth and Seal of Righteoussness have a dummy aura on effect 2
+                // Seal of Truth and Seal of Righteousness have a dummy aura on effect 2
                 Unit::AuraApplicationMap & sealAuras = m_caster->GetAppliedAuras();
                 for (Unit::AuraApplicationMap::iterator iter = sealAuras.begin(); iter != sealAuras.end();)
                 {
@@ -6053,7 +6053,15 @@ void Spell::EffectAddComboPoints(SpellEffIndex /*effIndex*/)
         return;
 
     if (damage <= 0)
-        return;
+    {
+        // Rogue: Redirect
+        Player* player = unitTarget->ToPlayer();
+        if (GetSpellInfo()->Id == 73981 && player->GetComboPoints() > 0 && player->GetComboTarget())
+        {
+            if (!(player->GetComboTarget() == unitTarget->GetGUID())) // Can't Use on target that already has Combo Points
+                player->AddComboPoints(unitTarget, player->GetComboPoints(), this);
+        }
+    }
 
     m_caster->_movedPlayer->AddComboPoints(unitTarget, damage, this);
 }
@@ -7834,44 +7842,44 @@ void Spell::EffectMassResurrect(SpellEffIndex effIndex)
 {
     if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
         return;
-    
+
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
-    
+
     float radius = m_spellInfo->Effects[effIndex].CalcRadius(m_caster);
 
     std::list<Unit*> RaidMembers;
     m_caster->GetRaidMember(RaidMembers,radius);
-    
+
     for (std::list<Unit*>::iterator itr = RaidMembers.begin(); itr != RaidMembers.end(); ++itr)
     {
         Unit* target = (*itr);
         if (!target)
             continue;
-        
+
         if (target->GetTypeId() != TYPEID_PLAYER)
             continue;
-        
+
         if (target->isAlive())
             continue;
-        
+
         if (!target->IsInWorld())
             continue;
-        
+
         if (target->ToPlayer()->isRessurectRequested())
             continue;
 
         if (target->HasAura(95223))
             continue;
-        
+
         uint32 health = target->CountPctFromMaxHealth(damage);
         uint32 mana   = CalculatePctN(target->GetMaxPower(POWER_MANA), damage);
-        
+
         target->CastSpell(m_caster, 58854, true, 0); // Ressurection Visual
         target->CastSpell(m_caster, 95223, true, 0); // Mass Ressurection Debuff
 
         ExecuteLogEffectResurrect(effIndex, target);
-        
+
         target->ToPlayer()->setResurrectRequestData(m_caster->GetGUID(), m_caster->GetMapId(), m_caster->GetPositionX(), m_caster->GetPositionY(), m_caster->GetPositionZ(), health, mana);
         SendResurrectRequest(target->ToPlayer());
     }
