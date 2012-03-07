@@ -18008,9 +18008,9 @@ void SpellModifier::Recalculate(SpellInfo const *spellInfo, Unit* target)
 
 void Unit::SetEclipsePower(int32 power)
 {
-    eclipse = power;
+    _eclipse = power;
 
-    if (eclipse == 0)
+    if (_eclipse == 0)
     {
         if (HasAura(67483))
             RemoveAurasDueToSpell(67483);
@@ -18018,19 +18018,19 @@ void Unit::SetEclipsePower(int32 power)
             RemoveAurasDueToSpell(67484);
     }
 
-    if (eclipse >= 100)
+    if (_eclipse >= 100)
     {
         if (HasAura(48518))
             RemoveAurasDueToSpell(48518);
-        eclipse = 100;
+        _eclipse = 100;
         AddAura(48517, ToPlayer());
     }
 
-    if (eclipse <= -100)
+    if (_eclipse <= -100)
     {
         if (HasAura(48517))
             RemoveAurasDueToSpell(48517);
-        eclipse = -100;
+        _eclipse = -100;
         AddAura(48518, ToPlayer());
     }
 
@@ -18038,7 +18038,7 @@ void Unit::SetEclipsePower(int32 power)
     data.append(GetPackGUID());
     data << int32(1);
     data << int8(POWER_ECLIPSE);
-    data << int32(eclipse);
+    data << int32(_eclipse);
     SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
 }
 

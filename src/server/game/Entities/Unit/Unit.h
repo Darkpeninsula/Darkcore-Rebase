@@ -2261,8 +2261,7 @@ class Unit : public WorldObject
         Spell* m_spellModTakingSpell;  // Spell for which charges are dropped in spell::finish
         SpellModList m_spellMods[MAX_SPELLMOD];
 
-        int32 eclipse;
-        int32 GetEclipsePower() {return eclipse;};
+        int32 GetEclipsePower() {return _eclipse;};
         void SetEclipsePower(int32 power);
 
         uint32 m_heal_done[120];
@@ -2280,12 +2279,13 @@ class Unit : public WorldObject
         void SetAbsorbHeal(float heal) { m_AbsorbHeal = heal; };
 
         // Movement info
-        Movement::MoveSpline * movespline;
+        Movement::MoveSpline* movespline;
 
     protected:
         explicit Unit (bool isWorldObject);
 
-        UnitAI *i_AI, *i_disabledAI;
+        UnitAI* i_AI;
+        UnitAI* i_disabledAI;
 
         void _UpdateSpells(uint32 time);
         void _DeleteRemovedAuras();
@@ -2346,8 +2346,8 @@ class Unit : public WorldObject
 
         ThreatManager m_ThreatManager;
 
-        Vehicle *m_vehicle;
-        Vehicle *_vehicleKit;
+        Vehicle* m_vehicle;
+        Vehicle* _vehicleKit;
 
         uint32 m_unitTypeMask;
 
@@ -2355,6 +2355,7 @@ class Unit : public WorldObject
         bool IsAlwaysDetectableFor(WorldObject const* seer) const;
 
         void DisableSpline();
+
     private:
         bool IsTriggeredAtSpellProcEvent(Unit* victim, Aura * aura, SpellInfo const* procSpell, uint32 procFlag, uint32 procExtra, WeaponAttackType attType, bool isVictim, bool active, SpellProcEventEntry const *& spellProcEvent);
         bool HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggeredByAura, SpellInfo const *procSpell, uint32 procFlag, uint32 procEx, uint32 cooldown);
@@ -2403,6 +2404,8 @@ class Unit : public WorldObject
 
         Spell const* _focusSpell;
         bool _targetLocked; // locks the target during spell cast for proper facing
+
+        int32 _eclipse;
 };
 
 namespace Darkcore
@@ -2490,8 +2493,10 @@ template <class T> T Unit::ApplySpellMod(uint32 spellId, SpellModOp op, T &basev
 
         DropModCharge(mod, spell);
     }
+
     float diff = (float)basevalue * (totalmul - 1.0f) + (float)totalflat;
     basevalue = T((float)basevalue + diff);
+
     return T(diff);
 }
 #endif

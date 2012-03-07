@@ -5406,7 +5406,7 @@ void Player::DurabilityLoss(Item* item, double percent)
     if (!pMaxDurability)
         return;
 
-    percent /= GetTotalAuraMultiplier(SPELL_AURA_MOD_DURABILITY_LOSS);
+    percent /= GetTotalAuraMultiplier(SPELL_AURA_REDUCE_DURABILITY_LOSS);
 
     uint32 pDurabilityLoss = uint32(pMaxDurability*percent);
 
@@ -19941,7 +19941,8 @@ void Player::_SaveStats(SQLTransaction& trans)
         << GetFloatValue(PLAYER_SPELL_CRIT_PERCENTAGE1) << ','
         << GetUInt32Value(UNIT_FIELD_ATTACK_POWER) << ','
         << GetUInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER) << ','
-        << GetBaseSpellPowerBonus() << ')';
+        << GetBaseSpellPowerBonus() << ','
+        << GetUInt32Value(PLAYER_FIELD_COMBAT_RATING_1 + CR_CRIT_TAKEN_SPELL) << ')';
     trans->Append(ss.str().c_str());
 }
 
