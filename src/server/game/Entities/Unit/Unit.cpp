@@ -1842,14 +1842,14 @@ void Unit::CalcHealAbsorb(Unit* victim, const SpellInfo *healSpell, uint32 &heal
     if (!healAmount)
         return;
 
-    int32 RemainingHeal = healAmount;
+    int32 remainingHeal = healAmount;
 
     // Need remove expired auras after
     bool existExpired = false;
 
     // absorb without mana cost
     AuraEffectList const& vHealAbsorb = victim->GetAuraEffectsByType(SPELL_AURA_SCHOOL_HEAL_ABSORB);
-    for (AuraEffectList::const_iterator i = vHealAbsorb.begin(); i != vHealAbsorb.end() && RemainingHeal > 0; ++i)
+    for (AuraEffectList::const_iterator i = vHealAbsorb.begin(); i != vHealAbsorb.end() && remainingHeal > 0; ++i)
     {
         if (!((*i)->GetMiscValue() & healSpell->SchoolMask))
             continue;
@@ -1866,10 +1866,10 @@ void Unit::CalcHealAbsorb(Unit* victim, const SpellInfo *healSpell, uint32 &heal
 
         // currentAbsorb - damage can be absorbed by shield
         // If need absorb less damage
-        if (RemainingHeal < currentAbsorb)
-            currentAbsorb = RemainingHeal;
+        if (remainingHeal < currentAbsorb)
+            currentAbsorb = remainingHeal;
 
-        RemainingHeal -= currentAbsorb;
+        remainingHeal -= currentAbsorb;
 
         // Reduce shield amount
         (*i)->SetAmount((*i)->GetAmount() - currentAbsorb);
@@ -1881,16 +1881,13 @@ void Unit::CalcHealAbsorb(Unit* victim, const SpellInfo *healSpell, uint32 &heal
     // Necrotic Strike
     if (victim->HasAura(73975))
     {
-        if (Aura* aur = GetAura(73975))
-        {
-            int32 heal = int32(victim->GetAbsorbHeal());
-            RemainingHeal -= heal;
-        }
+        int32 healAbsorb = int32(victim->GetHealAbsorb());
+        remainingHeal -= healAbsorb;
     }
 
     // No negative heal
-    if (RemainingHeal < 0)
-        RemainingHeal = 0;
+    if (remainingHeal < 0)
+        remainingHeal = 0;
 
     // Remove all expired absorb auras
     if (existExpired)
@@ -1899,8 +1896,6 @@ void Unit::CalcHealAbsorb(Unit* victim, const SpellInfo *healSpell, uint32 &heal
         {
             AuraEffect* auraEff = *i;
             ++i;
-            if (auraEff->GetId() != 73975)     // if aura id doesnt = necro strike
-            // undefined auras
             if (auraEff->GetAmount() <= 0)
             {
                 uint32 removedAuras = victim->m_removedAurasCount;
@@ -1911,17 +1906,15 @@ void Unit::CalcHealAbsorb(Unit* victim, const SpellInfo *healSpell, uint32 &heal
         }
     }
 
-    absorb = RemainingHeal > 0 ? (healAmount - RemainingHeal) : healAmount;
-    healAmount = RemainingHeal;
+    absorb = remainingHeal > 0 ? (healAmount - remainingHeal) : healAmount;
+    healAmount = remainingHeal;
 
-    if (Aura* aur = GetAura(73975))              // necrotic strike
+    // Necrotic Strike
+    if (victim->HasAura(73975))
     {
-        int32 getabsorb = GetAbsorbHeal();       // Get initial absorb value
-        int32 subtract = getabsorb - absorb;     // Define subtraction
-        SetAbsorbHeal(subtract);                 // set absorb heal to the new value
-        if (subtract <= 0)                       // remove if empty - 0 absorb left
-        victim->RemoveAura(73975);
-        SetAbsorbHeal(0);                        // reset absorb amount after consumed
+        SetHealAbsorb(GetHealAbsorb() - absorb);
+        if (GetHealAbsorb() <= 0.0f)
+            victim->RemoveAura(73975);
     }
 }
 
