@@ -369,12 +369,12 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNULL,                                      // 309 0 spells in 3.3.5
     &AuraEffect::HandleNoImmediateEffect,                         // 310 SPELL_AURA_MOD_CREATURE_AOE_DAMAGE_AVOIDANCE implemented in Spell::CalculateDamageDone
     &AuraEffect::HandleNULL,                                      // 311 0 spells in 3.3.5
-    &AuraEffect::HandleNULL,                                      // 312 0 spells in 3.3.5
+    &AuraEffect::HandleNULL,                                      // 312 Stealth Aura
     &AuraEffect::HandleNULL,                                      // 313 0 spells in 3.3.5
     &AuraEffect::HandlePreventResurrection,                       // 314 SPELL_AURA_PREVENT_RESURRECTION todo
     &AuraEffect::HandleNoImmediateEffect,                         // 315 SPELL_AURA_UNDERWATER_WALKING todo
     &AuraEffect::HandleNoImmediateEffect,                         // 316 SPELL_AURA_PERIODIC_HASTE implemented in AuraEffect::CalculatePeriodic
-    &AuraEffect::HandleNULL,                                      // 317 SPELL_AURA_MOD_SPELL_POWER_PCT
+    &AuraEffect::HandleAuraModSpellPowerPercent,                  // 317 SPELL_AURA_MOD_SPELL_POWER_PCT
     &AuraEffect::HandleAuraModMastery,                            // 318 SPELL_AURA_MASTERY allows and adds for player x% mastery.
     &AuraEffect::HandleModMeleeSpeedPct,                          // 319
     &AuraEffect::HandleModMeleeRangedSpeedPct,                    // 320
@@ -1392,7 +1392,7 @@ void AuraEffect::HandleShapeshiftBoosts(Unit* target, bool apply) const
             HotWSpellId = 24900;
             break;
         case FORM_TREE:
-            spellId = 34123;
+            spellId = 5420;
             break;
         case FORM_TRAVEL:
             spellId = 5419;
@@ -1416,7 +1416,7 @@ void AuraEffect::HandleShapeshiftBoosts(Unit* target, bool apply) const
             break;
         case FORM_MOONKIN:
             spellId = 24905;
-            spellId2 = 69366;
+            spellId2 = 24907;
             break;
         case FORM_FLIGHT:
             spellId = 33948;
@@ -1436,7 +1436,6 @@ void AuraEffect::HandleShapeshiftBoosts(Unit* target, bool apply) const
             break;
         case FORM_SHADOW:
             spellId = 49868;
-            spellId2 = 71167;
             break;
         case FORM_GHOSTWOLF:
             spellId = 67116;
@@ -1967,8 +1966,8 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
             case FORM_FLIGHT:
             case FORM_MOONKIN:
             {
-                // remove movement affects
-                target->RemoveMovementImpairingAuras();
+                // remove movement affects without root
+                target->RemoveAurasWithMechanic((1 << MECHANIC_SNARE));
 
                 // and polymorphic affects
                 if (target->IsPolymorphed())
@@ -1991,7 +1990,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
 
         if (PowerType != POWER_MANA)
         {
-            int32 oldPower = target->GetPower(PowerType);
+            uint32 oldPower = target->GetPower(PowerType);
             // reset power to default values only at power change
             if (target->getPowerType() != PowerType)
                 target->setPowerType(PowerType);
@@ -2010,7 +2009,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
                     {
                         case FORM_CAT:
                         {
-                            int32 basePoints = int32(std::min(oldPower, FurorChance));
+                            int32 basePoints = int32(std::min(oldPower, uint32(FurorChance)));
                             target->SetPower(POWER_ENERGY, 0);
                             target->CastCustomSpell(target, 17099, &basePoints, NULL, NULL, true, NULL, this);
                         }
@@ -2869,7 +2868,11 @@ void AuraEffect::HandleAuraMounted(AuraApplication const* aurApp, uint8 mode, bo
         target->Dismount();
 
         if (player)
+        {
             player->RemoveAurasDueToSpell(spellId);
+            player->RemoveAurasDueToSpell(22587);
+            player->RemoveAurasDueToSpell(87840);
+        }
 
         // some mounts like Headless Horseman's Mount or broom stick are skill based spell
         // need to remove ALL arura related to mounts, this will stop client crash with broom stick
@@ -3421,20 +3424,33 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const* aurApp, uint8
     if ((GetMiscValue() & (1<<7)) && (GetId() != 46924))
         immunity_list.push_back(SPELL_AURA_MOD_DISARM);
 
-    // apply immunities
-    for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
-        target->ApplySpellImmune(GetId(), IMMUNITY_STATE, *iter, apply);
-
     // Patch 3.0.3 Bladestorm now breaks all snares and roots on the warrior when activated.
+    // however not all mechanic specified in immunity
     if (apply && GetId() == 46924)
     {
+        immunity_list.pop_back(); // delete Disarm
         target->RemoveAurasByType(SPELL_AURA_MOD_ROOT);
-        target->RemoveAurasByType(SPELL_AURA_MOD_DECREASE_SPEED);
+        target->ApplySpellImmune(GetId(), IMMUNITY_MECHANIC, MECHANIC_SNARE, apply);
+        immunity_list.push_back(SPELL_AURA_MOD_ROOT);
+        immunity_list.push_back(SPELL_AURA_MOD_DECREASE_SPEED);
+        immunity_list.push_back(SPELL_AURA_MOD_PACIFY_SILENCE);
+        immunity_list.push_back(SPELL_AURA_MOD_POSSESS);
+        immunity_list.push_back(SPELL_AURA_MOD_CHARM);
+        immunity_list.push_back(SPELL_AURA_MOD_STUN);
     }
 
     if (apply && GetSpellInfo()->AttributesEx & SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY)
         for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
             target->RemoveAurasByType(*iter);
+
+    // stop handling the effect if it was removed by linked event
+    if (apply && aurApp->GetRemoveMode())
+        return;
+
+    // apply immunities
+    for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
+        target->ApplySpellImmune(GetId(), IMMUNITY_STATE, *iter, apply);
+
 }
 
 void AuraEffect::HandleModMechanicImmunity(AuraApplication const* aurApp, uint8 mode, bool apply) const
@@ -3833,6 +3849,20 @@ void AuraEffect::HandleModSpellHealingPercentFromStat(AuraApplication const* aur
         return;
 
     Unit* target = aurApp->GetTarget();
+
+    if (target->GetTypeId() != TYPEID_PLAYER)
+        return;
+
+    // Recalculate bonus
+    target->ToPlayer()->UpdateSpellDamageAndHealingBonus();
+}
+
+void AuraEffect::HandleAuraModSpellPowerPercent(AuraApplication const * aurApp, uint8 mode, bool apply) const
+{
+    if (!(mode & (AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK | AURA_EFFECT_HANDLE_STAT)))
+        return;
+
+    Unit *target = aurApp->GetTarget();
 
     if (target->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -5154,7 +5184,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                             target->CastSpell((Unit*)NULL, GetAmount(), true, NULL, this);
                             break;
                         case 58600: // Restricted Flight Area
-                        case 58730: // Restricted Flight Area
+                        case 91604: // Restricted Flight Area
                             if (aurApp->GetRemoveMode() == AURA_REMOVE_BY_EXPIRE)
                                 target->CastSpell(target, 61286, true);
                                 target->CastSpell(target, 58601, true);
@@ -5332,6 +5362,10 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                     }
                     break;
                 }
+                case 83508: // Molten Flame
+                    caster->ApplySpellImmune(GetId(), IMMUNITY_ID, 94644, apply); break; // Prevent restacking of Shadow Infusion while in dark transformation
+                case 63560: // Dark Transformation
+                    target->ApplySpellImmune(GetId(), IMMUNITY_ID, 91342, apply); break; // Prevent restacking of Shadow Infusion while in dark transformation
                 case 57723: // Exhaustion
                 case 57724: // Sated
                 case 80354: // Temporal Displacement
@@ -5557,9 +5591,61 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
             break;
         case SPELLFAMILY_DEATHKNIGHT:
         {
-            // if (!(mode & AURA_EFFECT_HANDLE_REAL))
-            //    break;
+            if (!(mode & AURA_EFFECT_HANDLE_REAL))
+                break;
+            // Improved Frost Presence
+            else if (m_spellInfo->SpellIconID == 2636)
+            {
+                if (apply)
+                {
+                    if (!target->HasAura(48266) && !target->HasAura(63611))
+                        target->CastSpell(target, 63611, true);
+                }
+                else
+                    target->RemoveAurasDueToSpell(63611);
+            }
             break;
+        }
+        case SPELLFAMILY_ROGUE:
+        {
+            switch(GetId())
+            {
+                // Smoke bomb
+                case 76577:
+                {
+                    if (apply)
+                    {
+                        if (SpellEntry const *spellInfo = sSpellStore.LookupEntry(88611))
+                        {
+                            if(Aura* aur = Aura::TryCreate(m_spellInfo, 0, target, this->GetCaster()))
+                            {
+                                aur->SetMaxDuration(GetBase()->GetDuration());
+                                aur->SetDuration(GetBase()->GetDuration());
+                            }
+                        }
+                    }
+                    else
+                        target->RemoveAura(88611);
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    // stop handling the effect if it was removed by linked event
+    if (apply && aurApp->GetRemoveMode())
+        return;
+
+    if (mode & AURA_EFFECT_HANDLE_REAL)
+    {
+        // pet auras
+        if (PetAura const* petSpell = sSpellMgr->GetPetAura(GetId(), m_effIndex))
+        {
+            if (apply)
+                target->AddPetAura(petSpell);
+            else
+                target->RemovePetAura(petSpell);
         }
     }
 }
