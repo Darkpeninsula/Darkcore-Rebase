@@ -476,11 +476,12 @@ enum SMART_ACTION
     SMART_ACTION_REMOVE_DYNAMIC_FLAG                = 96,     // Flags
     SMART_ACTION_JUMP_TO_POS                        = 97,     // speedXY, speedZ, targetX, targetY, targetZ
     SMART_ACTION_SEND_GOSSIP_MENU                   = 98,     // menuId, optionId
-    SMART_ACTION_SET_RANDOM_HEALTH                  = 99,     // MinPctHealth, MaxPctHelath
+    SMART_ACTION_SET_RANDOM_HEALTH                  = 99,     // MinPctHealth, MaxPctHealth
     SMART_ACTION_GO_SET_LOOT_STATE                  = 100,     // state
     SMART_ACTION_SEND_TARGET_TO_TARGET              = 101,
+    SMART_ACTION_SET_MANA                           = 102,     // Mana_Ammount
 
-    SMART_ACTION_END                                = 102,
+    SMART_ACTION_END                                = 103,
 };
 
 struct SmartAction
@@ -907,6 +908,10 @@ struct SmartAction
             uint32 MinPct;
             uint32 MaxPct;
         } health;
+        struct
+        {
+            uint32 Mana;
+        } mana;
     };
 };
 
@@ -1380,7 +1385,7 @@ class SmartAIMgr
             if (t > 0 && v1 >= 0 && v2 >= 0 && v3 >= 0)
             {
                 Condition cond;
-                cond.mConditionType = ConditionType(t);
+                cond.mConditionType = ConditionTypes(t);
                 cond.mConditionValue1 = uint32(v1);
                 cond.mConditionValue2 = uint32(v2);
                 cond.mConditionValue3 = uint32(v3);

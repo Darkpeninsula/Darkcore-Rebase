@@ -57,7 +57,7 @@ public:
 
     const std::string& getRemoteAddress(void) const;
 
-    const uint16 getRemotePort(void) const;
+    uint16 getRemotePort(void) const;
 
     virtual int open(void *);
 
