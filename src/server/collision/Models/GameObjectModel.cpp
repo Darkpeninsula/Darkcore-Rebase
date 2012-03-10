@@ -103,7 +103,7 @@ bool GameObjectModel::initialize(const GameObject& go, const GameObjectDisplayIn
     // ignore models with no bounds
     if (mdl_box == G3D::AABox::zero())
     {
-        sLog->outError("GameObject model %s has zero bounds, loading skipped", it->second.name);
+        sLog->outError("GameObject model %s has zero bounds, loading skipped", it->second.name.c_str());
         return false;
     }
 
