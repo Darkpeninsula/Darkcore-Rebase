@@ -3136,6 +3136,16 @@ void Player::GiveLevel(uint8 level)
             }
 
     sScriptMgr->OnPlayerLevelChanged(this, oldLevel);
+
+    // Only for Wargen
+    // Note: The ability is automatically learned at level 20 in addition to Apprentice riding,
+    // this saves Worgen players some money as they do not have to spend 4 to learn Apprentice Riding and buy a mount.
+    if (level >= 20 && getRace() == RACE_WORGEN)
+    {
+        // Running Wild
+        if(!HasSpell(87840))
+            CastSpell(this, 94098, true);
+    }
 }
 
 void Player::InitTalentForLevel()
