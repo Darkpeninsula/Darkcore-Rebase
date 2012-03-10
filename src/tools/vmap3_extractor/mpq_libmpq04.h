@@ -18,6 +18,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_WARNINGS
 
 #ifndef MPQ_H
 #define MPQ_H
@@ -41,10 +43,10 @@ public:
     void close();
 
     void GetFileListTo(vector<string>& filelist) {
-        uint32 filenum;
-        if (libmpq__file_number(mpq_a, "(listfile)", &filenum)) return;
-        libmpq__off_t size, transferred;
-        libmpq__file_unpacked_size(mpq_a, filenum, &size);
+    	uint32 filenum;
+    	if(libmpq__file_number(mpq_a, "(listfile)", &filenum)) return;
+    	libmpq__off_t size, transferred;
+		libmpq__file_unpacked_size(mpq_a, filenum, &size);
 
         char *buffer = new char[size];
 

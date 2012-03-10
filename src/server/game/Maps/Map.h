@@ -33,6 +33,8 @@
 #include "SharedDefines.h"
 #include "GridRefManager.h"
 #include "MapRefManager.h"
+#include "DynamicTree.h"
+#include "GameObjectModel.h"
 
 #include <bitset>
 #include <list>
@@ -137,7 +139,8 @@ enum ZLiquidStatus
 
 struct LiquidData
 {
-    uint32 type;
+    uint32 type_flags;
+    uint32 entry;
     float  level;
     float  depth_level;
 };
@@ -167,7 +170,8 @@ class GridMap
     uint8* _liquidData;
     float* _liquidMap;
     uint16 _gridArea;
-    uint16 _liquidType;
+    uint16* _liquidEntry;
+    uint8* _liquidFlags;
     uint8 _liquidOffX;
     uint8 _liquidOffY;
     uint8 _liquidWidth;
@@ -430,7 +434,13 @@ class Map : public GridRefManager<NGridType>
         InstanceMap* ToInstanceMap(){ if (IsDungeon())  return reinterpret_cast<InstanceMap*>(this); else return NULL;  }
         const InstanceMap* ToInstanceMap() const { if (IsDungeon())  return (const InstanceMap*)((InstanceMap*)this); else return NULL;  }
         float GetWaterOrGroundLevel(float x, float y, float z, float* ground = NULL, bool swim = false) const;
-
+        float GetHeight(uint32 phasemask, float x, float y, float z, bool vmap = true, float maxSearchDist = DEFAULT_HEIGHT_SEARCH) const;
+        bool isInLineOfSight(float x1, float y1, float z1, float x2, float y2, float z2, uint32 phasemask) const;
+        void Balance() { _dynamicTree.balance(); }
+        void Remove(const GameObjectModel& mdl) { _dynamicTree.remove(mdl); }
+        void Insert(const GameObjectModel& mdl) { _dynamicTree.insert(mdl); }
+        bool Contains(const GameObjectModel& mdl) const { return _dynamicTree.contains(mdl);}
+        bool getObjectHitPos(uint32 phasemask, float x1, float y1, float z1, float x2, float y2, float z2, float& rx, float &ry, float& rz, float modifyDist);
     private:
         void LoadMapAndVMap(int gx, int gy);
         void LoadVMap(int gx, int gy);
@@ -486,6 +496,7 @@ class Map : public GridRefManager<NGridType>
         uint32 i_InstanceId;
         uint32 m_unloadTimer;
         float m_VisibleDistance;
+        DynamicMapTree _dynamicTree;
 
         MapRefManager m_mapRefManager;
         MapRefManager::iterator m_mapRefIter;

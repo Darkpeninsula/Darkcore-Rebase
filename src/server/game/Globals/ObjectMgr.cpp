@@ -729,7 +729,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
         else if (!displayScaleEntry)
             displayScaleEntry = displayEntry;
 
-        CreatureModelInfo const* modelInfo = GetCreatureModelInfo(cInfo->Modelid2);;
+        CreatureModelInfo const* modelInfo = GetCreatureModelInfo(cInfo->Modelid2);
         if (!modelInfo)
             sLog->outErrorDb("No model data exist for `Modelid2` = %u listed by creature (Entry: %u).", cInfo->Modelid2, cInfo->Entry);
     }
@@ -761,7 +761,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
         else if (!displayScaleEntry)
             displayScaleEntry = displayEntry;
 
-        CreatureModelInfo const* modelInfo = GetCreatureModelInfo(cInfo->Modelid4);;
+        CreatureModelInfo const* modelInfo = GetCreatureModelInfo(cInfo->Modelid4);
         if (!modelInfo)
             sLog->outErrorDb("No model data exist for `Modelid4` = %u listed by creature (Entry: %u).", cInfo->Modelid4, cInfo->Entry);
     }
@@ -1020,7 +1020,7 @@ void ObjectMgr::LoadEquipmentTemplates()
             if (!equipmentInfo.ItemEntry[i])
                 continue;
 
-           ItemEntry const *dbcItem = sItemStore.LookupEntry(equipmentInfo.ItemEntry[i]);
+            ItemEntry const *dbcItem = sItemStore.LookupEntry(equipmentInfo.ItemEntry[i]);
 
             if (!dbcItem)
             {
@@ -1097,25 +1097,25 @@ void ObjectMgr::ChooseCreatureFlags(const CreatureTemplate *cinfo, uint32& npcfl
 
 CreatureModelInfo const* ObjectMgr::GetCreatureModelRandomGender(uint32* displayID)
 {
-    CreatureModelInfo const* minfo = GetCreatureModelInfo(*displayID);
-    if (!minfo)
+    CreatureModelInfo const* modelInfo = GetCreatureModelInfo(*displayID);
+    if (!modelInfo)
         return NULL;
 
     // If a model for another gender exists, 50% chance to use it
-    if (minfo->modelid_other_gender != 0 && urand(0, 1) == 0)
+    if (modelInfo->modelid_other_gender != 0 && urand(0, 1) == 0)
     {
-        CreatureModelInfo const *minfo_tmp = GetCreatureModelInfo(minfo->modelid_other_gender);
+        CreatureModelInfo const* minfo_tmp = GetCreatureModelInfo(modelInfo->modelid_other_gender);
         if (!minfo_tmp)
-            sLog->outErrorDb("Model (Entry: %u) has modelid_other_gender %u not found in table `creature_model_info`. ", *displayID, minfo->modelid_other_gender);
+            sLog->outErrorDb("Model (Entry: %u) has modelid_other_gender %u not found in table `creature_model_info`. ", *displayID, modelInfo->modelid_other_gender);
         else
         {
             // Model ID changed
-            *displayID = minfo->modelid_other_gender;
+            *displayID = modelInfo->modelid_other_gender;
             return minfo_tmp;
         }
     }
 
-    return minfo;
+    return modelInfo;
 }
 
 void ObjectMgr::LoadCreatureModelInfo()
@@ -1407,9 +1407,9 @@ void ObjectMgr::LoadCreatures()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                                         0     1   2      3           4            5         6            7           8            9            10
+    //                                               0              1   2    3        4             5           6           7           8            9              10
     QueryResult result = WorldDatabase.Query("SELECT creature.guid, id, map, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, "
-    //          11            12        13        14           15           16        17          18          19                 20                  21
+    //   11               12         13       14            15         16         17          18          19                20                   21
         "currentwaypoint, curhealth, curmana, MovementType, spawnMask, phaseMask, eventEntry, pool_entry, creature.npcflag, creature.unit_flags, creature.dynamicflags "
         "FROM creature "
         "LEFT OUTER JOIN game_event_creature ON creature.guid = game_event_creature.guid "
@@ -1721,7 +1721,7 @@ void ObjectMgr::LoadGameobjects()
 
     //                                                0                1   2    3           4           5           6
     QueryResult result = WorldDatabase.Query("SELECT gameobject.guid, id, map, position_x, position_y, position_z, orientation, "
-    //   7          8          9          10         11             12            13     14         15             16          17
+    //   7          8          9          10         11             12            13     14         15         16          17
         "rotation0, rotation1, rotation2, rotation3, spawntimesecs, animprogress, state, spawnMask, phaseMask, eventEntry, pool_entry "
         "FROM gameobject LEFT OUTER JOIN game_event_gameobject ON gameobject.guid = game_event_gameobject.guid "
         "LEFT OUTER JOIN pool_gameobject ON gameobject.guid = pool_gameobject.guid");
@@ -3061,7 +3061,7 @@ void ObjectMgr::LoadPlayerInfo()
 
                 uint32 item_id = fields[2].GetUInt32();
 
-                if (!sObjectMgr->GetItemTemplate(item_id))
+                if (!GetItemTemplate(item_id))
                 {
                     sLog->outErrorDb("Item id %u (race %u class %u) in `playercreateinfo_item` table but not listed in `item_template`, ignoring.", item_id, current_race, current_class);
                     continue;
@@ -3699,7 +3699,7 @@ void ObjectMgr::LoadQuests()
     {
         Field *fields = result->Fetch();
 
-        Quest * newQuest = new Quest(fields);
+        Quest* newQuest = new Quest(fields);
         _questTemplates[newQuest->GetQuestId()] = newQuest;
     } while (result->NextRow());
 
@@ -3717,9 +3717,7 @@ void ObjectMgr::LoadQuests()
         // additional quest integrity checks (GO, creature_template and item_template must be loaded already)
 
         if (qinfo->GetQuestMethod() >= 3)
-        {
             sLog->outErrorDb("Quest %u has `Method` = %u, expected values are 0, 1 or 2.", qinfo->GetQuestId(), qinfo->GetQuestMethod());
-        }
 
         if (qinfo->QuestFlags & ~QUEST_DARKCORE_FLAGS_DB_ALLOWED)
         {
@@ -4817,7 +4815,8 @@ void ObjectMgr::LoadWaypointScripts()
             uint32 action = fields[0].GetUInt32();
 
             actionSet.erase(action);
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
     }
 
     for (std::set<uint32>::iterator itr = actionSet.begin(); itr != actionSet.end(); ++itr)
@@ -5618,7 +5617,7 @@ uint32 ObjectMgr::GetTaxiMountDisplayId(uint32 id, uint32 team, bool allowed_alt
     }
 
     // minfo is not actually used but the mount_id was updated
-    sObjectMgr->GetCreatureModelRandomGender(&mount_id);
+    GetCreatureModelRandomGender(&mount_id);
 
     return mount_id;
 }
@@ -5766,10 +5765,10 @@ WorldSafeLocsEntry const *ObjectMgr::GetClosestGraveYard(float x, float y, float
         if (MapId != entry->map_id)
         {
             // if find graveyard at different map from where entrance placed (or no entrance data), use any first
-            if (!mapEntry ||
-                 mapEntry->entrance_map < 0 ||
-                 uint32(mapEntry->entrance_map) != entry->map_id ||
-                (mapEntry->entrance_x == 0 && mapEntry->entrance_y == 0))
+            if (!mapEntry
+                || mapEntry->entrance_map < 0
+                || uint32(mapEntry->entrance_map) != entry->map_id
+                || (mapEntry->entrance_x == 0 && mapEntry->entrance_y == 0))
             {
                 // not have any corrdinates for check distance anyway
                 entryFar = entry;
@@ -5914,8 +5913,6 @@ void ObjectMgr::RemoveGraveYardLink(uint32 id, uint32 zoneId, uint32 team, bool 
 
         WorldDatabase.Execute(stmt);
     }
-
-    return;
 }
 
 void ObjectMgr::LoadAreaTriggerTeleports()
@@ -5984,7 +5981,7 @@ void ObjectMgr::LoadAccessRequirements()
 
     _accessRequirementStore.clear();                                  // need for reload case
 
-    //                                                           0           1          2          3     4      5             6             7                      8                  9
+    //                                               0      1           2          3          4     5      6             7             8                      9
     QueryResult result = WorldDatabase.Query("SELECT mapid, difficulty, level_min, level_max, item, item2, quest_done_A, quest_done_H, completed_achievement, quest_failed_text FROM access_requirement");
     if (!result)
     {
@@ -6018,7 +6015,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item)
         {
-            ItemTemplate const *proto = sObjectMgr->GetItemTemplate(ar.item);
+            ItemTemplate const* pProto = GetItemTemplate(ar.item);
             if (!proto)
             {
                 sLog->outError("Key item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item, mapid, difficulty);
@@ -6028,7 +6025,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item2)
         {
-            ItemTemplate const *proto = sObjectMgr->GetItemTemplate(ar.item2);
+            ItemTemplate const* pProto = GetItemTemplate(ar.item2);
             if (!proto)
             {
                 sLog->outError("Second item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item2, mapid, difficulty);
@@ -6135,10 +6132,10 @@ void ObjectMgr::SetHighestGuids()
         _hiItemGuid = (*result)[0].GetUInt32()+1;
 
     // Cleanup other tables from not existed guids ( >= m_hiItemGuid)
-    CharacterDatabase.PExecute("DELETE FROM character_inventory WHERE item >= '%u'", _hiItemGuid);     // One-time query
-    CharacterDatabase.PExecute("DELETE FROM mail_items WHERE item_guid >= '%u'", _hiItemGuid);         // One-time query
-    CharacterDatabase.PExecute("DELETE FROM auctionhouse WHERE itemguid >= '%u'", _hiItemGuid);        // One-time query
-    CharacterDatabase.PExecute("DELETE FROM guild_bank_item WHERE item_guid >= '%u'", _hiItemGuid);    // One-time query
+    CharacterDatabase.PExecute("DELETE FROM character_inventory WHERE item >= '%u'", _hiItemGuid);
+    CharacterDatabase.PExecute("DELETE FROM mail_items WHERE item_guid >= '%u'", _hiItemGuid);
+    CharacterDatabase.PExecute("DELETE FROM auctionhouse WHERE itemguid >= '%u'", _hiItemGuid);
+    CharacterDatabase.PExecute("DELETE FROM guild_bank_item WHERE item_guid >= '%u'", _hiItemGuid);
 
     result = WorldDatabase.Query("SELECT MAX(guid) FROM gameobject");
     if (result)
@@ -6426,28 +6423,28 @@ void ObjectMgr::LoadGameObjectTemplate()
 
         switch (got.type)
         {
-        case GAMEOBJECT_TYPE_DOOR:                      //0
+            case GAMEOBJECT_TYPE_DOOR:                      //0
             {
                 if (got.door.lockId)
                     CheckGOLockId(&got, got.door.lockId, 1);
-                CheckGONoDamageImmuneId(&got, got.door.noDamageImmune,  3);
+                CheckGONoDamageImmuneId(&got, got.door.noDamageImmune, 3);
                 break;
             }
-        case GAMEOBJECT_TYPE_BUTTON:                    //1
+            case GAMEOBJECT_TYPE_BUTTON:                    //1
             {
                 if (got.button.lockId)
-                    CheckGOLockId(&got, got.button.lockId,  1);
+                    CheckGOLockId(&got, got.button.lockId, 1);
                 CheckGONoDamageImmuneId(&got, got.button.noDamageImmune, 4);
                 break;
             }
-        case GAMEOBJECT_TYPE_QUESTGIVER:                //2
+            case GAMEOBJECT_TYPE_QUESTGIVER:                //2
             {
                 if (got.questgiver.lockId)
                     CheckGOLockId(&got, got.questgiver.lockId, 0);
                 CheckGONoDamageImmuneId(&got, got.questgiver.noDamageImmune, 5);
                 break;
             }
-        case GAMEOBJECT_TYPE_CHEST:                     //3
+            case GAMEOBJECT_TYPE_CHEST:                     //3
             {
                 if (got.chest.lockId)
                     CheckGOLockId(&got, got.chest.lockId, 0);
@@ -6458,16 +6455,16 @@ void ObjectMgr::LoadGameObjectTemplate()
                     CheckGOLinkedTrapId(&got, got.chest.linkedTrapId, 7);
                 break;
             }
-        case GAMEOBJECT_TYPE_TRAP:                      //6
+            case GAMEOBJECT_TYPE_TRAP:                      //6
             {
                 if (got.trap.lockId)
                     CheckGOLockId(&got, got.trap.lockId, 0);
                 break;
             }
-        case GAMEOBJECT_TYPE_CHAIR:                     //7
-            CheckAndFixGOChairHeightId(&got, got.chair.height, 1);
-            break;
-        case GAMEOBJECT_TYPE_SPELL_FOCUS:               //8
+            case GAMEOBJECT_TYPE_CHAIR:                     //7
+                CheckAndFixGOChairHeightId(&got, got.chair.height, 1);
+                break;
+            case GAMEOBJECT_TYPE_SPELL_FOCUS:               //8
             {
                 if (got.spellFocus.focusId)
                 {
@@ -6480,7 +6477,7 @@ void ObjectMgr::LoadGameObjectTemplate()
                     CheckGOLinkedTrapId(&got, got.spellFocus.linkedTrapId, 2);
                 break;
             }
-        case GAMEOBJECT_TYPE_GOOBER:                    //10
+            case GAMEOBJECT_TYPE_GOOBER:                    //10
             {
                 if (got.goober.lockId)
                     CheckGOLockId(&got, got.goober.lockId, 0);
@@ -6498,19 +6495,19 @@ void ObjectMgr::LoadGameObjectTemplate()
                     CheckGOLinkedTrapId(&got, got.goober.linkedTrapId, 12);
                 break;
             }
-        case GAMEOBJECT_TYPE_AREADAMAGE:                //12
+            case GAMEOBJECT_TYPE_AREADAMAGE:                //12
             {
                 if (got.areadamage.lockId)
                     CheckGOLockId(&got, got.areadamage.lockId, 0);
                 break;
             }
-        case GAMEOBJECT_TYPE_CAMERA:                    //13
+            case GAMEOBJECT_TYPE_CAMERA:                    //13
             {
                 if (got.camera.lockId)
                     CheckGOLockId(&got, got.camera.lockId, 0);
                 break;
             }
-        case GAMEOBJECT_TYPE_MO_TRANSPORT:              //15
+            case GAMEOBJECT_TYPE_MO_TRANSPORT:              //15
             {
                 if (got.moTransport.taxiPathId)
                 {
@@ -6520,37 +6517,37 @@ void ObjectMgr::LoadGameObjectTemplate()
                 }
                 break;
             }
-        case GAMEOBJECT_TYPE_SUMMONING_RITUAL:          //18
-            break;
-        case GAMEOBJECT_TYPE_SPELLCASTER:               //22
+            case GAMEOBJECT_TYPE_SUMMONING_RITUAL:          //18
+                break;
+            case GAMEOBJECT_TYPE_SPELLCASTER:               //22
             {
                 // always must have spell
                 CheckGOSpellId(&got, got.spellcaster.spellId, 0);
                 break;
             }
-        case GAMEOBJECT_TYPE_FLAGSTAND:                 //24
+            case GAMEOBJECT_TYPE_FLAGSTAND:                 //24
             {
                 if (got.flagstand.lockId)
                     CheckGOLockId(&got, got.flagstand.lockId, 0);
                 CheckGONoDamageImmuneId(&got, got.flagstand.noDamageImmune, 5);
                 break;
             }
-        case GAMEOBJECT_TYPE_FISHINGHOLE:               //25
+            case GAMEOBJECT_TYPE_FISHINGHOLE:               //25
             {
                 if (got.fishinghole.lockId)
                     CheckGOLockId(&got, got.fishinghole.lockId, 4);
                 break;
             }
-        case GAMEOBJECT_TYPE_FLAGDROP:                  //26
+            case GAMEOBJECT_TYPE_FLAGDROP:                  //26
             {
                 if (got.flagdrop.lockId)
                     CheckGOLockId(&got, got.flagdrop.lockId, 0);
                 CheckGONoDamageImmuneId(&got, got.flagdrop.noDamageImmune, 3);
                 break;
             }
-        case GAMEOBJECT_TYPE_BARBER_CHAIR:              //32
-            CheckAndFixGOChairHeightId(&got, got.barberChair.chairheight, 0);
-            break;
+            case GAMEOBJECT_TYPE_BARBER_CHAIR:              //32
+                CheckAndFixGOChairHeightId(&got, got.barberChair.chairheight, 0);
+                break;
         }
 
        ++count;
@@ -7077,12 +7074,12 @@ void ObjectMgr::LoadPointsOfInterest()
         uint32 point_id = fields[0].GetUInt32();
 
         PointOfInterest POI;
-        POI.x                    = fields[1].GetFloat();
-        POI.y                    = fields[2].GetFloat();
-        POI.icon                 = fields[3].GetUInt32();
-        POI.flags                = fields[4].GetUInt32();
-        POI.data                 = fields[5].GetUInt32();
-        POI.icon_name            = fields[6].GetString();
+        POI.x = fields[1].GetFloat();
+        POI.y = fields[2].GetFloat();
+        POI.icon = fields[3].GetUInt32();
+        POI.flags = fields[4].GetUInt32();
+        POI.data = fields[5].GetUInt32();
+        POI.icon_name = fields[6].GetString();
 
         if (!Darkcore::IsValidMapCoord(POI.x, POI.y))
         {
@@ -7255,7 +7252,7 @@ void ObjectMgr::SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t
         _creatureRespawnTimesMutex.release();
     }
 
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN);
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
@@ -7731,7 +7728,7 @@ void ObjectMgr::LoadGameObjectForQuests()
     sLog->outString();
 }
 
-bool ObjectMgr::LoadCoreStrings(char const* table, int32 min_value, int32 max_value)
+bool ObjectMgr::LoadCoreStrings(const char* table, int32 min_value, int32 max_value)
 {
     uint32 oldMSTime = getMSTime();
 
@@ -7889,7 +7886,7 @@ bool ObjectMgr::CheckDeclinedNames(std::wstring w_ownname, DeclinedName const& n
     bool y = true;
 
     // check declined names
-    for (uint8 i =0; i < MAX_DECLINED_NAME_CASES; ++i)
+    for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
     {
         std::wstring wname;
         if (!Utf8toWStr(names.name[i], wname))
@@ -8007,7 +8004,7 @@ GameTele const* ObjectMgr::GetGameTele(const std::string& name) const
     // explicit name case
     std::wstring wname;
     if (!Utf8toWStr(name, wname))
-        return false;
+        return NULL;
 
     // converting string that we try to find to lower case
     wstrToLower(wname);
@@ -8259,7 +8256,7 @@ void ObjectMgr::LoadTrainerSpell()
 
         AddSpellToTrainer(entry, spell, spellCost, reqSkill, reqSkillValue, reqLevel);
 
-        count++;
+        ++count;
     }
     while (result->NextRow());
 
@@ -8527,7 +8524,7 @@ bool ObjectMgr::IsVendorItemValid(uint32 vendor_entry, uint32 item_id, int32 max
         return false;
     }
 
-    if (!sObjectMgr->GetItemTemplate(item_id))
+    if (!GetItemTemplate(item_id))
     {
         if (player)
             ChatHandler(player).PSendSysMessage(LANG_ITEM_NOT_FOUND, item_id);
@@ -8692,7 +8689,7 @@ void ObjectMgr::LoadDbScriptStrings()
         sLog->outErrorDb("Table `db_script_string` has unused string id  %u", *itr);
 }
 
-bool LoadCoreStrings(char const* table, int32 start_value, int32 end_value)
+bool LoadCoreStrings(const char* table, int32 start_value, int32 end_value)
 {
     // MAX_DB_SCRIPT_STRING_ID is max allowed negative value for scripts (scripts can use only more deep negative values
     // start/end reversed for negative values

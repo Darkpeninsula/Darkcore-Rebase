@@ -58,6 +58,8 @@ struct LfgProposal;
 struct LfgReward;
 struct LfgRoleCheck;
 struct LfgUpdateData;
+class CalendarEvent;
+class CalendarInvite;
 
 enum AccountDataType
 {
@@ -891,21 +893,36 @@ class WorldSession
         void HandleAcceptGrantLevel(WorldPacket& recv_data);
 
         // Calendar
-        void HandleCalendarGetCalendar(WorldPacket& recv_data);
-        void HandleCalendarGetEvent(WorldPacket& recv_data);
-        void HandleCalendarGuildFilter(WorldPacket& recv_data);
-        void HandleCalendarArenaTeam(WorldPacket& recv_data);
-        void HandleCalendarAddEvent(WorldPacket& recv_data);
-        void HandleCalendarUpdateEvent(WorldPacket& recv_data);
-        void HandleCalendarRemoveEvent(WorldPacket& recv_data);
-        void HandleCalendarCopyEvent(WorldPacket& recv_data);
-        void HandleCalendarEventInvite(WorldPacket& recv_data);
-        void HandleCalendarEventRsvp(WorldPacket& recv_data);
-        void HandleCalendarEventRemoveInvite(WorldPacket& recv_data);
-        void HandleCalendarEventStatus(WorldPacket& recv_data);
-        void HandleCalendarEventModeratorStatus(WorldPacket& recv_data);
-        void HandleCalendarComplain(WorldPacket& recv_data);
-        void HandleCalendarGetNumPending(WorldPacket& recv_data);
+        void HandleCalendarGetCalendar(WorldPacket& recvData);
+        void HandleCalendarGetEvent(WorldPacket& recvData);
+        void HandleCalendarGuildFilter(WorldPacket& recvData);
+        void HandleCalendarArenaTeam(WorldPacket& recvData);
+        void HandleCalendarAddEvent(WorldPacket& recvData);
+        void HandleCalendarUpdateEvent(WorldPacket& recvData);
+        void HandleCalendarRemoveEvent(WorldPacket& recvData);
+        void HandleCalendarCopyEvent(WorldPacket& recvData);
+        void HandleCalendarEventInvite(WorldPacket& recvData);
+        void HandleCalendarEventRsvp(WorldPacket& recvData);
+        void HandleCalendarEventRemoveInvite(WorldPacket& recvData);
+        void HandleCalendarEventStatus(WorldPacket& recvData);
+        void HandleCalendarEventModeratorStatus(WorldPacket& recvData);
+        void HandleCalendarComplain(WorldPacket& recvData);
+        void HandleCalendarGetNumPending(WorldPacket& recvData);
+        void HandleCalendarEventSignup(WorldPacket& recvData);
+
+        void SendCalendarEvent(CalendarEvent const& calendarEvent, CalendarSendEventType sendEventType);
+        void SendCalendarEventInvite(CalendarInvite const& invite, bool pending);
+        void SendCalendarEventInviteAlert(CalendarEvent const& calendarEvent, CalendarInvite const& calendarInvite);
+        void SendCalendarEventInviteRemove(CalendarInvite const& invite, uint32 flags);
+        void SendCalendarEventInviteRemoveAlert(CalendarEvent const& calendarEvent, CalendarInviteStatus status);
+        void SendCalendarEventRemovedAlert(CalendarEvent const& calendarEvent);
+        void SendCalendarEventUpdateAlert(CalendarEvent const& calendarEvent, CalendarSendEventType sendEventType);
+        void SendCalendarEventStatus(CalendarEvent const& calendarEvent, CalendarInvite const& invite);
+        void SendCalendarEventModeratorStatusAlert(CalendarInvite const& invite);
+        void SendCalendarClearPendingAction();
+        void SendCalendarRaidLockout(InstanceSave* save, bool add);
+        void SendCalendarRaidLockoutUpdated(InstanceSave const* save);
+        void SendCalendarCommandResult(CalendarError err, char const* param = NULL);
 
         void HandleSpellClick(WorldPacket& recv_data);
         void HandleMirrorImageDataRequest(WorldPacket& recv_data);
