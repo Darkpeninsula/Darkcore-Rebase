@@ -122,7 +122,7 @@ public:
 
         LiquidData liquidStatus;
         ZLiquidStatus status = map->getLiquidStatus(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), MAP_ALL_LIQUIDS, &liquidStatus);
-        if (res)
+        if (status)
         {
             handler->PSendSysMessage(LANG_LIQUID_STATUS, liquidStatus.level, liquidStatus.depth_level, liquidStatus.entry, liquidStatus.type_flags, status);
         }
