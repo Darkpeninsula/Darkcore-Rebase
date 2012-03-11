@@ -1035,7 +1035,7 @@ GridMap::GridMap()
     m_V9 = NULL;
     m_V8 = NULL;
     // Liquid data
-    _liquidData    = 0;
+    _liquidType    = 0;
     _liquidOffX   = 0;
     _liquidOffY   = 0;
     _liquidWidth  = 0;
@@ -1188,7 +1188,7 @@ bool GridMap::loadLiquidData(FILE* in, uint32 offset, uint32 /*size*/)
     if (fread(&header, sizeof(header), 1, in) != 1 || header.fourcc != MapLiquidMagic.asUInt)
         return false;
 
-    _liquidData   = header.liquidType;
+    _liquidType   = header.liquidType;
     _liquidOffX  = header.offsetX;
     _liquidOffY  = header.offsetY;
     _liquidWidth = header.width;
