@@ -1140,7 +1140,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_COMPLETE_ACHIEVEMENT_CHEAT,              STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_QUESTUPDATE_ADD_PVP_KILL,                STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SET_CRITERIA_CHEAT,                      STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
-    OPCODE( SMSG_CALENDAR_UPDATE_INVITE_LIST3,            STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_CALENDAR_RAID_LOCKOUT_UPDATED,           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_UNITANIMTIER_CHEAT,                      STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_CHAR_CUSTOMIZE,                          STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleCharCustomize              );
     OPCODE( SMSG_CHAR_CUSTOMIZE,                          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
@@ -1206,8 +1206,8 @@ void InitOpcodeTable()
     OPCODE( CMSG_CORPSE_MAP_POSITION_QUERY,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleCorpseMapPositionQuery    );
     OPCODE( SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE,      STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_LFG_SET_ROLES_2,                         STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
-    OPCODE( CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP,           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
-    OPCODE( SMSG_CALENDAR_ACTION_PENDING,                 STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_CALENDAR_RAID_LOCKOUT_UPDATED,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleCalendarEventSignup       );
+    OPCODE( SMSG_CALENDAR_CLEAR_PENDING_ACTION,           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_EQUIPMENT_SET_LIST,                      STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_EQUIPMENT_SET_SAVE,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEquipmentSetSave          );
     OPCODE( CMSG_UPDATE_PROJECTILE_POSITION,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleUpdateProjectilePosition  );

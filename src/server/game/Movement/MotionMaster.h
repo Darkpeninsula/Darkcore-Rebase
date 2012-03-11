@@ -86,8 +86,15 @@ class MotionMaster //: private std::stack<MovementGenerator *>
     private:
         //typedef std::stack<MovementGenerator *> Impl;
         typedef MovementGenerator* _Ty;
+        typedef std::vector<_Ty> ExpireList;
 
-        void pop() { Impl[_top] = NULL; --_top; }
+        void pop()
+        {
+            Impl[_top] = NULL;
+            while (!top())
+                --_top;
+        }
+
         void push(_Ty _Val) { ++_top; Impl[_top] = _Val; }
 
         bool needInitTop() const { return _needInit[_top]; }
@@ -186,7 +193,6 @@ class MotionMaster //: private std::stack<MovementGenerator *>
         void DirectExpire(bool reset);
         void DelayedExpire();
 
-        typedef std::vector<_Ty> ExpireList;
         ExpireList* _expList;
         _Ty Impl[MAX_MOTION_SLOT];
         int _top;

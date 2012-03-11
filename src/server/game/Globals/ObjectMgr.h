@@ -535,6 +535,7 @@ struct GraveYardData
     uint32 safeLocId;
     uint32 team;
 };
+
 typedef std::multimap<uint32, GraveYardData> GraveYardContainer;
 
 typedef UNORDERED_MAP<uint32, VendorItemData> CacheVendorItemContainer;
@@ -658,7 +659,7 @@ class ObjectMgr
             return NULL;
         }
 
-        InstanceTemplate const* GetInstanceTemplate(uint32 mapID);
+        InstanceTemplate const* GetInstanceTemplate(uint32 mapId);
 
         PetLevelInfo const* GetPetLevelInfo(uint32 creature_id, uint8 level) const;
 

@@ -79,6 +79,7 @@
 #include "SmartAI.h"
 #include "Channel.h"
 #include "DB2Stores.h"
+#include "CalendarMgr.h"
 
 volatile bool World::m_stopEvent = false;
 uint8 World::m_ExitCode = SHUTDOWN_EXIT_CODE;
@@ -1238,6 +1239,8 @@ void World::LoadConfigSettings(bool reload)
     sScriptMgr->OnConfigLoad(reload);
 }
 
+extern void LoadGameObjectModelList();
+
 /// Initialize the World
 void World::SetInitialWorldSettings()
 {
@@ -1318,6 +1321,9 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading spell custom attributes...");
     sSpellMgr->LoadSpellCustomAttr();
+
+    sLog->outString("Loading GameObject models...");
+    LoadGameObjectModelList();
 
     sLog->outString("Loading Actionbar Spell override...");
     sSpellMgr->LoadActionBarSpellOverride();
@@ -1701,6 +1707,9 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading SmartAI scripts...");
     sSmartScriptMgr->LoadSmartAIFromDB();
+
+    sLog->outString("Loading Calendar data...");
+    sCalendarMgr->LoadFromDB();
 
     ///- Initialize game time and timers
     sLog->outString("Initialize game time and timers");

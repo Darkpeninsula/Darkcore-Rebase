@@ -743,6 +743,7 @@ Player::Player(WorldSession* session): Unit(true), _achievementMgr(this), _reput
     for (uint8 i=0; i<MAX_TIMERS; i++)
         _MirrorTimer[i] = DISABLED_MIRROR_TIMER;
 
+    _lastLiquid = NULL;
     _MirrorTimerFlags = UNDERWATER_NONE;
     _MirrorTimerFlagsLast = UNDERWATER_NONE;
     _isInWater = false;
@@ -1431,14 +1432,14 @@ void Player::HandleDrowning(uint32 time_diff)
             SendMirrorTimer(FATIGUE_TIMER, DarkWaterTime, _MirrorTimer[FATIGUE_TIMER], 10);
     }
 
-    if (_MirrorTimerFlags & (UNDERWATER_INLAVA|UNDERWATER_INSLIME))
+    if (_MirrorTimerFlags & (UNDERWATER_INLAVA /*| UNDERWATER_INSLIME*/) && !(_lastLiquid && _lastLiquid->SpellId))
     {
         // Breath timer not activated - activate it
         if (_MirrorTimer[FIRE_TIMER] == DISABLED_MIRROR_TIMER)
             _MirrorTimer[FIRE_TIMER] = getMaxTimer(FIRE_TIMER);
         else
         {
-            _MirrorTimer[FIRE_TIMER]-=time_diff;
+            _MirrorTimer[FIRE_TIMER] -= time_diff;
             if (_MirrorTimer[FIRE_TIMER] < 0)
             {
                 _MirrorTimer[FIRE_TIMER]+= 1*IN_MILLISECONDS;
@@ -1449,8 +1450,8 @@ void Player::HandleDrowning(uint32 time_diff)
                     EnvironmentalDamage(DAMAGE_LAVA, damage);
                 // need to skip Slime damage in Undercity,
                 // maybe someone can find better way to handle environmental damage
-                else if (_zoneUpdateId != 1497 && _zoneUpdateId != 3968)
-                    EnvironmentalDamage(DAMAGE_SLIME, damage);
+                //else if (_zoneUpdateId != 1497 && _zoneUpdateId != 3968)
+                //    EnvironmentalDamage(DAMAGE_SLIME, damage);
             }
         }
     }
@@ -18818,6 +18819,10 @@ void Player::UnbindInstance(BoundInstancesMap::iterator &itr, Difficulty difficu
         }
 
         itr->second.save->RemovePlayer(this);               // save can become invalid
+
+        if (itr->second.perm)
+            GetSession()->SendCalendarRaidLockout(itr->second.save, false);
+
         _boundInstances[difficulty].erase(itr++);
     }
 }
@@ -18886,6 +18891,8 @@ void Player::BindToInstance()
     data << uint32(0);
     GetSession()->SendPacket(&data);
     BindToInstance(mapSave, true);
+
+    GetSession()->SendCalendarRaidLockout(mapSave, true);
 }
 
 void Player::SendRaidInfo()
@@ -23616,15 +23623,38 @@ void Player::UpdateUnderwaterState(Map* m, float x, float y, float z)
     ZLiquidStatus res = m->getLiquidStatus(x, y, z, MAP_ALL_LIQUIDS, &liquid_status);
     if (!res)
     {
-        _MirrorTimerFlags &= ~(UNDERWATER_INWATER|UNDERWATER_INLAVA|UNDERWATER_INSLIME|UNDERWARER_INDARKWATER);
-        // Small hack for enable breath in WMO
-        /* if (IsInWater())
-            _MirrorTimerFlags|=UNDERWATER_INWATER; */
+        _MirrorTimerFlags &= ~(UNDERWATER_INWATER | UNDERWATER_INLAVA | UNDERWATER_INSLIME | UNDERWARER_INDARKWATER);
+        if (_lastLiquid && _lastLiquid->SpellId)
+            RemoveAurasDueToSpell(_lastLiquid->SpellId);
+
+        _lastLiquid = NULL;
         return;
     }
 
+    if (uint32 liqEntry = liquid_status.entry)
+    {
+        LiquidTypeEntry const* liquid = sLiquidTypeStore.LookupEntry(liqEntry);
+        if (_lastLiquid && _lastLiquid->SpellId && _lastLiquid->Id != liqEntry)
+            RemoveAurasDueToSpell(_lastLiquid->SpellId);
+
+        if (liquid && liquid->SpellId)
+        {
+            if (res & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER))
+                CastSpell(this, liquid->SpellId, true);
+            else
+                RemoveAurasDueToSpell(liquid->SpellId);
+        }
+
+        _lastLiquid = liquid;
+    }
+    else if (_lastLiquid && _lastLiquid->SpellId)
+    {
+        RemoveAurasDueToSpell(_lastLiquid->SpellId);
+        _lastLiquid = NULL;
+    }
+
     // All liquids type - check under water position
-    if (liquid_status.type&(MAP_LIQUID_TYPE_WATER|MAP_LIQUID_TYPE_OCEAN|MAP_LIQUID_TYPE_MAGMA|MAP_LIQUID_TYPE_SLIME))
+    if (liquid_status.type_flags & (MAP_LIQUID_TYPE_WATER | MAP_LIQUID_TYPE_OCEAN | MAP_LIQUID_TYPE_MAGMA | MAP_LIQUID_TYPE_SLIME))
     {
         if (res & LIQUID_MAP_UNDER_WATER)
             _MirrorTimerFlags |= UNDERWATER_INWATER;
@@ -23633,23 +23663,23 @@ void Player::UpdateUnderwaterState(Map* m, float x, float y, float z)
     }
 
     // Allow travel in dark water on taxi or transport
-    if ((liquid_status.type & MAP_LIQUID_TYPE_DARK_WATER) && !isInFlight() && !GetTransport())
+    if ((liquid_status.type_flags & MAP_LIQUID_TYPE_DARK_WATER) && !isInFlight() && !GetTransport())
         _MirrorTimerFlags |= UNDERWARER_INDARKWATER;
     else
         _MirrorTimerFlags &= ~UNDERWARER_INDARKWATER;
 
     // in lava check, anywhere in lava level
-    if (liquid_status.type&MAP_LIQUID_TYPE_MAGMA)
+    if (liquid_status.type_flags & MAP_LIQUID_TYPE_MAGMA)
     {
-        if (res & (LIQUID_MAP_UNDER_WATER|LIQUID_MAP_IN_WATER|LIQUID_MAP_WATER_WALK))
+        if (res & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER | LIQUID_MAP_WATER_WALK))
             _MirrorTimerFlags |= UNDERWATER_INLAVA;
         else
             _MirrorTimerFlags &= ~UNDERWATER_INLAVA;
     }
     // in slime check, anywhere in slime level
-    if (liquid_status.type&MAP_LIQUID_TYPE_SLIME)
+    if (liquid_status.type_flags & MAP_LIQUID_TYPE_SLIME)
     {
-        if (res & (LIQUID_MAP_UNDER_WATER|LIQUID_MAP_IN_WATER|LIQUID_MAP_WATER_WALK))
+        if (res & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER | LIQUID_MAP_WATER_WALK))
             _MirrorTimerFlags |= UNDERWATER_INSLIME;
         else
             _MirrorTimerFlags &= ~UNDERWATER_INSLIME;

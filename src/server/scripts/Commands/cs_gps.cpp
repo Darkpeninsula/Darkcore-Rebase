@@ -90,8 +90,8 @@ public:
         Map2ZoneCoordinates(zone_x, zone_y, zone_id);
 
         Map const* map = obj->GetMap();
-        float ground_z = map->GetHeight(obj->GetPositionX(), obj->GetPositionY(), MAX_HEIGHT);
-        float floor_z = map->GetHeight(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ());
+        float ground_z = map->GetHeight(obj->GetPhaseMask(), obj->GetPositionX(), obj->GetPositionY(), MAX_HEIGHT);
+        float floor_z = map->GetHeight(obj->GetPhaseMask(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ());
 
         GridCoord p = Darkcore::ComputeGridCoord(obj->GetPositionX(), obj->GetPositionY());
 
@@ -120,11 +120,11 @@ public:
             cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
             zone_x, zone_y, ground_z, floor_z, have_map, have_vmap);
 
-        LiquidData liquid_status;
-        ZLiquidStatus res = map->getLiquidStatus(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), MAP_ALL_LIQUIDS, &liquid_status);
-        if (res)
+        LiquidData liquidStatus;
+        ZLiquidStatus status = map->getLiquidStatus(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), MAP_ALL_LIQUIDS, &liquidStatus);
+        if (status)
         {
-            handler->PSendSysMessage(LANG_LIQUID_STATUS, liquid_status.level, liquid_status.depth_level, liquid_status.type, res);
+            handler->PSendSysMessage(LANG_LIQUID_STATUS, liquidStatus.level, liquidStatus.depth_level, liquidStatus.entry, liquidStatus.type_flags, status);
         }
         return true;
     }

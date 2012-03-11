@@ -132,7 +132,7 @@ DBCStorage <ItemCurrencyCostEntry>        sItemCurrencyCostStore(ItemCurrencyCos
 
 DBCStorage <LFGDungeonEntry> sLFGDungeonStore(LFGDungeonEntryfmt);
 
-//DBCStorage <LiquidTypeEntry> sLiquidTypeStore(LiquidTypeEntryfmt);
+DBCStorage <LiquidTypeEntry> sLiquidTypeStore(LiquidTypeEntryfmt);
 DBCStorage <LockEntry> sLockStore(LockEntryfmt);
 
 DBCStorage <MailTemplateEntry> sMailTemplateStore(MailTemplateEntryfmt);
@@ -205,6 +205,14 @@ DBCStorage <TalentTabEntry> sTalentTabStore(TalentTabEntryfmt);
 
 // store absolute bit position for first rank for talent inspect
 static uint32 sTalentTabPages[MAX_CLASSES][3];
+
+uint32 GetLiquidFlags(uint32 liquidType)
+{
+    if (LiquidTypeEntry const* liq = sLiquidTypeStore.LookupEntry(liquidType))
+        return 1 << liq->Type;
+
+    return 0;
+}
 
 DBCStorage <TaxiNodesEntry> sTaxiNodesStore(TaxiNodesEntryfmt);
 TaxiMask sTaxiNodesMask;
@@ -407,6 +415,7 @@ void LoadDBCStores(const std::string& dataPath, uint32& availableDbcLocales)
     LoadDBC(availableDbcLocales, bad_dbc_files, sItemDisenchantLootStore,      dbcPath, "ItemDisenchantLoot.dbc");
 
     LoadDBC(availableDbcLocales, bad_dbc_files, sLFGDungeonStore,              dbcPath, "LFGDungeons.dbc");
+    LoadDBC(availableDbcLocales, bad_dbc_files, sLiquidTypeStore,              dbcPath, "LiquidType.dbc");
     LoadDBC(availableDbcLocales, bad_dbc_files, sLockStore,                    dbcPath, "Lock.dbc");
 
     LoadDBC(availableDbcLocales, bad_dbc_files, sMailTemplateStore,            dbcPath, "MailTemplate.dbc");

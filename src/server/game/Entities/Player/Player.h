@@ -2899,7 +2899,8 @@ class Player : public Unit, public GridObject<Player>
 
         uint32 _lastFallTime;
         float  _lastFallZ;
-
+        
+        LiquidTypeEntry const* _lastLiquid;
         int32 _MirrorTimer[MAX_TIMERS];
         uint8 _MirrorTimerFlags;
         uint8 _MirrorTimerFlagsLast;
