@@ -76,7 +76,7 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
         if (getPipeKnockBackTimer() < diff)
         {
             for (uint32 i = BG_DS_NPC_PIPE_KNOCKBACK_1; i <= BG_DS_NPC_PIPE_KNOCKBACK_2; ++i)
-                if (Creature* waterSpout = GetBgMap()->GetCreature(BgCreatures[i]))
+                if (Creature* waterSpout = GetBgMap()->GetCreature(_BgCreatures[i]))
                     waterSpout->CastSpell(waterSpout, BG_DS_SPELL_FLUSH, true);
 
             setPipeKnockBackCount(getPipeKnockBackCount() + 1);
@@ -90,7 +90,7 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
     {
         if (getWaterFallKnockbackTimer() < diff)
         {
-            if (Creature* waterSpout = GetBgMap()->GetCreature(BgCreatures[BG_DS_NPC_WATERFALL_KNOCKBACK]))
+            if (Creature* waterSpout = GetBgMap()->GetCreature(_BgCreatures[BG_DS_NPC_WATERFALL_KNOCKBACK]))
                 waterSpout->CastSpell(waterSpout, BG_DS_SPELL_WATER_SPOUT, true);
 
             setWaterFallKnockbackTimer(BG_DS_WATERFALL_KNOCKBACK_TIMER);
@@ -109,11 +109,11 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
         }
         else if (getWaterFallStatus() == BG_DS_WATERFALL_STATUS_WARNING) // Active collision and perform knockback
         {
-            if (Creature* waterSpout = GetBgMap()->GetCreature(BgCreatures[BG_DS_NPC_WATERFALL_KNOCKBACK]))
+            if (Creature* waterSpout = GetBgMap()->GetCreature(_BgCreatures[BG_DS_NPC_WATERFALL_KNOCKBACK]))
                 waterSpout->CastSpell(waterSpout, BG_DS_SPELL_WATER_SPOUT, true);
 
             // Turn on collision
-            if (GameObject* gob = GetBgMap()->GetGameObject(m_BgObjects[BG_DS_OBJECT_WATER_1]))
+            if (GameObject* gob = GetBgMap()->GetGameObject(_BgObjects[BG_DS_OBJECT_WATER_1]))
                 gob->SetGoState(GO_STATE_READY);
 
             setWaterFallTimer(BG_DS_WATERFALL_DURATION);
@@ -123,7 +123,7 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
         else //if (getWaterFallStatus() == BG_DS_WATERFALL_STATUS_ON) // Remove collision and water
         {
             // turn off collision
-            if (GameObject* gob = GetBgMap()->GetGameObject(m_BgObjects[BG_DS_OBJECT_WATER_1]))
+            if (GameObject* gob = GetBgMap()->GetGameObject(_BgObjects[BG_DS_OBJECT_WATER_1]))
                 gob->SetGoState(GO_STATE_ACTIVE);
 
             DoorOpen(BG_DS_OBJECT_WATER_2);
@@ -159,7 +159,7 @@ void BattlegroundDS::StartingEventOpenDoors()
     DoorOpen(BG_DS_OBJECT_WATER_2);
 
     // Turn off collision
-    if (GameObject* gob = GetBgMap()->GetGameObject(m_BgObjects[BG_DS_OBJECT_WATER_1]))
+    if (GameObject* gob = GetBgMap()->GetGameObject(_BgObjects[BG_DS_OBJECT_WATER_1]))
         gob->SetGoState(GO_STATE_ACTIVE);
 
     // Remove effects of Demonic Circle Summon

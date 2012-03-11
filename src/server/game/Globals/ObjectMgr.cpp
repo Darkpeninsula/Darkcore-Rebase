@@ -6015,7 +6015,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item)
         {
-            ItemTemplate const* pProto = GetItemTemplate(ar.item);
+            ItemTemplate const* proto = GetItemTemplate(ar.item);
             if (!proto)
             {
                 sLog->outError("Key item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item, mapid, difficulty);
@@ -6025,7 +6025,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item2)
         {
-            ItemTemplate const* pProto = GetItemTemplate(ar.item2);
+            ItemTemplate const* proto = GetItemTemplate(ar.item2);
             if (!proto)
             {
                 sLog->outError("Second item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item2, mapid, difficulty);
@@ -8524,7 +8524,7 @@ bool ObjectMgr::IsVendorItemValid(uint32 vendor_entry, uint32 item_id, int32 max
         return false;
     }
 
-    if (!GetItemTemplate(item_id))
+    if (!sObjectMgr->GetItemTemplate(item_id))
     {
         if (player)
             ChatHandler(player).PSendSysMessage(LANG_ITEM_NOT_FOUND, item_id);

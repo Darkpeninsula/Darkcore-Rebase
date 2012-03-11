@@ -113,9 +113,9 @@ class BattlegroundDS : public Battleground
     private:
         uint32 m_waterTimer;
         uint8 m_waterfallStatus;
-        uint32 _waterfallKnockbackTimer;
-        uint32 _pipeKnockBackTimer;
-        uint8 _pipeKnockBackCount;
+        uint32 m_waterfallKnockbackTimer;
+        uint32 m_pipeKnockBackTimer;
+        uint8 m_pipeKnockBackCount;
         bool m_knockbackCheck;
         uint32 m_knockback;
         void KnockBackPlayer(Unit *player, float angle, float horizontalSpeed, float verticalSpeed);
@@ -123,14 +123,18 @@ class BattlegroundDS : public Battleground
         virtual void PostUpdateImpl(uint32 diff);
     protected:
         uint32 getWaterFallStatus() { return m_waterfallStatus; };
-        void setWaterFallStatus(uint8 status) { _waterfallStatus = status; };
+        void setWaterFallStatus(uint8 status) { m_waterfallStatus = status; };
+
         uint32 getWaterFallTimer() { return m_waterTimer; };
-        void setWaterFallTimer(uint32 timer) { _waterfallTimer = timer; };
-        uint32 getWaterFallKnockbackTimer() { return _waterfallTimer; };
-        void setWaterFallKnockbackTimer(uint32 timer) { _waterfallKnockbackTimer = timer; };
-        uint8 getPipeKnockBackCount() { return _pipeKnockBackCount; };
-        void setPipeKnockBackCount(uint8 count) { _pipeKnockBackCount = count; };
-        uint32 getPipeKnockBackTimer() { return _pipeKnockBackTimer; };
-        void setPipeKnockBackTimer(uint32 timer) { _pipeKnockBackTimer = timer; };
+        void setWaterFallTimer(uint32 timer) { m_waterTimer = timer; };
+
+        uint32 getWaterFallKnockbackTimer() { return m_waterfallKnockbackTimer; };
+        void setWaterFallKnockbackTimer(uint32 timer) { m_waterfallKnockbackTimer = timer; };
+
+        uint8 getPipeKnockBackCount() { return m_pipeKnockBackCount; };
+        void setPipeKnockBackCount(uint8 count) { m_pipeKnockBackCount = count; };
+
+        uint32 getPipeKnockBackTimer() { return m_pipeKnockBackTimer; };
+        void setPipeKnockBackTimer(uint32 timer) { m_pipeKnockBackTimer = timer; };
 };
 #endif

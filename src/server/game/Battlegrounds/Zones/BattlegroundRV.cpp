@@ -233,7 +233,7 @@ void BattlegroundRV::TogglePillarCollision(bool apply)
 {
     for (uint8 i = BG_RV_OBJECT_PILAR_1; i <= BG_RV_OBJECT_PILAR_COLLISION_4; ++i)
     {
-        if (GameObject* gob = GetBgMap()->GetGameObject(m_BgObjects[i]))
+        if (GameObject* gob = GetBgMap()->GetGameObject(_BgObjects[i]))
         {
             if (i >= BG_RV_OBJECT_PILAR_COLLISION_1)
             {
@@ -246,7 +246,7 @@ void BattlegroundRV::TogglePillarCollision(bool apply)
                     gob->EnableCollision(!apply); // Forced collision toggle
             }
 
-            for (BattlegroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
+            for (BattlegroundPlayerMap::iterator itr = _Players.begin(); itr != _Players.end(); ++itr)
                 if (Player* player = ObjectAccessor::FindPlayer(MAKE_NEW_GUID(itr->first, 0, HIGHGUID_PLAYER)))
                     gob->SendUpdateToPlayer(player);
         }

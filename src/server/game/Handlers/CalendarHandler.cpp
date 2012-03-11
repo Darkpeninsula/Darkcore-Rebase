@@ -392,7 +392,7 @@ void WorldSession::HandleCalendarEventInvite(WorldPacket& recvData)
     }
     else
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_GUID_RACE_ACC_BY_NAME);
+        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_RACE_ACC_BY_NAME);
         stmt->setString(0, name);
         if (PreparedQueryResult result = CharacterDatabase.Query(stmt))
         {

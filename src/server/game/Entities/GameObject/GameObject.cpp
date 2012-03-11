@@ -1909,8 +1909,8 @@ void GameObject::SetDestructibleState(GameObjectDestructibleState state, Player*
 
 void GameObject::SetLootState(LootState s, Unit* unit)
 {
-    m_lootState = state;
-    AI()->OnStateChanged(state, unit);
+    m_lootState = s;
+    AI()->OnStateChanged(s, unit);
     if (m_model)
     {
         // startOpen determines whether we are going to add or remove the LoS on activation
@@ -1919,9 +1919,9 @@ void GameObject::SetLootState(LootState s, Unit* unit)
         if (GetGOData()->go_state == GO_NOT_READY)
             startOpen = !startOpen;
 
-        if (state == GO_ACTIVATED || state == GO_JUST_DEACTIVATED)
+        if (s == GO_ACTIVATED || s == GO_JUST_DEACTIVATED)
             EnableCollision(startOpen);
-        else if (state == GO_READY)
+        else if (s == GO_READY)
             EnableCollision(!startOpen);
     }
 }

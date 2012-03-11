@@ -31,7 +31,8 @@
 #include "AddonMgr.h"
 #include "DatabaseEnv.h"
 #include "World.h"
-//#include "WorldPacket.h"
+#include "WorldPacket.h"
+#include "Cryptography/BigNumber.h"
 
 struct ItemTemplate;
 struct AuctionEntry;
@@ -60,6 +61,7 @@ struct LfgRoleCheck;
 struct LfgUpdateData;
 class CalendarEvent;
 class CalendarInvite;
+class InstanceSave;
 
 enum AccountDataType
 {
