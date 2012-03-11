@@ -1792,8 +1792,8 @@ void World::SetInitialWorldSettings()
     sLog->outString("Calculate random battleground reset time..." );
     InitRandomBGResetTime();
 
-    //sLog->outString("Calculate guild Advancement XP daily reset time..." );
-    //InitGuildAdvancementDailyResetTime();
+    sLog->outString("Calculate guild Advancement XP daily reset time..." );
+    InitGuildAdvancementDailyResetTime();
 
     LoadCharacterNameData();
 
@@ -1956,8 +1956,8 @@ void World::Update(uint32 diff)
     if (m_gameTime > m_NextWeeklyQuestReset)
         ResetWeeklyQuests();
 
-    // if (m_gameTime > m_NextDailyXPReset)
-        // ResetGuildAdvancementDailyXP();
+    if (m_gameTime > m_NextDailyXPReset)
+        ResetGuildAdvancementDailyXP();
 
     if (m_gameTime > m_NextRandomBGReset)
         ResetRandomBG();
@@ -2786,7 +2786,7 @@ void World::ResetDailyQuests()
     sPoolMgr->ChangeDailyQuests();
 }
 
-/*void World::InitGuildAdvancementDailyResetTime()
+void World::InitGuildAdvancementDailyResetTime()
 {
     time_t Hourlyxptime = uint64(sWorld->getWorldState(WS_GUILD_AD_HOURLY_RESET_TIME));
     if (!Hourlyxptime)
@@ -2847,7 +2847,7 @@ void World::ResetGuildAdvancementDailyXP()
 
     m_NextHourlyXPReset = time_t(m_NextHourlyXPReset + HOUR);
     sWorld->setWorldState(WS_GUILD_AD_HOURLY_RESET_TIME, uint64(m_NextHourlyXPReset));
-}*/
+}
 
 void World::LoadDBAllowedSecurityLevel()
 {
