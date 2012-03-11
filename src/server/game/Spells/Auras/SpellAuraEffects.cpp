@@ -2831,8 +2831,8 @@ void AuraEffect::HandleAuraMounted(AuraApplication const* aurApp, uint8 mode, bo
 
         if (aurApp->GetBase()->GetId() == 87840)
         {
-            target->Mount(plr->getGender() == GENDER_FEMALE ? 29423 : 29422, 0, GetMiscValue());
-            target->Mount(plr->getGender() == GENDER_MALE ? 29422 : 29423, 0, GetMiscValue());
+            target->Mount(player->getGender() == GENDER_FEMALE ? 29423 : 29422, 0, GetMiscValue());
+            target->Mount(player->getGender() == GENDER_MALE ? 29422 : 29423, 0, GetMiscValue());
             return;
         }
 
