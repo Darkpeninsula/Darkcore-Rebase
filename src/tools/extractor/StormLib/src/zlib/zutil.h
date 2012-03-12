@@ -187,7 +187,7 @@ extern const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 #endif
 #ifndef HAVE_VSNPRINTF
 #  ifdef MSDOS
-     /* vsnprintf may exist on some MS-DOS compilers (DJGPP?),
+     /* vsnprintf may exist on some MS-DOS compilers (DJGPP?), 
         but for now we just assume it doesn't. */
 #    define NO_vsnprintf
 #  endif
