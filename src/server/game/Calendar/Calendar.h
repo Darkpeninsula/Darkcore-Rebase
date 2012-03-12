@@ -24,6 +24,7 @@
 
 #include "Errors.h"
 #include "SharedDefines.h"
+#include "Player.h"
 #include <map>
 
 class CalendarInvite
