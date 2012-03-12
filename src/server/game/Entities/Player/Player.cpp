@@ -15636,7 +15636,7 @@ void Player::RewardQuest(Quest const *quest, uint32 reward, Object* questGiver, 
             guildRep = 1;
 
         guild->GainXP(guildXP,GetGuildId(),GUID_LOPART(GetGUID()));
-        GainReputation(GetGUID(),guildRep);
+        guild->GainReputation(GetGUID(),guildRep);
     }
 
     // Give player extra money if GetRewOrReqMoney > 0 and get ReqMoney if negative
