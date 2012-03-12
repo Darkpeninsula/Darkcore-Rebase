@@ -18,33 +18,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef TYPEDEFS_H
-#define TYPEDEFS_H
+#ifndef VMAPEXPORT_H
+#define VMAPEXPORT_H
 
-#ifdef _WIN32
-    typedef __int64            int64;
-    typedef __int32            int32;
-    typedef __int16            int16;
-    typedef __int8             int8;
-    typedef unsigned __int64   uint64;
-    typedef unsigned __int32   uint32;
-    typedef unsigned __int16   uint16;
-    typedef unsigned __int8    uint8;
-#else
-    #include <stdint.h>
-    #ifndef uint64_t
-        #ifdef __linux__
-            #include <linux/types.h>
-        #endif
-    #endif
-    typedef int64_t            int64;
-    typedef int32_t            int32;
-    typedef int16_t            int16;
-    typedef int8_t             int8;
-    typedef uint64_t           uint64;
-    typedef uint32_t           uint32;
-    typedef uint16_t           uint16;
-    typedef uint8_t            uint8;
-#endif
+#include <string>
+
+enum ModelFlags
+{
+    MOD_M2 = 1,
+    MOD_WORLDSPAWN = 1<<1,
+    MOD_HAS_BOUND = 1<<2
+};
+
+extern const char * szWorkDirWmo;
+extern const char * szRawVMAPMagic;                         // vmap magic string for extracted raw vmap data
+
+bool FileExists(const char * file);
+void strToLower(char* str);
+
+bool ExtractSingleWmo(std::string& fname);
+bool ExtractSingleModel(std::string& fname);
+
+void ExtractGameobjectModels();
 
 #endif

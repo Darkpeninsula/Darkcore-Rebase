@@ -58,7 +58,7 @@ void MtSync_StopWriting(CMtSync *p)
     p->csWasEntered = False;
   }
   Semaphore_Release1(&p->freeSemaphore);
-
+ 
   Event_Wait(&p->wasStopped);
 
   while (myNumBlocks++ != p->numProcessedBlocks)
@@ -108,12 +108,12 @@ static SRes MtSync_Create2(CMtSync *p, unsigned (MY_STD_CALL *startAddress)(void
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->canStart));
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->wasStarted));
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->wasStopped));
-
+  
   RINOK_THREAD(Semaphore_Create(&p->freeSemaphore, numBlocks, numBlocks));
   RINOK_THREAD(Semaphore_Create(&p->filledSemaphore, 0, numBlocks));
 
   p->needStart = True;
-
+  
   RINOK_THREAD(Thread_Create(&p->thread, startAddress, obj));
   p->wasCreated = True;
   return SZ_OK;
@@ -231,8 +231,8 @@ void MatchFinderMt_GetNextBlock_Hash(CMatchFinderMt *p)
 
 #define NO_INLINE MY_FAST_CALL
 
-Int32 NO_INLINE GetMatchesSpecN(UInt32 lenLimit, UInt32 pos, const Byte *cur, CLzRef *son,
-    UInt32 _cyclicBufferPos, UInt32 _cyclicBufferSize, UInt32 _cutValue,
+Int32 NO_INLINE GetMatchesSpecN(UInt32 lenLimit, UInt32 pos, const Byte *cur, CLzRef *son, 
+    UInt32 _cyclicBufferPos, UInt32 _cyclicBufferSize, UInt32 _cutValue, 
     UInt32 *_distances, UInt32 _maxLen, const UInt32 *hash, Int32 limit, UInt32 size, UInt32 *posRes)
 {
   do
@@ -345,8 +345,8 @@ void BtGetMatches(CMatchFinderMt *p, UInt32 *distances)
       while (curPos < limit && size-- != 0)
       {
         UInt32 *startDistances = distances + curPos;
-        UInt32 num = (UInt32)(GetMatchesSpec1(lenLimit, pos - p->hashBuf[p->hashBufPos++],
-          pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue,
+        UInt32 num = (UInt32)(GetMatchesSpec1(lenLimit, pos - p->hashBuf[p->hashBufPos++], 
+          pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue, 
           startDistances + 1, p->numHashBytes - 1) - startDistances);
         *startDistances = num - 1;
         curPos += num;
@@ -357,7 +357,7 @@ void BtGetMatches(CMatchFinderMt *p, UInt32 *distances)
       #else
       {
         UInt32 posRes;
-        curPos = limit - GetMatchesSpecN(lenLimit, pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue,
+        curPos = limit - GetMatchesSpecN(lenLimit, pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue, 
           distances + curPos, p->numHashBytes - 1, p->hashBuf + p->hashBufPos, (Int32)(limit - curPos) , size, &posRes);
         p->hashBufPos += posRes - pos;
         cyclicBufferPos += posRes - pos;
@@ -385,7 +385,7 @@ void BtFillBlock(CMatchFinderMt *p, UInt32 globalBlockIndex)
     CriticalSection_Enter(&sync->cs);
     sync->csWasEntered = True;
   }
-
+  
   BtGetMatches(p, p->btBuf + (globalBlockIndex & kMtBtNumBlocksMask) * kMtBtBlockSize);
 
   if (p->pos > kMtMaxValForNormalize - kMtBtBlockSize)
@@ -462,7 +462,7 @@ static unsigned MY_STD_CALL BtThreadFunc2(void *p)
   return 0;
 }
 
-SRes MatchFinderMt_Create(CMatchFinderMt *p, UInt32 historySize, UInt32 keepAddBufferBefore,
+SRes MatchFinderMt_Create(CMatchFinderMt *p, UInt32 historySize, UInt32 keepAddBufferBefore, 
     UInt32 matchMaxLen, UInt32 keepAddBufferAfter, ISzAlloc *alloc)
 {
   CMatchFinder *mf = p->MatchFinder;
@@ -561,7 +561,7 @@ UInt32 * MixMatches2(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
   const Byte *cur = p->pointerToCurPos;
   UInt32 lzPos = p->lzPos;
   MT_HASH2_CALC
-
+      
   curMatch2 = hash[hash2Value];
   hash[hash2Value] = lzPos;
 
@@ -584,7 +584,7 @@ UInt32 * MixMatches3(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
 
   curMatch2 = hash[                hash2Value];
   curMatch3 = hash[kFix3HashSize + hash3Value];
-
+  
   hash[                hash2Value] =
   hash[kFix3HashSize + hash3Value] =
     lzPos;
@@ -616,11 +616,11 @@ UInt32 *MixMatches4(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
   const Byte *cur = p->pointerToCurPos;
   UInt32 lzPos = p->lzPos;
   MT_HASH4_CALC
-
+      
   curMatch2 = hash[                hash2Value];
   curMatch3 = hash[kFix3HashSize + hash3Value];
   curMatch4 = hash[kFix4HashSize + hash4Value];
-
+  
   hash[                hash2Value] =
   hash[kFix3HashSize + hash3Value] =
   hash[kFix4HashSize + hash4Value] =

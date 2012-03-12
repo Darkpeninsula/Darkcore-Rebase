@@ -12,7 +12,7 @@ bool ExtractSingleModel(std::string& fname)
     char * ext = GetExtension(name);
 
     // < 3.1.0 ADT MMDX section store filename.mdx filenames for corresponded .m2 file
-    if (!strcmp(ext, ".mdx"))
+    if (!ext || !strcmp(ext, ".mdx"))
     {
         // replace .mdx -> .m2
         fname.erase(fname.length()-2,2);
@@ -29,7 +29,7 @@ bool ExtractSingleModel(std::string& fname)
         return true;
 
     Model mdl(fname);
-    if (!mdl.open())
+    if (!mdl.open()) //Now it crashes here.
         return false;
 
     return mdl.ConvertToVMAPModel(output.c_str());

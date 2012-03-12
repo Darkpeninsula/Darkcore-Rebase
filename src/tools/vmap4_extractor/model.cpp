@@ -1,23 +1,22 @@
 /*
- * Copyright (C) 2011-2012 DarkCore <http://www.darkpeninsula.eu/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  * Copyright (C) 2011-2012 Project SkyFire <http://www.projectskyfire.org/>
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2012 MaNGOS <http://getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 3 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 
 #include "vmapexport.h"
 #include "model.h"
@@ -40,8 +39,7 @@ bool Model::open()
     if (!ok)
     {
         f.close();
-        // Do not show this error on console to avoid confusion, the extractor can continue working even if some models fail to load
-        //printf("Error loading model %s\n", filename.c_str());
+        printf("Error loading model %s\n", filename.c_str());
         return false;
     }
 
@@ -82,7 +80,7 @@ bool Model::ConvertToVMAPModel(const char * outfilename)
         printf("Can't create the output file '%s'\n", outfilename);
         return false;
     }
-    fwrite(szRawVMAPMagic,8,1,output);
+    fwrite(szRawVMAPMagic, 8, 1, output);
     uint32 nVertices = 0;
     nVertices = header.nBoundingVertices;
     fwrite(&nVertices, sizeof(int), 1, output);
@@ -169,7 +167,7 @@ ModelInstance::ModelInstance(MPQFile &f, const char* ModelInstName, uint32 mapID
 
     uint16 adtId = 0;// not used for models
     uint32 flags = MOD_M2;
-    if(tileX == 65 && tileY == 65) flags |= MOD_WORLDSPAWN;
+    if (tileX == 65 && tileY == 65) flags |= MOD_WORLDSPAWN;
     //write mapID, tileX, tileY, Flags, ID, Pos, Rot, Scale, name
     fwrite(&mapID, sizeof(uint32), 1, pDirfile);
     fwrite(&tileX, sizeof(uint32), 1, pDirfile);
