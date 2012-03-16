@@ -745,6 +745,32 @@ LOCK TABLES `character_glyphs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `character_guild_reputation`
+--
+
+DROP TABLE IF EXISTS `character_guild_reputation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `character_guild_reputation` (
+ `guid` int(10) unsigned NOT NULL,
+ `guildid` int(10) unsigned NOT NULL COMMENT 'Guild Identificator',
+ `disband_time` int(10) unsigned NOT NULL DEFAULT '0',
+ `weekly_rep` bigint(20) NOT NULL DEFAULT '0',
+ UNIQUE KEY `guid_key` (`guid`),
+ KEY `guildid_key` (`guildid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Characters Guild Reputation System';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_guild_reputation`
+--
+
+LOCK TABLES `character_guild_reputation` WRITE;
+/*!40000 ALTER TABLE `character_guild_reputation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_guild_reputation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_homebind`
 --
 
@@ -2000,6 +2026,8 @@ CREATE TABLE `guild_member` (
   `SecondProffLevel` int(11) unsigned NOT NULL DEFAULT '0',
   `SecondProffSkill` int(11) unsigned NOT NULL DEFAULT '0',
   `SecondProffRank` int(11) unsigned NOT NULL DEFAULT '0',
+  `weekly_xp` bigint(20) NOT NULL DEFAULT '0',
+  `total_xp` bigint(20) NOT NULL DEFAULT '0',
   UNIQUE KEY `guid_key` (`guid`),
   KEY `guildid_key` (`guildid`),
   KEY `guildid_rank_key` (`guildid`,`rank`)
